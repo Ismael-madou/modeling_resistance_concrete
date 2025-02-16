@@ -1,0 +1,70 @@
+---
+title: "Regression linéaire"
+author: "groupe 3 : "
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+# Analyse univariée
+
+```{r base, echo = FALSE, message=FALSE, warning=F}
+library(readxl)
+library(corrplot)
+library(ggplot2)
+
+# Charger les données ( Verifier si on se trouve bien dans le repertoire juste avant "Data")
+bdd <- read_excel("../Data/Concrete_Data.xls")
+
+
+#reecriture des variables pour faciliter l'etude
+names(bdd) <- c('cement',
+                'blast_furnace',
+                'fly_ash',
+                'water',
+                'super_plast',
+                'coarse',
+                'fine_aggr',
+                'age',
+                'y_concrete_compresive')
+```
+
+```{r var_numeric,eval = F, echo = FALSE, message=FALSE, warning=F}
+#il n'y a que des variables numérique
+verif <- str(bdd)
+```
+
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+#analyse variable à expliquer ( y_concrete_compressive) :
+#distribution
+boite_moust <- ggplot(bdd, aes_string(y= bdd$y_concrete_compresive)) +
+  geom_boxplot(fill = "lightgreen", color = "darkgreen", alpha = 0.7) + 
+  geom_hline(yintercept = mean(bdd$y_concrete_compresive), color = "red", linetype = "dashed") 
+```
+
+## Première variable
+
+La variable `Concrete compressive strength`, que nous avons choisi d'expliquer grâce aux autres, est bien distribuée, sans valeurs abérente avec des compressions qui varie entre 2 MPa ( Mega Pascals ) et 80 MPa pour une moyenne et une médiane autour de 35 MPa. Cette bonne distribution va nous aider pour la suite de l'étude.
+
+# Analyse bivariée
+
+# Analyse Multivariée
+
+# Regression
+
+# Conclusion
+
+# Annexe
+
+## Analyse univariée
+
+Boite à moustache pour la variable `Concrete compressive strength`.
+
+```{r, echo = F, eval = T,fig.width=3, fig.height=3}
+boite_moust
+```
