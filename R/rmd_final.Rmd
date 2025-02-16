@@ -53,6 +53,34 @@ La variable `Concrete compressive strength`, que nous avons choisi d'expliquer g
 
 # Analyse bivariée
 
+La matrice de correlation en annexe va nous aider a voir les différents lien de correlation potentiels entre les variables. S'il on voit des potentiels lien, il faudra les tester en faisant des test de correlation pou ren extraire la p-value pour valider nos dires. On peut déjà penser à regarder la possible relation positive entre `y` et `cement` et également le potentiel lien négatif entre `water` et  `super_plast`.
+
+##  1  - var expliquee et ciment
+
+On va ici regarder si notre variable à expliquer dans notre projet est reliée significativement à la variable `cement`, en effet on peut voir sous le test sui dessous qu'il y a une correlation significative entre ces deux variables. 
+On peut appercevoir cette correlation ici :
+
+```{r, echo = FALSE, fig.width=5, fig.height=4, fig.align='center'}
+plot(bdd$cement, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "Cement",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
+
+## 2 - relation entre `water` et `super_plast` 
+
+Ensuite on regarde la correlation `water` et `super_plast`. Sur la matrice précédante, nous avions une taux de correlation de -0.66 ce qui peut laisser penser  àun lien significatif entre ces deux variables. Et en effet, grâce à un test de correlation, on peut voir quil y un lien très fort entre ces deux variable, ce lien est négatif ce qui veux dire que plus la variable `water` augmente, plus la variable `superplasticizer` diminue ce qui peut être vu grâce au graphique suivant.
+
+```{r, echo = FALSE, fig.width=5, fig.height=4, fig.align='center'}
+plot(bdd$water, bdd$super_plast,
+     main = "Relation entre l'eau et Super plasticizer",
+     xlab = "eau",
+     ylab = "CSuper plasticizer",
+     pch = 16, col = "black")
+```
+
+
 # Analyse Multivariée
 
 # Regression
@@ -65,6 +93,29 @@ La variable `Concrete compressive strength`, que nous avons choisi d'expliquer g
 
 Boite à moustache pour la variable `Concrete compressive strength`.
 
-```{r, echo = F, eval = T,fig.width=3, fig.height=3}
+```{r, echo = F, eval = T,fig.width=4, fig.height=3, fig.align='center'}
 boite_moust
+```
+
+## Analyse bivariee
+
+Matrice de correlation
+
+```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center'}
+cor_matrix <- cor(bdd, use = "complete.obs")
+
+cor <- corrplot(cor_matrix)
+
+```
+
+test corrrelation entre variable à expliquer et `cement`
+
+```{r}
+cor.test(bdd$cement, bdd$y_concrete_compresive, method = "kendall")
+```
+
+test de correlation entre variable `water` et `SuperPlasticizer`
+
+```{r}
+cor.test(bdd$water, bdd$super_plast, method = "kendall")
 ```
