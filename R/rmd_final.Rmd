@@ -1,17 +1,39 @@
 ---
-title: "Regression linéaire"
-author: "groupe 3 : "
+title: "\\fbox{\\huge Regression Linéaire}"  # Encadre et agrandit le titre
+author:
+- Dimitri DELPECH,
+- Timothé FADENIPO,
+- Matthis ARVOIS,
+- Ismael MADOU GAGI GREMA,
+- Cheikh LO
 date: "`r Sys.Date()`"
-output: pdf_document
+output: 
+  pdf_document:
+    toc: true       # Génère le sommaire
+    toc_depth: 2    # Niveau de profondeur du sommaire
+    number_sections: true  # Numérotation des sections
+    keep_tex: true  # Garde le fichier LaTeX (utile pour debug)
+fontsize: 12pt
+geometry: a4paper
+titlepage: true  # Ajoute une page de titre (nécessite le package LaTeX titlepage)
+
+header-includes:
+  - \usepackage{fancyhdr}  # Ajoute un en-tête personnalisé
+  - \pagestyle{fancy}  
+  - \fancyhead{}  # Réinitialise les en-têtes
+  - \fancyhead[R]{\small `r Sys.Date()`}  # Date en haut à droite
+  - \fancyhead[L]{\small Regression Linéaire}  # Titre en haut à gauche
+  - \renewcommand{\headrulewidth}{0.4pt}  # Ligne sous l'en-tête
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+\newpage
+# Introduction. 
+(contexte -> motivations -> problématique)
 
-# Introduction
-
-# Analyse univariée
+# Analyse univariée.
 
 ```{r base, echo = FALSE, message=FALSE, warning=F}
 library(readxl)
@@ -47,32 +69,38 @@ boite_moust <- ggplot(bdd, aes_string(y= bdd$y_concrete_compresive)) +
   geom_hline(yintercept = mean(bdd$y_concrete_compresive), color = "red", linetype = "dashed") 
 ```
 
-## Première variable
+## Première variable.
 
-La variable `Concrete compressive strength`, que nous avons choisi d'expliquer grâce aux autres, est bien distribuée, sans valeurs abérente avec des compressions qui varie entre 2 MPa ( Mega Pascals ) et 80 MPa pour une moyenne et une médiane autour de 35 MPa. Cette bonne distribution va nous aider pour la suite de l'étude.
+La variable qui répertorie les résistances à la compression des bétons étudiés, que nous avons choisi d'expliquer grâce aux autres, est bien distribuée, sans valeurs aberrantes, avec des résistances variant entre 2 MPa (mégapascals) et 80 MPa, pour une moyenne et une médiane autour de 35 MPa. Cette bonne distribution nous sera utile pour la suite de l'étude.
 
-# Analyse bivariée
+# Analyse bivariée.
 
-La matrice de correlation en annexe va nous aider a voir les différents lien de correlation potentiels entre les variables. S'il on voit des potentiels lien, il faudra les tester en faisant des test de correlation pou ren extraire la p-value pour valider nos dires. On peut déjà penser à regarder la possible relation positive entre `y` et `cement` et également le potentiel lien négatif entre `water` et  `super_plast`.
+La matrice de corrélation en annexe va nous aider à voir les différents liens de corrélation potentiels entre nos variables. Dans cette partie, nous allons étudier et essayer de trouver les couples de variables significativement dépendants. Il est important de trouver tous les couples liés afin d'expliquer de manière optimale comment les variables de notre base peuvent influer sur la résistance à la compression du béton.
 
-##  1  - var expliquee et ciment
+##  Quantité de ciment et résistance du béton.
 
-On va ici regarder si notre variable à expliquer dans notre projet est reliée significativement à la variable `cement`, en effet on peut voir sous le test sui dessous qu'il y a une correlation significative entre ces deux variables. 
-On peut appercevoir cette correlation ici :
+Nous allons ici examiner si la quantité de ciment utilisée pour créer le béton est significativement reliée à la résistance à la compression du béton. En effet, nous pouvons d'abord observer la distribution de ces deux variables à l'aide du graphique ci-dessous :
 
-```{r, echo = FALSE, fig.width=5, fig.height=4, fig.align='center'}
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex=0.5)
 plot(bdd$cement, bdd$y_concrete_compresive,
      main = "Relation entre Cement et Résistance à la Compression",
      xlab = "Cement",
      ylab = "Concrete Compressive Strength",
      pch = 16, col = "black")
 ```
+Cette visualisation des données nous donne une première impression du lien potentiel entre ces deux variables. En étudiant plus précisément ces deux variables avec un test de corrélation de Pearson, on se rend compte qu'il y a un lien significatif : ces deux variables sont positivement liées.
 
-## 2 - relation entre `water` et `super_plast` 
+On peut alors dire que plus la quantité de ciment utilisée pour la fabrication du béton est grande, plus la résistance à la compression de ce béton sera importante. Le test final a donné un coefficient de corrélation $\rho$ de Pearson égal à **0,5** (annexe), ce qui indique un lien relativement fort et non négligeable. Ainsi, une fabrication de béton comprenant une grande quantité de ciment favoriserait grandement sa résistance à la compression.
+ 
+##  Additif chimique et eau.
 
-Ensuite on regarde la correlation `water` et `super_plast`. Sur la matrice précédante, nous avions une taux de correlation de -0.66 ce qui peut laisser penser  àun lien significatif entre ces deux variables. Et en effet, grâce à un test de correlation, on peut voir quil y un lien très fort entre ces deux variable, ce lien est négatif ce qui veux dire que plus la variable `water` augmente, plus la variable `superplasticizer` diminue ce qui peut être vu grâce au graphique suivant.
+Dans le processus de fabrication du béton, il est parfois nécessaire d'ajouter un additif chimique pour améliorer sa fluidité et sa maniabilité. La réflexion porte ici sur la corrélation entre l'ajout de cet additif chimique et la quantité d'eau utilisée pour la fabrication : y aurait-il un quelconque lien entre ces deux variables ?
 
-```{r, echo = FALSE, fig.width=5, fig.height=4, fig.align='center'}
+Pour ce faire, il semble juste d'examiner les différents ajouts d'additif en fonction de la quantité d'eau utilisée pour chaque béton. Le graphique ci-dessous illustre cette relation, et nous pouvons aisément supposer qu'il existe une corrélation entre ces deux variables. En effet, dans l'ensemble, on remarque une diminution de l'ajout d'additif lorsque la quantité d'eau augmente.
+
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex = 0.5) 
 plot(bdd$water, bdd$super_plast,
      main = "Relation entre l'eau et Super plasticizer",
      xlab = "eau",
@@ -80,10 +108,34 @@ plot(bdd$water, bdd$super_plast,
      pch = 16, col = "black")
 ```
 
+Pour avoir une certitude, nous effectuons alors un test de corrélation de Kendall, qui nous indique, premièrement, qu'il existe un lien significatif entre ces deux variables et, deuxièmement, que le coefficient de corrélation $\tau$ étant de **-0.53** (annexe), la négativité de la liaison est prouvée. 
 
-# Analyse Multivariée
+En clair, plus la quantité d'eau utilisée pour la fabrication du béton est importante, moins d'additif chimique a été ajouté lors de cette fabrication. Ce lien fort nous aidera dans la suite de notre étude.
 
-# Regression
+## L'age, une variable importante.
+
+Il serait tout à fait naturel de penser que l'âge ait une quelconque importance sur la résistance à la compression du béton. En effet, l'imaginaire collectif nous amène d'abord à penser que ce béton, en conséquence de l'âge, deviendrait de plus en plus fragile et, de ce fait, moins résistant à la compression. Notre hypothèse serait alors de dire que l'âge est négativement lié à la résistance à la compression du béton, $i.e.$, plus l'âge augmente, moins le béton est résistant.
+
+Dans un premier temps, l'observation de la distribution du temps par rapport à la compression nous aiderait à confirmer ou infirmer l'hypothèse de cette partie. Voyons le graphique ci-dessous.
+
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex = 0.5)
+plot(bdd$water, bdd$y_concrete_compresive,
+     main = "Relation entre l'eau et la resistance",
+     xlab = "eau",
+     ylab = "Resistance à la compression",
+     pch = 16, col = "black")
+```
+
+Cette première visualisation ne nous permet pas de dire s'il y aurait en réalité un quelconque lien entre ces deux variables. En conséquence, il est nécessaire de réaliser un test de corrélation.
+
+Ici, le test réalisé nous permet de voir que notre hypothèse est infirmée, car il y a en effet un lien significatif entre ces deux variables, et la corrélation indique que ce lien est positif. Cette corrélation est positive mais modérée, avec un coefficient de Kendall $\tau$ de **0,449** (annexe). Les valeurs croissent significativement ensemble, mais il y aura tout de même quelques exceptions.
+
+# Analyse Multivariée.
+ (ACP, AFC ACM etc...)
+
+# Regression .
+(lm(formula = , data = )..  + REGARDER Intercept + faire graphique + regarder coeffs + retirer des variable a cause de l'analyse bivairée
 
 # Conclusion
 
@@ -93,7 +145,8 @@ plot(bdd$water, bdd$super_plast,
 
 Boite à moustache pour la variable `Concrete compressive strength`.
 
-```{r, echo = F, eval = T,fig.width=4, fig.height=3, fig.align='center'}
+```{r, echo = F, eval = T,fig.width=4, fig.height=3, fig.align='center',fig.width=3, fig.height=2}
+par(cex = 0.5)
 boite_moust
 ```
 
@@ -101,9 +154,9 @@ boite_moust
 
 Matrice de correlation
 
-```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center'}
-cor_matrix <- cor(bdd, use = "complete.obs")
-
+```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center',,fig.width=4, fig.height=3}
+par(cex=0.4)
+cor_matrix <- cor(bdd, use = "complete.obs", method = "kendall")
 cor <- corrplot(cor_matrix)
 
 ```
@@ -111,11 +164,21 @@ cor <- corrplot(cor_matrix)
 test corrrelation entre variable à expliquer et `cement`
 
 ```{r}
-cor.test(bdd$cement, bdd$y_concrete_compresive, method = "kendall")
+cor.test(bdd$cement, bdd$y_concrete_compresive, method = "pearson")
+#test de pearson car ont une distribution pseudo-normale
 ```
 
 test de correlation entre variable `water` et `SuperPlasticizer`
 
 ```{r}
 cor.test(bdd$water, bdd$super_plast, method = "kendall")
+#test de Kendall car n'ont pas de distribution pseudo- normale
+```
+
+
+test de correlation entre variable `water` et `y`
+
+```{r}
+cor.test(bdd$age, bdd$y_concrete_compresive, method = "kendall")
+#test de Kendall car n'ont pas de distribution pseudo- normale
 ```
