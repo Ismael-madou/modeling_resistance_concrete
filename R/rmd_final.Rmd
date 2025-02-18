@@ -135,7 +135,7 @@ Ici, le test réalisé nous permet de voir que notre hypothèse est infirmée, c
 
 Dans cette partie nous allons étudier maintenat l'ensemble des variable
 
-## ACP
+## Analyse en composantes principales.
 
 ```{r, echo = F, fig.width=4, fig.height=3, fig.align='center'}
 # Chargement de la librairie FactoMineR 
