@@ -1,0 +1,311 @@
+---
+title: "\\fbox{\\huge Regression Linéaire}"  # Encadre et agrandit le titre
+author:
+- Dimitri DELPECH,
+- Timothé FADENIPO,
+- Matthis ARVOIS,
+- Ismael MADOU GAGI GREMA,
+- Cheikh LO
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    toc: true       # Génère le sommaire
+    toc_depth: 2    # Niveau de profondeur du sommaire
+    number_sections: true  # Numérotation des sections
+    keep_tex: true  # Garde le fichier LaTeX (utile pour debug)
+fontsize: 12pt
+geometry: a4paper
+titlepage: true  # Ajoute une page de titre (nécessite le package LaTeX titlepage)
+
+header-includes:
+  - \usepackage{fancyhdr}  # Ajoute un en-tête personnalisé
+  - \pagestyle{fancy}  
+  - \fancyhead{}  # Réinitialise les en-têtes
+  - \fancyhead[R]{\small `r Sys.Date()`}  # Date en haut à droite
+  - \fancyhead[L]{\small Regression Linéaire}  # Titre en haut à gauche
+  - \renewcommand{\headrulewidth}{0.4pt}  # Ligne sous l'en-tête
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+\newpage
+# Introduction. 
+(contexte -> motivations -> problématique)
+
+# Analyse univariée.
+
+```{r base, echo = FALSE, message=FALSE, warning=F}
+library(readxl)
+library(corrplot)
+library(ggplot2)
+
+# Charger les données ( Verifier si on se trouve bien dans le repertoire juste avant "Data")
+bdd <- read_excel("../Data/Concrete_Data.xls")
+
+
+#reecriture des variables pour faciliter l'etude
+names(bdd) <- c('cement',
+                'blast_furnace',
+                'fly_ash',
+                'water',
+                'super_plast',
+                'coarse',
+                'fine_aggr',
+                'age',
+                'y_concrete_compresive')
+```
+
+```{r var_numeric,eval = F, echo = FALSE, message=FALSE, warning=F}
+#il n'y a que des variables numérique
+verif <- str(bdd)
+```
+
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+#analyse variable à expliquer ( y_concrete_compressive) :
+#distribution
+boite_moust <- ggplot(bdd, aes_string(y= bdd$y_concrete_compresive)) +
+  geom_boxplot(fill = "lightgreen", color = "darkgreen", alpha = 0.7) + 
+  geom_hline(yintercept = mean(bdd$y_concrete_compresive), color = "red", linetype = "dashed") 
+```
+
+## Première variable.
+
+La variable qui répertorie les résistances à la compression des bétons étudiés, que nous avons choisi d'expliquer grâce aux autres, est bien distribuée, sans valeurs aberrantes, avec des résistances variant entre 2 MPa (mégapascals) et 80 MPa, pour une moyenne et une médiane autour de 35 MPa. Cette bonne distribution nous sera utile pour la suite de l'étude.
+
+# Analyse bivariée.
+
+La matrice de corrélation en annexe va nous aider à voir les différents liens de corrélation potentiels entre nos variables. Dans cette partie, nous allons étudier et essayer de trouver les couples de variables significativement dépendants. Il est important de trouver tous les couples liés afin d'expliquer de manière optimale comment les variables de notre base peuvent influer sur la résistance à la compression du béton.
+
+##  Quantité de ciment et résistance du béton.
+
+Nous allons ici examiner si la quantité de ciment utilisée pour créer le béton est significativement reliée à la résistance à la compression du béton. En effet, nous pouvons d'abord observer la distribution de ces deux variables à l'aide du graphique ci-dessous :
+
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex=0.5)
+plot(bdd$cement, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "Cement",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
+Cette visualisation des données nous donne une première impression du lien potentiel entre ces deux variables. En étudiant plus précisément ces deux variables avec un test de corrélation de Pearson, on se rend compte qu'il y a un lien significatif : ces deux variables sont positivement liées.
+
+On peut alors dire que plus la quantité de ciment utilisée pour la fabrication du béton est grande, plus la résistance à la compression de ce béton sera importante. Le test final a donné un coefficient de corrélation $\rho$ de Pearson égal à **0,5** (annexe), ce qui indique un lien relativement fort et non négligeable. Ainsi, une fabrication de béton comprenant une grande quantité de ciment favoriserait grandement sa résistance à la compression.
+ 
+##  Additif chimique et eau.
+
+Dans le processus de fabrication du béton, il est parfois nécessaire d'ajouter un additif chimique pour améliorer sa fluidité et sa maniabilité. La réflexion porte ici sur la corrélation entre l'ajout de cet additif chimique et la quantité d'eau utilisée pour la fabrication : y aurait-il un quelconque lien entre ces deux variables ?
+
+Pour ce faire, il semble juste d'examiner les différents ajouts d'additif en fonction de la quantité d'eau utilisée pour chaque béton. Le graphique ci-dessous illustre cette relation, et nous pouvons aisément supposer qu'il existe une corrélation entre ces deux variables. En effet, dans l'ensemble, on remarque une diminution de l'ajout d'additif lorsque la quantité d'eau augmente.
+
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex = 0.5) 
+plot(bdd$water, bdd$super_plast,
+     main = "Relation entre l'eau et Super plasticizer",
+     xlab = "eau",
+     ylab = "CSuper plasticizer",
+     pch = 16, col = "black")
+```
+
+Pour avoir une certitude, nous effectuons alors un test de corrélation de Kendall, qui nous indique, premièrement, qu'il existe un lien significatif entre ces deux variables et, deuxièmement, que le coefficient de corrélation $\tau$ étant de **-0.53** (annexe), la négativité de la liaison est prouvée. 
+
+En clair, plus la quantité d'eau utilisée pour la fabrication du béton est importante, moins d'additif chimique a été ajouté lors de cette fabrication. Ce lien fort nous aidera dans la suite de notre étude.
+
+## L'age, une variable importante.
+
+Il serait tout à fait naturel de penser que l'âge ait une quelconque importance sur la résistance à la compression du béton. En effet, l'imaginaire collectif nous amène d'abord à penser que ce béton, en conséquence de l'âge, deviendrait de plus en plus fragile et, de ce fait, moins résistant à la compression. Notre hypothèse serait alors de dire que l'âge est négativement lié à la résistance à la compression du béton, $i.e.$, plus l'âge augmente, moins le béton est résistant.
+
+Dans un premier temps, l'observation de la distribution du temps par rapport à la compression nous aiderait à confirmer ou infirmer l'hypothèse de cette partie. Voyons le graphique ci-dessous.
+
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex = 0.5)
+plot(bdd$water, bdd$y_concrete_compresive,
+     main = "Relation entre l'eau et la resistance",
+     xlab = "eau",
+     ylab = "Resistance à la compression",
+     pch = 16, col = "black")
+```
+
+Cette première visualisation ne nous permet pas de dire s'il y aurait en réalité un quelconque lien entre ces deux variables. En conséquence, il est nécessaire de réaliser un test de corrélation.
+
+Ici, le test réalisé nous permet de voir que notre hypothèse est infirmée, car il y a en effet un lien significatif entre ces deux variables, et la corrélation indique que ce lien est positif. Cette corrélation est positive mais modérée, avec un coefficient de Kendall $\tau$ de **0,449** (annexe). Les valeurs croissent significativement ensemble, mais il y aura tout de même quelques exceptions.
+
+# Analyse Multivariée.
+
+Dans cette partie nous allons étudier maintenat l'ensemble des variable
+
+## Analyse en composantes principales.
+
+```{r, echo = F, fig.width=4, fig.height=3, fig.align='center'}
+# Chargement de la librairie FactoMineR 
+library(FactoMineR)
+
+# Réalisation de l'ACP :
+# On considère les 8 premières colonnes comme variables actives (expliquant la résistance)
+# et la 9ème colonne ("y_concrete_compresive") comme variable quantitative supplémentaire.
+res_pca <- PCA(bdd,
+               quanti.sup = 9,       # 9ème colonne : résistance à la compression 
+               scale.unit = TRUE,    # Standardisation des données
+               graph = FALSE)        # Pas de graphique initial
+
+# Visualisation des valeurs propres (histogramme)
+
+barplot(
+  res_pca$eig[, 1],                 # Extraction des valeurs propres
+  xlab = "Composantes principales", # Étiquette axe X
+  ylab = "Valeur propre",           # Étiquette axe Y
+  col = "#DDB688",                  # Couleur des barres
+  border = "#4B0000",
+  cex.names = 0.65,
+  cex.axis = 0.65,
+  las = 2                           # Couleur de la bordure des barres
+)
+```
+
+
+Le graphique illustre l’histogramme des valeurs propres issu de l’ACP, permettant d’identifier combien d’axes principaux il est pertinent de retenir. Le premier axe affiche une valeur propre autour de 2.0, indiquant qu’il concentre une part importante de la variance totale. Le deuxième axe, avec une valeur propre avoisinant 1.5, conserve également une proportion significative d’information. Les troisième et quatrième axes présentent des valeurs légèrement inférieures ajoutant encore un complément notable de variance. À partir du cinquième axe, les valeurs propres décroissent nettement, indiquant une contribution plus marginale à la variabilité des données. En appliquant la règle du coude, qui consiste à repérer un point où la décroissance des valeurs propres ralentit, il est judicieux de retenir les deux ou trois premiers axes pour une analyse plus approfondie.
+
+### Analyse sur les 2 premiers axes
+
+```{r,echo = F, fig.width=4, fig.height=3, fig.align='center'}
+# Représentation des variables sur le plan factoriel (axes 1 et 2)
+
+plot.PCA(
+  res_pca,
+  axes = c(1, 2),             # On se concentre sur les 2 premiers axes
+  choix = "var",              # Afficher les variables dans le plan factoriel
+  col.var = "#4B0000",        # Couleur des variables alignée au style
+  col.quanti.sup = "#0000FF", # Couleur pour la variable quantitative supplémentaire
+  label = "all",
+  title = "",
+  addgrid.col = "#DDB688" ,
+  cex = 0.65# Couleur de la grille
+)
+```
+
+
+Le cercle de corrélation met en lumière les relations entre les variables étudiées, projetées sur les deux premiers axes principaux. de l’ACP. Ces axes capturent ensemble 45,2 % de la variance totale des données (28,50 % pour Dim 1 et 17,7 % pour Dim 2).
+
+### Interprétation du premier axe (Dim 1 : 28,50 %)
+
+Le premier axe oppose la teneur en eau (`water`) et l’âge du béton (`age`)  aux formulations utilisant des superplastifiants (`super_plast`), des cendres volantes (`fly_ash`)  et une plus grande proportion de granulats fins (`fine_aggr`).
+
+1. `water` (29,93 % de contribution, cos² = 0.68) est la variable la plus représentée sur Dim 1. 
+
+2. `super_plast` (25,59 % de contribution, cos² = 0.58) est projeté dans la direction opposée à "water". Cela traduit son rôle dans l’amélioration de la fluidité du béton et la réduction du besoin en eau, permettant une meilleure résistance.
+
+3. `fly_ash` (15,57 % de contribution, cos² = 0.35) est bien projeté sur cet axe, montrant que l’incorporation de cendres volantes influence la résistance du béton.
+
+4. `fine_aggr` (16,15 % de contribution, cos² = 0.37) est bien représenté sur Dim 1, indiquant que la proportion de granulats fins influence la maniabilité et la compacité du béton, ce qui impacte sa résistance.
+
+5. `age` (8,50 % de contribution, cos² = 0.19) est aussi bien représenté sur Dim 1.
+
+6. `y_concrete_compresive`est projetée dans la même direction que `super_plas` suggérant que ce composant est associé à une meilleure résistance finale, tandis qu’une forte teneur en eau (`water`) est corrélée négativement à la résistance.
+
+### Interprétation du deuxième axe (Dim 2 : 17,7 %)
+
+Le deuxième axe met en opposition la quantité de laitier de haut fourneau (`blast_furnace`) et la quantité de granulats grossiers (`coarse`).
+
+1. `blast_furnace` (47,01 % de contribution, cos² = 0.66) est la variable la plus représentée sur Dim 2. Son influence importante sur cet axe montre que l’ajout de laitier de haut fourneau différencie certaines formulations de béton, influençant leur durabilité.
+
+2. `coarse` (39,73 % de contribution, cos² = 0.56) est aussi bien projeté sur Dim 2.
+
+
+### C. Implications pour la modélisation de la résistance du béton
+
+L’axe 1 montre une forte opposition entre `water` et `super_plast`, indiquant qu’un terme d’interaction entre ces deux variables pourrait être testé dans notre modèle linéaire.
+
+1. `fine_aggr` étant bien projeté sur Dim 1, son interaction avec `super_plast` pourrait être pertinente pour examiner leur effet combiné sur la compacité et la résistance.
+
+2. `age` étant bien projeté sur Dim 1, son interaction avec `water` pourrait également être pertinente, car l’effet de l’eau sur la résistance varie avec le temps.
+
+L’axe 2 suggère que l’interaction entre `blast_furnace` et `coarse` pourrait être testée pour examiner comment leur combinaison influence la résistance mécanique.
+
+
+### Conclusion
+Cette ACP met en évidence deux dimension de la composition du béton :
+
+1. Un premier axe (Dim 1) montrant les formulations riches en eau avec celles utilisant des superplastifiants, des cendres volantes et une proportion plus élevée de granulats fins.
+
+2. Un deuxième axe (Dim 2) mettant en opposition le laitier de haut fourneau et les granulats grossiers, soulignant leur effet sur la structure du béton et sa prise à long terme.
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+# Regression .
+(lm(formula = , data = )..  + REGARDER Intercept + faire graphique + regarder coeffs + retirer des variable a cause de l'analyse bivairée
+
+# Conclusion
+
+# Annexe
+
+## Analyse univariée
+
+Boite à moustache pour la variable `Concrete compressive strength`.
+
+```{r, echo = F, eval = T,fig.width=4, fig.height=3, fig.align='center',fig.width=3, fig.height=2}
+par(cex = 0.5)
+boite_moust
+```
+
+## Analyse bivariee
+
+Matrice de correlation
+
+```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center',,fig.width=4, fig.height=3}
+par(cex=0.4)
+cor_matrix <- cor(bdd, use = "complete.obs", method = "kendall")
+cor <- corrplot(cor_matrix)
+
+```
+
+test corrrelation entre variable à expliquer et `cement`
+
+```{r}
+cor.test(bdd$cement, bdd$y_concrete_compresive, method = "pearson")
+#test de pearson car ont une distribution pseudo-normale
+```
+
+test de correlation entre variable `water` et `SuperPlasticizer`
+
+```{r}
+cor.test(bdd$water, bdd$super_plast, method = "kendall")
+#test de Kendall car n'ont pas de distribution pseudo- normale
+```
+
+
+test de correlation entre variable `water` et `y`
+
+```{r}
+cor.test(bdd$age, bdd$y_concrete_compresive, method = "kendall")
+#test de Kendall car n'ont pas de distribution pseudo- normale
+```
+
+
+
+## Analyse multivariée
+
+### Contribution des variables
+
+```{r, fig.width=3, fig.height=2, fig.align='center'}
+# Tableau des contributions des variables
+par(cex = 0.65)
+contrib_var <- as.data.frame(res_pca$var$contrib)
+print(contrib_var)
+```
+
+### Tableau des $cos^2$ des variables
+
+```{r, fig.width=3, fig.height=2, fig.align='center'}
+# Tableau des cos² des variables
+par(cex = 0.65)
+cos2_var <- as.data.frame(res_pca$var$cos2)
+print(cos2_var)
+```
