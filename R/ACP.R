@@ -82,7 +82,7 @@ print(cos2_var)
 
 # Le cercle de corrélation met en lumière les relations entre les variables étudiées, projetées
 # sur les deux premiers axes principaux. de l’ACP. Ces axes
-# capturent ensemble 45,2 % de la variance totale des données (28,50 % pour Dim 1
+# capturent ensemble 46,2 % de la variance totale des données (28,50 % pour Dim 1
 # et 17,7 % pour Dim 2).
 
 # A. Interprétation du premier axe (Dim 1 : 28,50 %)
@@ -124,6 +124,54 @@ print(cos2_var)
 # - L’axe 2 suggère que l’interaction entre "blast_furnace" et "coarse" pourrait 
 #   être testée pour examiner comment leur combinaison influence la résistance mécanique.
 
+
+
+# Représentation des variables sur le plan factoriel (axes 1 et 3)
+plot.PCA(
+  res_pca,
+  axes = c(1, 3),             # On se concentre sur les 2 premiers axes
+  choix = "var",              # Afficher les variables dans le plan factoriel
+  col.var = "#4B0000",        # Couleur des variables alignée au style
+  col.quanti.sup = "#0000FF", # Couleur pour la variable quantitative supplémentaire
+  label = "all",
+  title = "",
+  addgrid.col = "#DDB688"     # Couleur de la grille
+)
+
+# D. interpretation du troisème axe avec dim(1-3) 
+------------------------------------------------------------------------------------------------------------------
+# ces deux axes 1 et 3 forment 45% de la variance totale des données.
+# cette dimension oppose water,cement contre super_plast,fly_ash. Dans le soucis de connaitre les variables 
+# réellement opposés, nous nous interessons à la representativité mais aussi la contribution.
+# - la variable cement est très bien representée (cos² = 0.88) et contribue en grande partie à la construction 
+# de cet axe (66% terme de contributions).
+#- la variable fly_ash contribue à la hauteur de 17% à la construction de cet axe et est bien representée avec cos² = 0.22.
+# contrairement aux deux variables qui ne contribuent pas enormement et qui ne sont pas aussi bien representées.
+# la relation entre cement et fly_ash sera bien anlysée par le modèle qui sera construit à la suite de ce travail.
+# De plus, la variable cible suit la meme direction que la variable cement donc cette varaible va certainement plus
+#impactée positivement la resistance à la compression du beton comparé aux autres.
+  
+  # Représentation des variables sur le plan factoriel (axes 2 et 3)
+  plot.PCA(
+    res_pca,
+    axes = c(2, 3),             # On se concentre sur les axes 2 et 3
+    choix = "var",              # Afficher les variables dans le plan factoriel
+    col.var = "#4B0000",        # Couleur des variables alignée au style
+    col.quanti.sup = "#0000FF", # Couleur pour la variable quantitative supplémentaire
+    label = "all",
+    title = "",
+    addgrid.col = "#DDB688"     # Couleur de la grille
+  )
+
+# D. interpretation du troisème axe avec dim(2-3) 
+------------------------------------------------------------------------------------------------------------------
+# les deux axes 2 et 3 forment à leur tour 35% de la vraiance totale. 
+# A ce  niveau, contrairement au précedent, on on remarque les deux variables retenues à savoir cement et fly_ash. 
+# ce qui veut dire qu'en réalité, en combinant les deux, la resistance du beton augmente. ce petit contraste comparé 
+# à la representation précedente va etre bien plus explicite après la construction du modèle.
+
+
+
 # En conclusion, cette ACP met en évidence deux dimensions
 # de la composition du béton :
 # 1) Un premier axe (Dim 1) montrant les formulations riches en eau 
@@ -132,9 +180,7 @@ print(cos2_var)
 # 2) Un deuxième axe (Dim 2) mettant en opposition le laitier de haut fourneau 
 #    et les granulats grossiers, soulignant leur effet sur la structure du béton 
 #    et sa prise à long terme.
-
-
-
+# 3) un troisième axe montrant l'influence du lien cement-fly_ash sur la resistance à la compression du beton.
 
 
 
