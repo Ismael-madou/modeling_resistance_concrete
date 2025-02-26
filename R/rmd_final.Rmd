@@ -197,6 +197,109 @@ Cette première visualisation ne nous permet pas de dire s'il y aurait en réali
 
 Ici, le test réalisé nous permet de voir que notre hypothèse est infirmée, car il y a en effet un lien significatif entre ces deux variables, et la corrélation indique que ce lien est positif. Cette corrélation est positive mais modérée, avec un coefficient de Kendall $\tau$ de **0,449** (annexe). Les valeurs croissent significativement ensemble, mais il y aura tout de même quelques exceptions.
 
+
+
+## `blast_furnace` et résistance du béton.
+
+graph1 ; On
+
+```{r, echo = FALSE, fig.align='center'}
+par(cex=0.5)
+plot(bdd$blast_furnace, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "laitier de haut fourneau",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
+
+test1 ;
+
+```{r}
+cor.test(bdd$blast_furnace, bdd$y_concrete_compresive, method = "spearman")
+```
+ -> Significatif mais (tau plutot proche de zero et positif donc lien positif )
+
+
+```{r, echo = FALSE, fig.align='center'}
+par(cex=0.5)
+plot(bdd$fly_ash, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "cendre volantes",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
+
+```{r}
+cor.test(bdd$fly_ash, bdd$y_concrete_compresive, method = "spearman")
+```
+ -> pvalue a 0.01 donc seuil de significativité et pour le tau on est a -0.07 donc inversement proportionel
+
+
+
+```{r, echo = FALSE, fig.align='center'}
+par(cex=0.5)
+plot(bdd$water, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "quantité d'eau",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
+
+
+
+```{r}
+cor.test(bdd$water, bdd$y_concrete_compresive, method = "spearman")
+```
+
+-> significatif car <2.2e-16 donc et inversement proportionel : moins il y a d'eau, plus la resistance est importante
+
+
+
+
+```{r, echo = FALSE, fig.align='center'}
+par(cex=0.5)
+plot(bdd$super_plast, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "additif chimique",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
+
+
+```{r}
+cor.test(bdd$super_plast, bdd$y_concrete_compresive, method = "kendall")
+```
+
+
+
+```{r, echo = FALSE, fig.align='center'}
+par(cex=0.5)
+plot(bdd$coarse, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "granulats grossiers",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
+
+```{r}
+cor.test(bdd$coarse, bdd$y_concrete_compresive, method = "kendall")
+```
+-> lien significatif, tau a -0.123 donc fort lien négatif
+
+```{r, echo = FALSE, fig.align='center'}
+par(cex=0.5)
+plot(bdd$fine_aggr, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "granulat fins",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
+
+```{r}
+cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
+```
+-> lein significatif,tau négatif donc moins il y a de granulat fin, plus la resistance est grande
+
 # Analyse Multivariée
 
 Dans cette partie, nous allons étudier l'ensemble des variables en utilisant une analyse en composantes principales (ACP). La variable à expliquer (`y_concrete_compresive`) est placée en supplément, tandis que les huit autres variables (les variables explicatives) sont considérées comme actives dans l'ACP.
@@ -331,6 +434,7 @@ Matrice de correlation
 
 ```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center',,fig.width=4, fig.height=3}
 par(cex=0.4)
+library(corrplot)
 cor_matrix <- cor(bdd, use = "complete.obs", method = "kendall")
 cor <- corrplot(cor_matrix)
 
