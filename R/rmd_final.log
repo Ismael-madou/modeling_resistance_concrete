@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.12)  21 FEB 2025 19:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.12)  28 FEB 2025 21:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -439,7 +439,10 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 4.
-
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 10.
+(c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
 
 [1
 
@@ -493,12 +496,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [6]
-<rmd_final_files/figure-latex/unnamed-chunk-2-1.pdf, id=76, 206.7725pt x 124.465pt>
+<rmd_final_files/figure-latex/unnamed-chunk-2-1.pdf, id=79, 206.7725pt x 124.465pt>
 File: rmd_final_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
 <use rmd_final_files/figure-latex/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-2-1.pdf  used on input line 325.
 (pdftex.def)             Requested size: 206.77513pt x 124.46658pt.
-<rmd_final_files/figure-latex/unnamed-chunk-3-1.pdf, id=77, 202.7575pt x 123.46124pt>
+<rmd_final_files/figure-latex/unnamed-chunk-3-1.pdf, id=80, 202.7575pt x 123.46124pt>
 File: rmd_final_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use rmd_final_files/figure-latex/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 356.
@@ -513,7 +516,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [7{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc} <./rmd_final_files/figure-latex/unnamed-chunk-2-1.pdf>]
-<rmd_final_files/figure-latex/unnamed-chunk-4-1.pdf, id=92, 202.7575pt x 123.46124pt>
+<rmd_final_files/figure-latex/unnamed-chunk-4-1.pdf, id=95, 202.7575pt x 123.46124pt>
 File: rmd_final_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use rmd_final_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 383.
@@ -528,68 +531,148 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [8 <./rmd_final_files/figure-latex/unnamed-chunk-3-1.pdf> <./rmd_final_files/figure-latex/unnamed-chunk-4-1.pdf>]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 401.
-(c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Underfull \hbox (badness 2582) in paragraph at lines 399--404
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 398.
+<rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf, id=116, 455.7025pt x 307.1475pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 402.
+(pdftex.def)             Requested size: 418.26398pt x 281.9136pt.
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 408.
+
+Overfull \hbox (63.39656pt too wide) in paragraph at lines 415--415
+[]\T1/lmtt/m/n/12 ## Warning in cor.test.default(bdd$blast_furnace, bdd$y_concrete_compresive, :[] 
+ []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[9 <./rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf>]
+<rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf, id=130, 455.7025pt x 307.1475pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 432.
+(pdftex.def)             Requested size: 418.26398pt x 281.9136pt.
+
+Overfull \hbox (69.57156pt too wide) in paragraph at lines 443--443
+[]\T1/lmtt/m/n/12 ## Warning in cor.test.default(bdd$fly_ash, bdd$y_concrete_compresive, method =[] 
+ []
+
+
+Overfull \hbox (44.87155pt too wide) in paragraph at lines 443--443
+[]\T1/lmtt/m/n/12 ## "spearman"): Impossible de calculer la p-value exacte avec des ex-aequos[] 
+ []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[10 <./rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf>]
+<rmd_final_files/figure-latex/unnamed-chunk-9-1.pdf, id=143, 455.7025pt x 307.1475pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-9-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-9-1.pdf  used on input line 460.
+(pdftex.def)             Requested size: 418.26398pt x 281.9136pt.
+
+Overfull \hbox (57.22156pt too wide) in paragraph at lines 471--471
+[]\T1/lmtt/m/n/12 ## Warning in cor.test.default(bdd$water, bdd$y_concrete_compresive, method =[] 
+ []
+
+
+Overfull \hbox (44.87155pt too wide) in paragraph at lines 471--471
+[]\T1/lmtt/m/n/12 ## "spearman"): Impossible de calculer la p-value exacte avec des ex-aequos[] 
+ []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[11 <./rmd_final_files/figure-latex/unnamed-chunk-9-1.pdf>]
+<rmd_final_files/figure-latex/unnamed-chunk-11-1.pdf, id=157, 455.7025pt x 307.1475pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-11-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-11-1.pdf  used on input line 488.
+(pdftex.def)             Requested size: 418.26398pt x 281.9136pt.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[12 <./rmd_final_files/figure-latex/unnamed-chunk-11-1.pdf>]
+<rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf, id=170, 455.7025pt x 307.1475pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf  used on input line 508.
+(pdftex.def)             Requested size: 418.26398pt x 281.9136pt.
+<rmd_final_files/figure-latex/unnamed-chunk-15-1.pdf, id=171, 455.7025pt x 307.1475pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-15-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-15-1.pdf  used on input line 530.
+(pdftex.def)             Requested size: 418.26398pt x 281.9136pt.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[13 <./rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf>]
+Underfull \hbox (badness 2582) in paragraph at lines 555--559
 \T1/lmr/m/n/12 une anal-yse en com-posantes prin-ci-pales (ACP). La vari-able à ex-pli-quer
  []
 
-<rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf, id=113, 250.9375pt x 143.53625pt>
-File: rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
-<use rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 408.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[14 <./rmd_final_files/figure-latex/unnamed-chunk-15-1.pdf>]
+<rmd_final_files/figure-latex/unnamed-chunk-17-1.pdf, id=197, 250.9375pt x 143.53625pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-17-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-17-1.pdf  used on input line 563.
 (pdftex.def)             Requested size: 250.94452pt x 143.54027pt.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 417.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 571.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[9{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc} <./rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf>]
-<rmd_final_files/figure-latex/unnamed-chunk-6-1.pdf, id=127, 202.7575pt x 191.71625pt>
-File: rmd_final_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use rmd_final_files/figure-latex/unnamed-chunk-6-1.pdf>
-Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 437.
-(pdftex.def)             Requested size: 202.76318pt x 191.72162pt.
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 448.
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[10 <./rmd_final_files/figure-latex/unnamed-chunk-6-1.pdf>]
-Underfull \hbox (badness 4995) in paragraph at lines 475--479
-[]\T1/lmtt/m/n/12 y_concrete_compresive \T1/lmr/m/n/12 est pro-jetée dans la même di-rec-tion que
+Underfull \hbox (badness 6927) in paragraph at lines 573--576
+[]\T1/lmr/m/n/12 Le deux-ième axe con-serve égale-ment une pro-por-tion sig-ni-fica-tive
  []
 
+<rmd_final_files/figure-latex/unnamed-chunk-18-1.pdf, id=198, 275.0275pt x 263.98625pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-18-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-18-1.pdf  used on input line 587.
+(pdftex.def)             Requested size: 275.04361pt x 264.0017pt.
 
-Underfull \hbox (badness 1097) in paragraph at lines 475--479
-\T1/lmtt/m/n/12 super_plast\T1/lmr/m/n/12 , sug-gérant une cor-réla-tion avec une meilleure ré-sis-tance
- []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[11]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -598,16 +681,43 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[12]
-<rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf, id=157, 207.77625pt x 132.495pt>
-File: rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
-<use rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 590.
+[15{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc} <./rmd_final_files/figure-latex/unnamed-chunk-17-1.pdf>]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[16 <./rmd_final_files/figure-latex/unnamed-chunk-18-1.pdf>]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[17]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[18]
+<rmd_final_files/figure-latex/unnamed-chunk-19-1.pdf, id=238, 207.77625pt x 132.495pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-19-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-19-1.pdf  used on input line 752.
 (pdftex.def)             Requested size: 207.78523pt x 132.50072pt.
-<rmd_final_files/figure-latex/corr_y-1.pdf, id=158, 231.86626pt x 213.79875pt>
+<rmd_final_files/figure-latex/corr_y-1.pdf, id=239, 231.86626pt x 213.79875pt>
 File: rmd_final_files/figure-latex/corr_y-1.pdf Graphic file (type pdf)
 <use rmd_final_files/figure-latex/corr_y-1.pdf>
-Package pdftex.def Info: rmd_final_files/figure-latex/corr_y-1.pdf  used on input line 596.
+Package pdftex.def Info: rmd_final_files/figure-latex/corr_y-1.pdf  used on input line 758.
 (pdftex.def)             Requested size: 231.86568pt x 213.79822pt.
 
 
@@ -618,37 +728,67 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[13 <./rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf>]
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[14 <./rmd_final_files/figure-latex/corr_y-1.pdf>]
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 649.
+[19 <./rmd_final_files/figure-latex/unnamed-chunk-19-1.pdf> <./rmd_final_files/figure-latex/corr_y-1.pdf>]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 811.
 (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Overfull \hbox (38.69655pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ##                    Dim.1       Dim.2       Dim.3      Dim.4       Dim.5[] 
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[20]
+Overfull \hbox (88.09657pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ##                            Dim.1     Dim.2        Dim.3      Dim.4        Dim.5[] 
  []
 
 
-Overfull \hbox (38.62651pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ## cement         0.9657572  1.25015253 66.34026520  0.2956763  2.18688819[] 
+Overfull \hbox (88.02654pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## cement                 0.1686558 28.780302 1.293835e+01  9.5954664 2.990868e-01[] 
  []
 
 
-Overfull \hbox (38.66153pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ## blast_furnace  3.1418685 47.00808507  3.00678838 13.1551244  0.04499216[] 
+Overfull \hbox (88.06856pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## blast_furnace          2.6566581  1.857785 4.885852e+01  0.5815925 1.314741e+01[] 
  []
 
 
-Overfull \hbox (38.64752pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ## fly_ash       15.5742135  2.06783294 16.62804875  5.1320692 30.24382886[] 
+Overfull \hbox (88.04755pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## fly_ash               13.6760355  7.204202 3.911677e-02 36.0802387 5.179921e+00[] 
+ []
+
+
+Overfull \hbox (88.03354pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## water                 31.8191398  1.395419 1.447269e+00  0.2201554 8.766687e+00[] 
+ []
+
+
+Overfull \hbox (88.04755pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## super_plast           28.7359223  6.161874 3.532860e+00  2.7508660 1.368220e-01[] 
+ []
+
+
+Overfull \hbox (88.02654pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## coarse                 0.3655176  5.054896 3.019502e+01  4.9126729 2.975316e+01[] 
+ []
+
+
+Overfull \hbox (88.05455pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## fine_aggr             14.5682217  3.499218 1.522624e-04 27.8593901 1.478283e+01[] 
+ []
+
+
+Overfull \hbox (88.03354pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## age                    6.8599228  6.341809 2.876323e+00 12.9252642 2.793407e+01[] 
+ []
+
+
+Overfull \hbox (88.03354pt too wide) in paragraph at lines 866--866
+[]\T1/lmtt/m/n/12 ## y_concrete_compresive  1.1499265 39.704494 1.123899e-01  5.0743538 9.380241e-06[] 
  []
 
 
@@ -660,95 +800,75 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[15]
-Overfull \hbox (38.6125pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ## water         29.9268374  0.28006635  4.54049303  8.7626234  0.49652926[] 
+[21{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
+Overfull \hbox (26.34654pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ##                             Dim.1      Dim.2        Dim.3       Dim.4[] 
  []
 
 
-Overfull \hbox (38.65453pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ## super_plast   25.5951980  8.04312583  5.48455554  0.1399878 12.56071516[] 
+Overfull \hbox (26.31853pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## cement                0.003858358 0.55733497 1.822917e-01 0.100060379[] 
  []
 
 
-Overfull \hbox (38.62651pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ## coarse         0.1448236 39.73293560  2.97783054 29.7839567  0.10956174[] 
+Overfull \hbox (26.28351pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## blast_furnace         0.060776682 0.03597629 6.883804e-01 0.006064777[] 
  []
 
 
-Overfull \hbox (38.64052pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ## fine_aggr     16.1528229  0.03829362  0.00234814 14.8642835 49.15490568[] 
+Overfull \hbox (26.31152pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## fly_ash               0.312868284 0.13951048 5.511263e-04 0.376240426[] 
  []
 
 
-Overfull \hbox (38.64052pt too wide) in paragraph at lines 703--703
-[]\T1/lmtt/m/n/12 ## age            8.4984788  1.57950806  1.01967042 27.8662787  5.20257895[] 
+Overfull \hbox (26.31853pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## water                 0.727930233 0.02702251 2.039094e-02 0.002295754[] 
  []
 
 
-Overfull \hbox (69.57156pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ##                     Dim.1        Dim.2        Dim.3       Dim.4        Dim.5[] 
+Overfull \hbox (26.30452pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## super_plast           0.657395101 0.11932563 4.977538e-02 0.028685702[] 
  []
 
 
-Overfull \hbox (69.52254pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ## cement        0.022018186 0.0177048019 8.891208e-01 0.002998614 0.0208104673[] 
+Overfull \hbox (26.31152pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## coarse                0.008361991 0.09788884 4.254254e-01 0.051228767[] 
  []
 
 
-Overfull \hbox (69.51553pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ## blast_furnace 0.071631096 0.6657338306 4.029827e-02 0.133413270 0.0004281462[] 
+Overfull \hbox (26.29051pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## fine_aggr             0.333278934 0.06776290 2.145264e-06 0.290514397[] 
  []
 
 
-Overfull \hbox (69.54355pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ## fly_ash       0.355074686 0.0292848845 2.228563e-01 0.052047104 0.2878008183[] 
+Overfull \hbox (26.31853pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## age                   0.156935267 0.12281010 4.052526e-02 0.134783114[] 
  []
 
 
-Overfull \hbox (69.48752pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ## water         0.682298492 0.0039663315 6.085364e-02 0.088866529 0.0047249813[] 
+Overfull \hbox (26.30452pt too wide) in paragraph at lines 901--901
+[]\T1/lmtt/m/n/12 ## y_concrete_compresive 0.026307004 0.76888362 1.583491e-03 0.052914756[] 
  []
 
-
-Overfull \hbox (69.48051pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ## super_plast   0.583541947 0.1139076599 7.350637e-02 0.001419693 0.1195279909[] 
- []
-
-
-Overfull \hbox (69.52954pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ## coarse        0.003301816 0.5627023389 3.991017e-02 0.302055301 0.0010425915[] 
- []
-
-
-Overfull \hbox (69.50853pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ## fine_aggr     0.368266334 0.0005423186 3.147079e-05 0.150746782 0.4677589648[] 
- []
-
-
-Overfull \hbox (69.50153pt too wide) in paragraph at lines 727--727
-[]\T1/lmtt/m/n/12 ## age           0.193755832 0.0223691722 1.366606e-02 0.282607085 0.0495078346[] 
- []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[16{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
-<rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf, id=200, 311.1625pt x 300.12125pt>
-File: rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
-<use rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf>
-Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf  used on input line 746.
+<rmd_final_files/figure-latex/unnamed-chunk-25-1.pdf, id=276, 311.1625pt x 300.12125pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-25-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-25-1.pdf  used on input line 920.
 (pdftex.def)             Requested size: 311.16649pt x 300.12509pt.
-<rmd_final_files/figure-latex/unnamed-chunk-14-1.pdf, id=201, 311.1625pt x 300.12125pt>
-File: rmd_final_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
-<use rmd_final_files/figure-latex/unnamed-chunk-14-1.pdf>
-Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-14-1.pdf  used on input line 766.
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[22]
+<rmd_final_files/figure-latex/unnamed-chunk-26-1.pdf, id=283, 311.1625pt x 300.12125pt>
+File: rmd_final_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (type pdf)
+<use rmd_final_files/figure-latex/unnamed-chunk-26-1.pdf>
+Package pdftex.def Info: rmd_final_files/figure-latex/unnamed-chunk-26-1.pdf  used on input line 940.
 (pdftex.def)             Requested size: 311.16649pt x 300.12509pt.
 
 
@@ -759,7 +879,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[17 <./rmd_final_files/figure-latex/unnamed-chunk-13-1.pdf>]
+[23 <./rmd_final_files/figure-latex/unnamed-chunk-25-1.pdf>]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -768,25 +888,25 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[18 <./rmd_final_files/figure-latex/unnamed-chunk-14-1.pdf>] (./rmd_final.aux)
+[24 <./rmd_final_files/figure-latex/unnamed-chunk-26-1.pdf>] (./rmd_final.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 12155 strings out of 475270
- 190410 string characters out of 5768001
- 590788 words of memory out of 5000000
- 34807 multiletter control sequences out of 15000+600000
- 612104 words of font info for 83 fonts, out of 8000000 for 9000
+ 12220 strings out of 475270
+ 193761 string characters out of 5768001
+ 591907 words of memory out of 5000000
+ 34865 multiletter control sequences out of 15000+600000
+ 612422 words of font info for 84 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  89i,12n,93p,790b,591s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on rmd_final.pdf (18 pages, 423383 bytes).
+Output written on rmd_final.pdf (24 pages, 759716 bytes).
 PDF statistics:
- 352 PDF objects out of 1000 (max. 8388607)
- 282 compressed objects within 3 object streams
- 52 named destinations out of 1000 (max. 500000)
- 214 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 438 PDF objects out of 1000 (max. 8388607)
+ 343 compressed objects within 4 object streams
+ 59 named destinations out of 1000 (max. 500000)
+ 252 words of extra memory for PDF output out of 10000 (max. 10000000)
 

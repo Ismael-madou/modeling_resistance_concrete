@@ -302,7 +302,8 @@ cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
 
 # Analyse Multivariée
 
-Dans cette partie, nous allons étudier l'ensemble des variables en utilisant une analyse en composantes principales (ACP). La variable à expliquer (`y_concrete_compresive`) est placée en supplément, tandis que les huit autres variables (les variables explicatives) sont considérées comme actives dans l'ACP.
+Dans cette partie, nous allons étudier l'ensemble des variables en utilisant une analyse en composantes principales (ACP). La variable à expliquer ("y_concrete_compresive") est également considérée comme active, aux côtés des huit autres variables explicatives.
+
 
 
 ## Analyse en Composantes Principales
@@ -315,7 +316,6 @@ library(FactoMineR)
 # On considère les 8 premières colonnes comme variables actives (expliquant la résistance)
 # et la 9ème colonne ("y_concrete_compresive") comme variable quantitative supplémentaire.
 res_pca <- PCA(bdd,
-               quanti.sup = 9,       # 9ème colonne : résistance à la compression 
                scale.unit = TRUE,    # Standardisation des données
                graph = FALSE)        # Pas de graphique initial
 
@@ -332,25 +332,24 @@ barplot(
 )
 ```
 
-Le graphique illustre l’histogramme des valeurs propres issu de l’ACP, permettant d’identifier combien d’axes principaux il est pertinent de retenir.
+Le graphique illustre l’histogramme des valeurs propres issu de l’ACP, permettant d’identifier le nombre d’axes principaux à retenir.
 
-- Le premier axe affiche une valeur propre autour de **2.0**, indiquant qu’il concentre une part importante de la variance totale.
-- Le deuxième axe, avec une valeur propre avoisinant **1.5**, conserve également une proportion significative d’information.
-- Les troisième et quatrième axes présentent des valeurs légèrement inférieures ajoutant encore un complément notable de variance.
-- À partir du cinquième axe, les valeurs propres décroissent nettement, indiquant une contribution plus marginale à la variabilité des données.
+- Le premier axe capte une part importante de la variance totale.
+- Le deuxième axe conserve également une proportion significative d’information.
+- Le troisième axe ajoute un complément notable de variance.
+- À partir du quatrième axe, la contribution devient plus marginale.
 
-En appliquant la **règle du coude**, il est judicieux de retenir les **trois premiers axes** pour une analyse plus approfondie.
+En appliquant la **règle du coude**, il est pertinent de retenir les **trois premiers axes** pour l’analyse.
 
 ## Analyse sur les 2 Premiers Axes
 
-```{r,echo = F, fig.width=4, fig.height=3, fig.align='center'}
+```{r,echo = F, fig.width=5, fig.height=4, fig.align='center'}
 # Représentation des variables sur le plan factoriel (axes 1 et 2)
 plot.PCA(
   res_pca,
   axes = c(1, 2),             # On se concentre sur les 2 premiers axes
   choix = "var",              # Afficher les variables dans le plan factoriel
   col.var = "#4B0000",        # Couleur des variables alignée au style
-  col.quanti.sup = "#0000FF", # Couleur pour la variable quantitative supplémentaire
   label = "all",
   title = "",
   addgrid.col = "#DDB688" ,
@@ -358,32 +357,36 @@ plot.PCA(
 )
 ```
 
-Le cercle de corrélation met en lumière les relations entre les variables étudiées, projetées sur les deux premiers axes principaux de l’ACP. Ces axes capturent ensemble **46,2 %** de la variance totale des données (**28,50 % pour Dim 1 et 17,7 % pour Dim 2**).
+Le cercle de corrélation met en évidence les relations entre les variables étudiées, projetées sur les deux premiers axes principaux de l’ACP. Ces axes capturent ensemble **46,94 %** de la variance totale des données (**25,42 % pour Dim 1 et 21,52 % pour Dim 2**). 
 
-### Interprétation du Premier Axe (Dim 1 : 28,50 %)
+### Interprétation du Premier Axe (Dim 1 : 25,42 %)
 
-Le premier axe oppose **la teneur en eau (`water`) et l’âge du béton (`age`)** aux formulations utilisant **des superplastifiants (`super_plast`), des cendres volantes (`fly_ash`) et une plus grande proportion de granulats fins (`fine_aggr`)**.
+Le premier axe distingue **les formulations riches en eau (`water`) et l’âge du béton (`age`)** de celles utilisant **des superplastifiants (`super_plast`), des cendres volantes (`fly_ash`), et une proportion plus élevée de granulats fins (`fine_aggr`)**.
 
-- `water` (29,93 % de contribution, cos² = 0.68) est la variable la plus représentée sur Dim 1.
-- `super_plast` (25,59 % de contribution, cos² = 0.58) est projeté dans la direction opposée à `water`. Cela traduit son rôle dans l’amélioration de la fluidité du béton et la réduction du besoin en eau, permettant une meilleure résistance.
-- `fly_ash` (15,57 % de contribution, cos² = 0.35) est bien projeté sur cet axe, montrant que l’incorporation de cendres volantes influence la résistance du béton.
-- `fine_aggr` (16,15 % de contribution, cos² = 0.37) est bien représenté sur Dim 1, indiquant que la proportion de granulats fins influence la maniabilité et la compacité du béton.
-- `age` (8,50 % de contribution, cos² = 0.19) est aussi bien représenté sur Dim 1.
-- `y_concrete_compresive` est projetée dans la même direction que `super_plast`, suggérant une corrélation avec une meilleure résistance finale, tandis qu’une forte teneur en eau (`water`) est corrélée négativement à la résistance.
+- `water` (31,82 % de contribution, cos² = 0.73) est la variable la plus influente sur Dim 1. Son orientation négative indique qu’une teneur élevée en eau tend à être associée à une baisse de la résistance à la compression.
+- `super_plast` (28,74 % de contribution, cos² = 0.66) est projeté dans la direction opposée à `water`, traduisant son rôle de réduction du besoin en eau, favorisant ainsi la résistance.
+- `fly_ash` (13,68 % de contribution, cos² = 0.31) et `fine_aggr` (14,57 % de contribution, cos² = 0.33) sont également bien projetés sur cet axe, suggérant que ces composants influencent la résistence du béton.
+- `age` (6,86 % de contribution, cos² = 0.16) est aussi bien représenté sur Dim 1, confirmant que la résistance du béton augmente avec le temps de durcissement.
+- `y_concrete_compresive` (1,15 % de contribution, cos² = 0.03) est légèrement projetée sur Dim 1, mais son faible cos² indique qu’elle est mieux représentée sur un autre axe.
 
-### Interprétation du Deuxième Axe (Dim 2 : 17,7 %)
+### Interprétation du Deuxième Axe (Dim 2 : 21,52 %)
 
-Le deuxième axe met en opposition **la quantité de laitier de haut fourneau (`blast_furnace`) et la quantité de granulats grossiers (`coarse`)**.
+Le deuxième axe distingue **les formulations riches en ciment (`cement`) et associées à une plus grande résistance (`y_concrete_compresive`)** des formulations utilisant **une proportion plus élevée de granulats grossiers (`coarse`)**.
 
-- `blast_furnace` (47,01 % de contribution, cos² = 0.66) est la variable la plus représentée sur Dim 2. Son influence montre que l’ajout de laitier de haut fourneau différencie certaines formulations de béton, influençant leur durabilité.
-- `coarse` (39,73 % de contribution, cos² = 0.56) est également bien projeté sur Dim 2.
+- `y_concrete_compresive` (39,70 % de contribution, cos² = 0.77) est la variable la plus influente sur Dim 2. Cela signifie que la résistance à la compression est fortement expliquée par cette dimension.
+- `cement` (28,78 % de contribution, cos² = 0.56) est bien représenté sur Dim 2, indiquant que la quantité de ciment influence fortement la résistance mécanique.
+- `coarse` (5,05 % de contribution, cos² = 0.10) est projeté dans la direction opposée à `cement` et `y_concrete_compresive`, suggérant que les formulations contenant une proportion élevée de granulats grossiers sont associées à une résistance plus faible.
 
 ## Implications pour la Modélisation de la Résistance du Béton
 
-- L’axe 1 montre une forte opposition entre `water` et `super_plast`, indiquant qu’un **terme d’interaction** entre ces deux variables pourrait être testé dans notre modèle linéaire.
+- L’opposition entre `water` et `super_plast` sur Dim 1 indique qu’un **terme d’interaction** entre ces deux variables pourrait être testé dans le modèle linéaire.
 - `fine_aggr` étant bien projeté sur Dim 1, son interaction avec `super_plast` pourrait être pertinente pour examiner leur effet combiné sur la compacité et la résistance.
-- `age` étant bien projeté sur Dim 1, son interaction avec `water` pourrait également être pertinente.
-- L’axe 2 suggère que l’interaction entre `blast_furnace` et `coarse` pourrait être testée pour examiner leur influence combinée sur la résistance mécanique.
+- `age` étant bien représenté sur Dim 1, une interaction avec `water` pourrait être étudiée pour voir comment l’évolution du béton avec le temps est influencée par l’eau.
+- `y_concrete_compresive` étant principalement projeté sur Dim 2, un modèle linéaire devrait inclure **`cement`** comme facteur explicatif principal.
+- L’opposition entre `coarse` et `cement` sur Dim 2 suggère qu’un effet combiné de ces deux variables pourrait influencer la résistance mécanique.
+
+
+
 
 ## Interprétation du Troisième Axe
 

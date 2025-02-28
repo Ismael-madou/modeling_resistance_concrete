@@ -98,7 +98,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhead{}
-\fancyhead[R]{\small 2025-02-21}
+\fancyhead[R]{\small 2025-02-28}
 \fancyhead[L]{\small Regression Linéaire}
 \renewcommand{\headrulewidth}{0.4pt}
 \ifLuaTeX
@@ -115,7 +115,7 @@
 \title{\fbox{\huge Regression Linéaire}}
 \author{Dimitri DELPECH, \and Timothé FADENIPO, \and Matthis
 ARVOIS, \and Ismael MADOU GAGI GREMA, \and Cheikh LO}
-\date{2025-02-21}
+\date{2025-02-28}
 
 \begin{document}
 \maketitle
@@ -394,107 +394,265 @@ corrélation est positive mais modérée, avec un coefficient de Kendall
 significativement ensemble, mais il y aura tout de même quelques
 exceptions.
 
+\subsection{\texorpdfstring{\texttt{blast\_furnace} et résistance du
+béton.}{blast\_furnace et résistance du béton.}}\label{blast_furnace-et-ruxe9sistance-du-buxe9ton.}
+
+graph1 ; On
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+test1 ;
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{blast\_furnace, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"spearman"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in cor.test.default(bdd$blast_furnace, bdd$y_concrete_compresive, :
+## Impossible de calculer la p-value exacte avec des ex-aequos
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Spearman's rank correlation rho
+## 
+## data:  bdd$blast_furnace and bdd$y_concrete_compresive
+## S = 152531172, p-value = 1.581e-07
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.1624734
+\end{verbatim}
+
+-\textgreater{} Significatif mais (tau plutot proche de zero et positif
+donc lien positif )
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{fly\_ash, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"spearman"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in cor.test.default(bdd$fly_ash, bdd$y_concrete_compresive, method =
+## "spearman"): Impossible de calculer la p-value exacte avec des ex-aequos
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Spearman's rank correlation rho
+## 
+## data:  bdd$fly_ash and bdd$y_concrete_compresive
+## S = 196318556, p-value = 0.01233
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##         rho 
+## -0.07795675
+\end{verbatim}
+
+-\textgreater{} pvalue a 0.01 donc seuil de significativité et pour le
+tau on est a -0.07 donc inversement proportionel
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{water, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"spearman"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in cor.test.default(bdd$water, bdd$y_concrete_compresive, method =
+## "spearman"): Impossible de calculer la p-value exacte avec des ex-aequos
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Spearman's rank correlation rho
+## 
+## data:  bdd$water and bdd$y_concrete_compresive
+## S = 238281768, p-value < 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##        rho 
+## -0.3083707
+\end{verbatim}
+
+-\textgreater{} significatif car \textless2.2e-16 donc et inversement
+proportionel : moins il y a d'eau, plus la resistance est importante
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{super\_plast, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Kendall's rank correlation tau
+## 
+## data:  bdd$super_plast and bdd$y_concrete_compresive
+## z = 11.39, p-value < 2.2e-16
+## alternative hypothesis: true tau is not equal to 0
+## sample estimates:
+##       tau 
+## 0.2490572
+\end{verbatim}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{coarse, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Kendall's rank correlation tau
+## 
+## data:  bdd$coarse and bdd$y_concrete_compresive
+## z = -5.915, p-value = 3.318e-09
+## alternative hypothesis: true tau is not equal to 0
+## sample estimates:
+##        tau 
+## -0.1237223
+\end{verbatim}
+
+-\textgreater{} lien significatif, tau a -0.123 donc fort lien négatif
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{fine\_aggr, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Kendall's rank correlation tau
+## 
+## data:  bdd$fine_aggr and bdd$y_concrete_compresive
+## z = -5.8569, p-value = 4.717e-09
+## alternative hypothesis: true tau is not equal to 0
+## sample estimates:
+##        tau 
+## -0.1222597
+\end{verbatim}
+
+-\textgreater{} lein significatif,tau négatif donc moins il y a de
+granulat fin, plus la resistance est grande
+
 \section{Analyse Multivariée}\label{analyse-multivariuxe9e}
 
 Dans cette partie, nous allons étudier l'ensemble des variables en
 utilisant une analyse en composantes principales (ACP). La variable à
-expliquer (\texttt{y\_concrete\_compresive}) est placée en supplément,
-tandis que les huit autres variables (les variables explicatives) sont
-considérées comme actives dans l'ACP.
+expliquer (``y\_concrete\_compresive'') est également considérée comme
+active, aux côtés des huit autres variables explicatives.
 
 \subsection{Analyse en Composantes
 Principales}\label{analyse-en-composantes-principales}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 Le graphique illustre l'histogramme des valeurs propres issu de l'ACP,
-permettant d'identifier combien d'axes principaux il est pertinent de
-retenir.
+permettant d'identifier le nombre d'axes principaux à retenir.
 
 \begin{itemize}
 \tightlist
 \item
-  Le premier axe affiche une valeur propre autour de \textbf{2.0},
-  indiquant qu'il concentre une part importante de la variance totale.
+  Le premier axe capte une part importante de la variance totale.
 \item
-  Le deuxième axe, avec une valeur propre avoisinant \textbf{1.5},
-  conserve également une proportion significative d'information.
+  Le deuxième axe conserve également une proportion significative
+  d'information.
 \item
-  Les troisième et quatrième axes présentent des valeurs légèrement
-  inférieures ajoutant encore un complément notable de variance.
+  Le troisième axe ajoute un complément notable de variance.
 \item
-  À partir du cinquième axe, les valeurs propres décroissent nettement,
-  indiquant une contribution plus marginale à la variabilité des
-  données.
+  À partir du quatrième axe, la contribution devient plus marginale.
 \end{itemize}
 
-En appliquant la \textbf{règle du coude}, il est judicieux de retenir
-les \textbf{trois premiers axes} pour une analyse plus approfondie.
+En appliquant la \textbf{règle du coude}, il est pertinent de retenir
+les \textbf{trois premiers axes} pour l'analyse.
 
 \subsection{Analyse sur les 2 Premiers
 Axes}\label{analyse-sur-les-2-premiers-axes}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
-Le cercle de corrélation met en lumière les relations entre les
+Le cercle de corrélation met en évidence les relations entre les
 variables étudiées, projetées sur les deux premiers axes principaux de
-l'ACP. Ces axes capturent ensemble \textbf{46,2 \%} de la variance
-totale des données (\textbf{28,50 \% pour Dim 1 et 17,7 \% pour Dim 2}).
+l'ACP. Ces axes capturent ensemble \textbf{46,94 \%} de la variance
+totale des données (\textbf{25,42 \% pour Dim 1 et 21,52 \% pour Dim
+2}).
 
-\subsubsection{Interprétation du Premier Axe (Dim 1 : 28,50
-\%)}\label{interpruxe9tation-du-premier-axe-dim-1-2850}
+\subsubsection{Interprétation du Premier Axe (Dim 1 : 25,42
+\%)}\label{interpruxe9tation-du-premier-axe-dim-1-2542}
 
-Le premier axe oppose \textbf{la teneur en eau (\texttt{water}) et l'âge
-du béton (\texttt{age})} aux formulations utilisant \textbf{des
-superplastifiants (\texttt{super\_plast}), des cendres volantes
-(\texttt{fly\_ash}) et une plus grande proportion de granulats fins
-(\texttt{fine\_aggr})}.
+Le premier axe distingue \textbf{les formulations riches en eau
+(\texttt{water}) et l'âge du béton (\texttt{age})} de celles utilisant
+\textbf{des superplastifiants (\texttt{super\_plast}), des cendres
+volantes (\texttt{fly\_ash}), et une proportion plus élevée de granulats
+fins (\texttt{fine\_aggr})}.
 
 \begin{itemize}
 \tightlist
 \item
-  \texttt{water} (29,93 \% de contribution, cos² = 0.68) est la variable
-  la plus représentée sur Dim 1.
+  \texttt{water} (31,82 \% de contribution, cos² = 0.73) est la variable
+  la plus influente sur Dim 1. Son orientation négative indique qu'une
+  teneur élevée en eau tend à être associée à une baisse de la
+  résistance à la compression.
 \item
-  \texttt{super\_plast} (25,59 \% de contribution, cos² = 0.58) est
-  projeté dans la direction opposée à \texttt{water}. Cela traduit son
-  rôle dans l'amélioration de la fluidité du béton et la réduction du
-  besoin en eau, permettant une meilleure résistance.
+  \texttt{super\_plast} (28,74 \% de contribution, cos² = 0.66) est
+  projeté dans la direction opposée à \texttt{water}, traduisant son
+  rôle de réduction du besoin en eau, favorisant ainsi la résistance.
 \item
-  \texttt{fly\_ash} (15,57 \% de contribution, cos² = 0.35) est bien
-  projeté sur cet axe, montrant que l'incorporation de cendres volantes
-  influence la résistance du béton.
+  \texttt{fly\_ash} (13,68 \% de contribution, cos² = 0.31) et
+  \texttt{fine\_aggr} (14,57 \% de contribution, cos² = 0.33) sont
+  également bien projetés sur cet axe, suggérant que ces composants
+  influencent la résistence du béton.
 \item
-  \texttt{fine\_aggr} (16,15 \% de contribution, cos² = 0.37) est bien
-  représenté sur Dim 1, indiquant que la proportion de granulats fins
-  influence la maniabilité et la compacité du béton.
+  \texttt{age} (6,86 \% de contribution, cos² = 0.16) est aussi bien
+  représenté sur Dim 1, confirmant que la résistance du béton augmente
+  avec le temps de durcissement.
 \item
-  \texttt{age} (8,50 \% de contribution, cos² = 0.19) est aussi bien
-  représenté sur Dim 1.
-\item
-  \texttt{y\_concrete\_compresive} est projetée dans la même direction
-  que \texttt{super\_plast}, suggérant une corrélation avec une
-  meilleure résistance finale, tandis qu'une forte teneur en eau
-  (\texttt{water}) est corrélée négativement à la résistance.
+  \texttt{y\_concrete\_compresive} (1,15 \% de contribution, cos² =
+  0.03) est légèrement projetée sur Dim 1, mais son faible cos² indique
+  qu'elle est mieux représentée sur un autre axe.
 \end{itemize}
 
-\subsubsection{Interprétation du Deuxième Axe (Dim 2 : 17,7
-\%)}\label{interpruxe9tation-du-deuxiuxe8me-axe-dim-2-177}
+\subsubsection{Interprétation du Deuxième Axe (Dim 2 : 21,52
+\%)}\label{interpruxe9tation-du-deuxiuxe8me-axe-dim-2-2152}
 
-Le deuxième axe met en opposition \textbf{la quantité de laitier de haut
-fourneau (\texttt{blast\_furnace}) et la quantité de granulats grossiers
+Le deuxième axe distingue \textbf{les formulations riches en ciment
+(\texttt{cement}) et associées à une plus grande résistance
+(\texttt{y\_concrete\_compresive})} des formulations utilisant
+\textbf{une proportion plus élevée de granulats grossiers
 (\texttt{coarse})}.
 
 \begin{itemize}
 \tightlist
 \item
-  \texttt{blast\_furnace} (47,01 \% de contribution, cos² = 0.66) est la
-  variable la plus représentée sur Dim 2. Son influence montre que
-  l'ajout de laitier de haut fourneau différencie certaines formulations
-  de béton, influençant leur durabilité.
+  \texttt{y\_concrete\_compresive} (39,70 \% de contribution, cos² =
+  0.77) est la variable la plus influente sur Dim 2. Cela signifie que
+  la résistance à la compression est fortement expliquée par cette
+  dimension.
 \item
-  \texttt{coarse} (39,73 \% de contribution, cos² = 0.56) est également
-  bien projeté sur Dim 2.
+  \texttt{cement} (28,78 \% de contribution, cos² = 0.56) est bien
+  représenté sur Dim 2, indiquant que la quantité de ciment influence
+  fortement la résistance mécanique.
+\item
+  \texttt{coarse} (5,05 \% de contribution, cos² = 0.10) est projeté
+  dans la direction opposée à \texttt{cement} et
+  \texttt{y\_concrete\_compresive}, suggérant que les formulations
+  contenant une proportion élevée de granulats grossiers sont associées
+  à une résistance plus faible.
 \end{itemize}
 
 \subsection{Implications pour la Modélisation de la Résistance du
@@ -503,21 +661,25 @@ Béton}\label{implications-pour-la-moduxe9lisation-de-la-ruxe9sistance-du-buxe9t
 \begin{itemize}
 \tightlist
 \item
-  L'axe 1 montre une forte opposition entre \texttt{water} et
-  \texttt{super\_plast}, indiquant qu'un \textbf{terme d'interaction}
-  entre ces deux variables pourrait être testé dans notre modèle
-  linéaire.
+  L'opposition entre \texttt{water} et \texttt{super\_plast} sur Dim 1
+  indique qu'un \textbf{terme d'interaction} entre ces deux variables
+  pourrait être testé dans le modèle linéaire.
 \item
   \texttt{fine\_aggr} étant bien projeté sur Dim 1, son interaction avec
   \texttt{super\_plast} pourrait être pertinente pour examiner leur
   effet combiné sur la compacité et la résistance.
 \item
-  \texttt{age} étant bien projeté sur Dim 1, son interaction avec
-  \texttt{water} pourrait également être pertinente.
+  \texttt{age} étant bien représenté sur Dim 1, une interaction avec
+  \texttt{water} pourrait être étudiée pour voir comment l'évolution du
+  béton avec le temps est influencée par l'eau.
 \item
-  L'axe 2 suggère que l'interaction entre \texttt{blast\_furnace} et
-  \texttt{coarse} pourrait être testée pour examiner leur influence
-  combinée sur la résistance mécanique.
+  \texttt{y\_concrete\_compresive} étant principalement projeté sur Dim
+  2, un modèle linéaire devrait inclure \textbf{\texttt{cement}} comme
+  facteur explicatif principal.
+\item
+  L'opposition entre \texttt{coarse} et \texttt{cement} sur Dim 2
+  suggère qu'un effet combiné de ces deux variables pourrait influencer
+  la résistance mécanique.
 \end{itemize}
 
 \subsection{Interprétation du Troisième
@@ -587,7 +749,7 @@ regarder coeffs + retirer des variable a cause de l'analyse bivairée
 Boite à moustache pour la variable
 \texttt{Concrete\ compressive\ strength}.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 \subsection{Analyse bivariee}\label{analyse-bivariee}
 
@@ -691,15 +853,16 @@ variables}\label{contribution-des-variables}
 \end{Shaded}
 
 \begin{verbatim}
-##                    Dim.1       Dim.2       Dim.3      Dim.4       Dim.5
-## cement         0.9657572  1.25015253 66.34026520  0.2956763  2.18688819
-## blast_furnace  3.1418685 47.00808507  3.00678838 13.1551244  0.04499216
-## fly_ash       15.5742135  2.06783294 16.62804875  5.1320692 30.24382886
-## water         29.9268374  0.28006635  4.54049303  8.7626234  0.49652926
-## super_plast   25.5951980  8.04312583  5.48455554  0.1399878 12.56071516
-## coarse         0.1448236 39.73293560  2.97783054 29.7839567  0.10956174
-## fine_aggr     16.1528229  0.03829362  0.00234814 14.8642835 49.15490568
-## age            8.4984788  1.57950806  1.01967042 27.8662787  5.20257895
+##                            Dim.1     Dim.2        Dim.3      Dim.4        Dim.5
+## cement                 0.1686558 28.780302 1.293835e+01  9.5954664 2.990868e-01
+## blast_furnace          2.6566581  1.857785 4.885852e+01  0.5815925 1.314741e+01
+## fly_ash               13.6760355  7.204202 3.911677e-02 36.0802387 5.179921e+00
+## water                 31.8191398  1.395419 1.447269e+00  0.2201554 8.766687e+00
+## super_plast           28.7359223  6.161874 3.532860e+00  2.7508660 1.368220e-01
+## coarse                 0.3655176  5.054896 3.019502e+01  4.9126729 2.975316e+01
+## fine_aggr             14.5682217  3.499218 1.522624e-04 27.8593901 1.478283e+01
+## age                    6.8599228  6.341809 2.876323e+00 12.9252642 2.793407e+01
+## y_concrete_compresive  1.1499265 39.704494 1.123899e-01  5.0743538 9.380241e-06
 \end{verbatim}
 
 \subsubsection{\texorpdfstring{Tableau des \(cos^2\) des variables
@@ -715,15 +878,26 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Shaded}
 
 \begin{verbatim}
-##                     Dim.1        Dim.2        Dim.3       Dim.4        Dim.5
-## cement        0.022018186 0.0177048019 8.891208e-01 0.002998614 0.0208104673
-## blast_furnace 0.071631096 0.6657338306 4.029827e-02 0.133413270 0.0004281462
-## fly_ash       0.355074686 0.0292848845 2.228563e-01 0.052047104 0.2878008183
-## water         0.682298492 0.0039663315 6.085364e-02 0.088866529 0.0047249813
-## super_plast   0.583541947 0.1139076599 7.350637e-02 0.001419693 0.1195279909
-## coarse        0.003301816 0.5627023389 3.991017e-02 0.302055301 0.0010425915
-## fine_aggr     0.368266334 0.0005423186 3.147079e-05 0.150746782 0.4677589648
-## age           0.193755832 0.0223691722 1.366606e-02 0.282607085 0.0495078346
+##                             Dim.1      Dim.2        Dim.3       Dim.4
+## cement                0.003858358 0.55733497 1.822917e-01 0.100060379
+## blast_furnace         0.060776682 0.03597629 6.883804e-01 0.006064777
+## fly_ash               0.312868284 0.13951048 5.511263e-04 0.376240426
+## water                 0.727930233 0.02702251 2.039094e-02 0.002295754
+## super_plast           0.657395101 0.11932563 4.977538e-02 0.028685702
+## coarse                0.008361991 0.09788884 4.254254e-01 0.051228767
+## fine_aggr             0.333278934 0.06776290 2.145264e-06 0.290514397
+## age                   0.156935267 0.12281010 4.052526e-02 0.134783114
+## y_concrete_compresive 0.026307004 0.76888362 1.583491e-03 0.052914756
+##                              Dim.5
+## cement                3.033202e-03
+## blast_furnace         1.333351e-01
+## fly_ash               5.253239e-02
+## water                 8.890773e-02
+## super_plast           1.387586e-03
+## coarse                3.017429e-01
+## fine_aggr             1.499208e-01
+## age                   2.832946e-01
+## y_concrete_compresive 9.513012e-08
 \end{verbatim}
 
 \subsubsection{partie D}\label{partie-d}
@@ -743,7 +917,7 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 \subsubsection{Partie E}\label{partie-e}
 
@@ -763,6 +937,6 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 \end{document}
