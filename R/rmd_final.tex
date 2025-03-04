@@ -78,6 +78,16 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -733,46 +743,34 @@ Béton}\label{implications-pour-la-moduxe9lisation-de-la-ruxe9sistance-du-buxe9t
   la résistance mécanique.
 \end{itemize}
 
+\newpage
+
 \section{Modélisation Linéaire}\label{moduxe9lisation-linuxe9aire}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Construction du modèle}
-\NormalTok{regression.lineaire }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ y\_concrete\_compresive }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data=}\NormalTok{bdd)}
-\FunctionTok{summary}\NormalTok{(regression.lineaire)}
-\end{Highlighting}
-\end{Shaded}
+\begin{longtable}[]{@{}lrrrl@{}}
+\caption{Tableau des résultats de la régression linéaire}\tabularnewline
+\toprule\noalign{}
+Coefficient & Estimate & Std\_Error & t\_value & Pr \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Coefficient & Estimate & Std\_Error & t\_value & Pr \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Intercept) & -23.163756 & 26.588421 & -0.871 & 0.383851 \\
+cement & 0.119785 & 0.008489 & 14.110 & \textless{} 2e-16 \\
+blast\_furnace & 0.103847 & 0.010136 & 10.245 & \textless{} 2e-16 \\
+fly\_ash & 0.087943 & 0.012585 & 6.988 & 5.03e-12 \\
+water & -0.150298 & 0.040179 & -3.741 & 0.000194 \\
+super\_plast & 0.290687 & 0.093460 & 3.110 & 0.001921 \\
+coarse & 0.018030 & 0.009394 & 1.919 & 0.055227 \\
+fine\_aggr & 0.020154 & 0.010703 & 1.883 & 0.059968 \\
+age & 0.114226 & 0.005427 & 21.046 & \textless{} 2e-16 \\
+\end{longtable}
 
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = y_concrete_compresive ~ ., data = bdd)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -28.653  -6.303   0.704   6.562  34.446 
-## 
-## Coefficients:
-##                 Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   -23.163756  26.588421  -0.871 0.383851    
-## cement          0.119785   0.008489  14.110  < 2e-16 ***
-## blast_furnace   0.103847   0.010136  10.245  < 2e-16 ***
-## fly_ash         0.087943   0.012585   6.988 5.03e-12 ***
-## water          -0.150298   0.040179  -3.741 0.000194 ***
-## super_plast     0.290687   0.093460   3.110 0.001921 ** 
-## coarse          0.018030   0.009394   1.919 0.055227 .  
-## fine_aggr       0.020154   0.010703   1.883 0.059968 .  
-## age             0.114226   0.005427  21.046  < 2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 10.4 on 1021 degrees of freedom
-## Multiple R-squared:  0.6155, Adjusted R-squared:  0.6125 
-## F-statistic: 204.3 on 8 and 1021 DF,  p-value: < 2.2e-16
-\end{verbatim}
-
-\subsection{Interprétation des
-p-values}\label{interpruxe9tation-des-p-values}
+\textbf{Interprétation des p-values}
 
 Les résultats de la régression montrent que :
 
@@ -780,13 +778,13 @@ Les résultats de la régression montrent que :
 \tightlist
 \item
   \textbf{Intercept} : La p-value est de \textbf{0.38}, ce qui est
-  \textbf{supérieur à 0.05}. Nous retenons donc l'\textbf{hypothèse H₀},
+  \textbf{supérieur à 0.05}. Nous retenons donc l'\textbf{hypothèse H0},
   selon laquelle cette valeur n'est \textbf{pas significative}.
 \item
   \textbf{Variables significatives (p \textless{} 0.05)} :
   \texttt{cement}, \texttt{blast\_furnace}, \texttt{fly\_ash},
   \texttt{water}, \texttt{super\_plast} et \texttt{age}. Nous acceptons
-  l'\textbf{hypothèse H₁}, qui indique que ces variables ont un
+  l'\textbf{hypothèse H1}, qui indique que ces variables ont un
   \textbf{effet significatif} sur la résistance du béton.
 \item
   \textbf{Variables non significatives au seuil de 5 \%} :
@@ -798,22 +796,24 @@ Ces résultats suggèrent que certaines variables ont un impact plus
 marqué sur la \textbf{résistance à la compression du béton}, tandis que
 d'autres jouent un rôle moins déterminant.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{dwtest}\NormalTok{(regression.lineaire, }\AttributeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\textbf{Test de Durbin-Watson}
 
-\begin{verbatim}
-## 
-##  Durbin-Watson test
-## 
-## data:  regression.lineaire
-## DW = 1.2815, p-value < 2.2e-16
-## alternative hypothesis: true autocorrelation is not 0
-\end{verbatim}
-
-\subsection{Test de Durbin-Watson}\label{test-de-durbin-watson}
+\begin{longtable}[]{@{}ll@{}}
+\caption{Durbin-Watson Test Results}\tabularnewline
+\toprule\noalign{}
+Description & Valeur \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Description & Valeur \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+DW & 1.2815 \\
+p-value & \textless{} 2.2e-16 \\
+Alternative hypothesis & true autocorrelation is not 0 \\
+\end{longtable}
 
 \begin{itemize}
 \tightlist
@@ -827,14 +827,8 @@ d'autres jouent un rôle moins déterminant.
 \end{itemize}
 
 La p-value étant inférieure à 0.05, nous rejetons l'\textbf{hypothèse
-H₀} et acceptons l'\textbf{hypothèse H₁},\\
+H0} et acceptons l'\textbf{hypothèse H1},\\
 ce qui signifie que \textbf{les erreurs sont fortement corrélées}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{acf}\NormalTok{(regression.lineaire}\SpecialCharTok{$}\NormalTok{residuals, }\AttributeTok{main =} \StringTok{"Autocorrélation des erreurs"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-21-1.pdf}
 
@@ -843,21 +837,24 @@ ce qui vient soutenir la conclusion\\
 du test de Durbin-Watson selon laquelle les erreurs sont
 \textbf{autocorrélées}.
 
-\subsection{Test de Breusch-Pagan}\label{test-de-breusch-pagan}
+\textbf{Test de Breusch-Pagan}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{bptest}\NormalTok{(regression.lineaire, }\AttributeTok{studentize =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  Breusch-Pagan test
-## 
-## data:  regression.lineaire
-## BP = 140.25, df = 8, p-value < 2.2e-16
-\end{verbatim}
+\begin{longtable}[]{@{}ll@{}}
+\caption{Breusch-Pagan Test Results}\tabularnewline
+\toprule\noalign{}
+Description & Valeur \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Description & Valeur \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Breusch-Pagan statistic (BP) & 140.25 \\
+Degrés de liberté (df) & 8 \\
+p-value & \textless{} 2.2e-16 \\
+\end{longtable}
 
 \begin{itemize}
 \tightlist
@@ -870,27 +867,28 @@ du test de Durbin-Watson selon laquelle les erreurs sont
 \end{itemize}
 
 D'après les résultats du \textbf{test de Breusch-Pagan}, nous acceptons
-l'\textbf{hypothèse H₁},\\
+l'\textbf{hypothèse H1},\\
 ce qui signifie que \textbf{l'erreur est hétéroscédastique}. Cela
 indique qu'il existe une \textbf{dépendance}\\
 entre la variance des erreurs et les \textbf{variables explicatives}.
 
-\subsection{Test de Normalité de
-Shapiro-Wilk}\label{test-de-normalituxe9-de-shapiro-wilk}
+\textbf{Test de Normalité de Shapiro-Wilk}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{shapiro.test}\NormalTok{(regression.lineaire}\SpecialCharTok{$}\NormalTok{residuals)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  Shapiro-Wilk normality test
-## 
-## data:  regression.lineaire$residuals
-## W = 0.99532, p-value = 0.002986
-\end{verbatim}
+\begin{longtable}[]{@{}ll@{}}
+\caption{Shapiro-Wilk Normality Test Results}\tabularnewline
+\toprule\noalign{}
+Description & Valeur \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Description & Valeur \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Shapiro-Wilk statistic (W) & 0.99532 \\
+p-value & 0.002986 \\
+\end{longtable}
 
 \begin{itemize}
 \tightlist
@@ -902,15 +900,79 @@ Shapiro-Wilk}\label{test-de-normalituxe9-de-shapiro-wilk}
 
 D'après les résultats du \textbf{test de Shapiro-Wilk}, la p-value est
 \textbf{inférieure au seuil de 5 \%}.\\
-Nous rejetons donc l'\textbf{hypothèse nulle (H₀)} de normalité des
+Nous rejetons donc l'\textbf{hypothèse nulle (H0)} de normalité des
 erreurs.\\
 Par conséquent, \textbf{les erreurs ne suivent pas une distribution
 normale}.
 
-\section{Regression .}\label{regression-.}
+\begin{longtable}[]{@{}rrrrrr@{}}
+\caption{A tibble: 6 x 6}\tabularnewline
+\toprule\noalign{}
+.fitted & .resid & .hat & .sigma & .cooksd & .std.resid \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+.fitted & .resid & .hat & .sigma & .cooksd & .std.resid \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+53.5 & 26.50 & 0.01370 & 10.4 & 0.010200 & 2.570 \\
+53.7 & 8.14 & 0.01290 & 10.4 & 0.000902 & 0.788 \\
+56.8 & -16.50 & 0.01700 & 10.4 & 0.004950 & -1.600 \\
+67.7 & -26.60 & 0.02870 & 10.4 & 0.022100 & -2.600 \\
+60.9 & -16.60 & 0.03060 & 10.4 & 0.009230 & -1.620 \\
+26.9 & 20.20 & 0.00694 & 10.4 & 0.002940 & 1.950 \\
+\end{longtable}
 
-(lm(formula = , data = ).. + REGARDER Intercept + faire graphique +
-regarder coeffs + retirer des variable a cause de l'analyse bivairée
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-25-1.pdf}
+D'après ce plot, il \textbf{n'existe aucune linéarité} entre la variable
+réponse et les variables explicatives.\\
+La \textbf{courbe rouge n'est pas horizontale}, ce qui indique que la
+relation \textbf{n'est pas linéaire}.
+
+Les observations \textbf{382, 384 et 115} sont les \textbf{bétons
+présentant les plus grandes valeurs en termes de résidus}.
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-26-1.pdf}
+Dans notre cas, la \textbf{courbe rouge n'est pas horizontale} et ne
+sépare pas les points de manière homogène\\
+de part et d'autre. Cela indique que \textbf{les erreurs ne sont pas
+homogènes}, ce qui confirme la conclusion\\
+du \textbf{test de Breusch-Pagan}.
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+Ce plot de l'\textbf{hypothèse de normalité} montre que plusieurs points
+\textbf{ne suivent pas la ligne},\\
+bien qu'ils en soient proches.
+
+Cela confirme les résultats du \textbf{test de normalité de
+Shapiro-Wilk},\\
+indiquant que les erreurs \textbf{ne suivent pas une distribution
+normale}.
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+Tous les points situés \textbf{à droite de la droite verticale bleue}
+sont des \textbf{points leviers extrêmes},\\
+c'est-à-dire des \textbf{valeurs extrêmes des variables explicatives}.
+
+De plus, tous les points \textbf{en dehors de l'intervalle formé par les
+pointillés jaunes} sont des \textbf{outliers},\\
+c'est-à-dire des \textbf{valeurs extrêmes de la variable cible}.
+
+Dans notre cas, nous avons \textbf{deux outliers} et \textbf{plusieurs
+points leviers extrêmes}.
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+Suite à l'observation des résultats donnés par le graphique, on remarque
+que \textbf{plusieurs points dépassent la ligne}\\
+formée par les \textbf{pointillés rouges}, qui représente le seuil à
+partir duquel un point est \textbf{considéré comme influent}.
+
+Les \textbf{bétons 57, 225 et 611} sont les \textbf{plus influents}.
 
 \section{Conclusion}\label{conclusion}
 
@@ -921,7 +983,7 @@ regarder coeffs + retirer des variable a cause de l'analyse bivairée
 Boite à moustache pour la variable
 \texttt{Concrete\ compressive\ strength}.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 \subsection{Analyse bivariee}\label{analyse-bivariee}
 
@@ -1089,7 +1151,7 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 \subsubsection{Partie E}\label{partie-e}
 
@@ -1109,6 +1171,6 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-31-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 \end{document}
