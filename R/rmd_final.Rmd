@@ -16,7 +16,6 @@ output:
 fontsize: 12pt
 geometry: a4paper
 titlepage: true  # Ajoute une page de titre (nécessite le package LaTeX titlepage)
-
 header-includes:
   - \usepackage{fancyhdr}  # Ajoute un en-tête personnalisé
   - \pagestyle{fancy}  
@@ -24,37 +23,81 @@ header-includes:
   - \fancyhead[R]{\small `r Sys.Date()`}  # Date en haut à droite
   - \fancyhead[L]{\small Regression Linéaire}  # Titre en haut à gauche
   - \renewcommand{\headrulewidth}{0.4pt}  # Ligne sous l'en-tête
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 \newpage
 
 # Introduction
 
-
 (en cours)
-
 
 # Revue empirique
 
-La résistance du béton est une propriété reconnue depuis longtemps. Si le béton est un élément important du développement de nos sociétés, c’est qu’il possède une résistance mécanique, en particulier à la compression, qui a permis aux architectes et concepteurs de concevoir des structures de plus en plus importantes et durables dans le temps. La propriété de la résistance du béton reste la propriété la plus importante du matériau pour du point de vue de l'ingénieur. Depuis longtemps, la relation entre la composition du béton et la résistance au béton fait écho dans le monde du génie civil et intéresse de nombreux chercheurs de ce domaine. Cependant aucune théorie fondamentale et universellement adoptée n’existe, en la matière, au-delà de la notion commune de rapport eau/ciment. Cette première partie a pour but de mettre en lumière les effets des variables explicatives sur la variable cible en l'occurrence sur la résistance à la compression du béton en se basant sur les travaux effectués dans ce sens.
+La résistance du béton est une propriété reconnue depuis longtemps.
+Si le béton est un élément important du développement de nos sociétés, c’est qu’il possède une résistance mécanique, en particulier à la compression, qui a permis aux architectes et concepteurs de concevoir des structures de plus en plus importantes et durables dans le temps.
+La propriété de la résistance du béton reste la propriété la plus importante du matériau pour du point de vue de l'ingénieur.
+Depuis longtemps, la relation entre la composition du béton et la résistance au béton fait écho dans le monde du génie civil et intéresse de nombreux chercheurs de ce domaine.
+Cependant aucune théorie fondamentale et universellement adoptée n’existe, en la matière, au-delà de la notion commune de rapport eau/ciment.
+Cette première partie a pour but de mettre en lumière les effets des variables explicatives sur la variable cible en l'occurrence sur la résistance à la compression du béton en se basant sur les travaux effectués dans ce sens.
 
-Bien que dans toute approche fondamentale de la résistance à la compression, la nature du granulat représente un rôle secondaire néanmoins ceci reste important pour notre étude. Dans les années 1960, Walker et Bloem ont publié dans leur article (Effect of Aggregate size on properties of concrete, journal of AIC,septembre) un résultat assez percutant. Il s’agit de la démonstration de l’effet négatif du volume de la dimension maximale sur la résistance. Trois effets du granulat sur la résistance du béton ont été énumérés à savoir un effet d’adhérence ; l’effet de confinement et l’effet plafond (le Bulletin des Laboratoires des Ponts et Chaussées, numéro 219, en janvier-février 1999, pages 41 à 52.).
+Bien que dans toute approche fondamentale de la résistance à la compression, la nature du granulat représente un rôle secondaire néanmoins ceci reste important pour notre étude.
+Dans les années 1960, Walker et Bloem ont publié dans leur article (Effect of Aggregate size on properties of concrete, journal of AIC,septembre) un résultat assez percutant.
+Il s’agit de la démonstration de l’effet négatif du volume de la dimension maximale sur la résistance.
+Trois effets du granulat sur la résistance du béton ont été énumérés à savoir un effet d’adhérence ; l’effet de confinement et l’effet plafond (le Bulletin des Laboratoires des Ponts et Chaussées, numéro 219, en janvier-février 1999, pages 41 à 52.).
 
-A part son rôle important dans le phénomène de l’hydratation, l’eau est l’un des facteurs les plus importants au niveau de l’ouvrabilité du béton. L’augmentation du dosage en eau augmente la fluidité du béton et entraîne la diminution de la concentration en solides. Cependant, l’introduction excessive de l’eau provoque la chute de la résistance mécanique et sa durabilité (effect on composition parameters on fresh state properties of self-compacting concrete N.Bouhamou et al.). Le bulletin publié par FEBELCEM (Fédération de l’Industrie Cimentière Belge) avec l’auteur Ir C.Ployaert que la durabilité d’un béton dépend d’une faible porosité. De plus, pour les surfaces de bétonnage non coffrées sont les plus critiques du fait de leur exposition au soleil et au vent. Le contrôle de leur protection efficace contre toute évaporation intempestive de l’eau nécessaire à l’hydratation du ciment revêt d’une grande importance. D’où la liaison importante entre la résistance à la compression et l’eau. 
+A part son rôle important dans le phénomène de l’hydratation, l’eau est l’un des facteurs les plus importants au niveau de l’ouvrabilité du béton.
+L’augmentation du dosage en eau augmente la fluidité du béton et entraîne la diminution de la concentration en solides.
+Cependant, l’introduction excessive de l’eau provoque la chute de la résistance mécanique et sa durabilité (effect on composition parameters on fresh state properties of self-compacting concrete N.Bouhamou et al.).
+Le bulletin publié par FEBELCEM (Fédération de l’Industrie Cimentière Belge) avec l’auteur Ir C.Ployaert que la durabilité d’un béton dépend d’une faible porosité.
+De plus, pour les surfaces de bétonnage non coffrées sont les plus critiques du fait de leur exposition au soleil et au vent.
+Le contrôle de leur protection efficace contre toute évaporation intempestive de l’eau nécessaire à l’hydratation du ciment revêt d’une grande importance.
+D’où la liaison importante entre la résistance à la compression et l’eau.
 
-Puis dans l’article publié par le département de génie civil à l’université de Mostaganem en Algérie, le rôle de superplastifiant a été mis en exergue. Le volume d’eau augmente avec l’augmentation du dosage en superplastifiant. L’une des explications avancées est l’augmentation de la viscosité de l’eau due au superplastifiant. De plus, il est noté que l'augmentation du dosage en superplastifiant a engendré une augmentation du taux de ségrégation statique dans le cas où le dosage est élevé entraînant ainsi une réduction de l'homogénéité du béton et   par conséquent une réduction sa résistance à la compression. Par ailleurs, un dosage modéré en superplastifiants apporte un bénéfice supplémentaire, particulièrement aux premiers âges (48h, 72h), en raison d’une meilleure compacité et d’une dispersion plus efficace des grains de ciment.
-     				 
-Ensuite, Mehta et Monteiro (2014) soulignent que l’augmentation de la teneur en ciment améliore significativement la résistance mécanique, en particulier dans les premiers jours de durcissement. De même, Siddique et al. (2011) ont observé une corrélation positive entre la teneur en ciment et la résistance à la compression, confirmant que cette relation est particulièrement marquée dans les premières phases de durcissement. Toutefois, au-delà d’un certain seuil, une concentration excessive de ciment peut entraîner des effets négatifs, notamment une élévation de la chaleur d’hydratation et une augmentation du retrait, favorisant ainsi l’apparition de fissures (Neville, 2011). Il a également spécifié qu’il existe une diminution dans l'efficacité du ciment en appliquant de très haut dosage même en présence de superplastifiant dans ADDIS B.J , Alexandre M.G (1994) . Le dosage du ciment dans le béton est très souvent relié à ses propriétés mécaniques et sa durabilité (effect on composition parameters on fresh state properties of self-compacting concrete N.Bouhamou et al.).
+Puis dans l’article publié par le département de génie civil à l’université de Mostaganem en Algérie, le rôle de superplastifiant a été mis en exergue.
+Le volume d’eau augmente avec l’augmentation du dosage en superplastifiant.
+L’une des explications avancées est l’augmentation de la viscosité de l’eau due au superplastifiant.
+De plus, il est noté que l'augmentation du dosage en superplastifiant a engendré une augmentation du taux de ségrégation statique dans le cas où le dosage est élevé entraînant ainsi une réduction de l'homogénéité du béton et par conséquent une réduction sa résistance à la compression.
+Par ailleurs, un dosage modéré en superplastifiants apporte un bénéfice supplémentaire, particulièrement aux premiers âges (48h, 72h), en raison d’une meilleure compacité et d’une dispersion plus efficace des grains de ciment.
 
-Par ailleurs, le laitier de haut fourneau est souvent utilisé pour remplacer une partie du ciment afin d’améliorer certaines propriétés du béton. Plusieurs études ont montré que son ajout réduit la résistance du béton dans les premiers jours, car sa réaction est plus lente que celle du ciment classique. Cependant, à plus long terme, il aide à renforcer le béton grâce à une réaction chimique qui produit des éléments solides supplémentaires, améliorant ainsi sa résistance (Jin et al., 2003). 
+Ensuite, Mehta et Monteiro (2014) soulignent que l’augmentation de la teneur en ciment améliore significativement la résistance mécanique, en particulier dans les premiers jours de durcissement.
+De même, Siddique et al. (2011) ont observé une corrélation positive entre la teneur en ciment et la résistance à la compression, confirmant que cette relation est particulièrement marquée dans les premières phases de durcissement.
+Toutefois, au-delà d’un certain seuil, une concentration excessive de ciment peut entraîner des effets négatifs, notamment une élévation de la chaleur d’hydratation et une augmentation du retrait, favorisant ainsi l’apparition de fissures (Neville, 2011).
+Il a également spécifié qu’il existe une diminution dans l'efficacité du ciment en appliquant de très haut dosage même en présence de superplastifiant dans ADDIS B.J , Alexandre M.G (1994) .
+Le dosage du ciment dans le béton est très souvent relié à ses propriétés mécaniques et sa durabilité (effect on composition parameters on fresh state properties of self-compacting concrete N.Bouhamou et al.).
 
-De plus, l’utilisation des cendres volantes pour remplacer une partie du ciment a aussi un impact sur la résistance du béton. D’après Tan et al. (2016), leur ajout réduit la résistance dans les premiers jours, car elles réagissent plus lentement que le ciment. Toutefois, avec le temps, elles renforcent la structure du béton et améliorent sa durabilité grâce à une réaction chimique progressive. Zhao et al. (2019) précisent que leur effet dépend de la quantité utilisée et de la finesse des particules, ce qui influence directement la résistance finale du béton.
-			
-En outre, Les granulats fins, communément appelés “Fine Aggregate”, constituent la fraction sableuse dans la formulation du béton. On considère généralement qu’il s’agit de particules de dimensions inférieures à 5 mm. La quantité de granulats fins, principalement constitués de sable, influence la résistance du béton. Selon Chatterji (2013), une bonne proportion de granulats fins améliore la compacité du mélange, réduit la porosité et augmente la résistance à la compression. Cependant, un excès de sable peut affaiblir la structure en diminuant la cohésion entre les particules de ciment et les granulats plus gros (Neville, 2011). Concrètement, une teneur adéquate en sable améliore le contact entre la pâte cimentaire et les grains, réduisant la porosité et favorisant ainsi un meilleur transfert des contraintes. Il est donc essentiel de trouver un équilibre pour garantir une répartition homogène des matériaux et optimiser la résistance du béton. Quant à l’étude du bulletin des laboratoires des ponts et chaussées (1999) intitulée “Influence du granulat sur la résistance à la compression des bétons”, elle révèle qu’entre 60 % et 75 % de volume total d’agrégats, une variation de la proportion de granulats fins peut entraîner un écart de l’ordre de 2 à 3 MPa en résistance à la compression. La raison tient à la formation d’une couche de pâte cimentaire plus ou moins épaisse selon la quantité de sables incorporée, conditionnant ainsi la compacité et la performance mécanique du béton.
-Enfin, L’âge du béton (Age) se définit comme la durée écoulée depuis le coulage et le compactage jusqu’à la réalisation des essais mécaniques, habituellement exprimée en nombre de jours (1, 2, 7, 28, etc.). Il revêt une grande importance, car plus le béton mûrit, plus la réaction d’hydratation du ciment se poursuit, consolidant la microstructure et augmentant de manière significative la résistance en compression. Plusieurs études, dont celles de Neville (2011), Mindess et Young (2019), montrent que la résistance du béton augmente avec le temps en raison du processus d’hydratation du ciment. La majeure partie du gain de résistance se produit au cours des 28 premiers jours, période pendant laquelle le ciment continue de réagir avec l’eau pour former une structure solide. Cependant, le taux de durcissement ralentit après cette période, bien que certaines formulations, notamment celles contenant du laitier ou des cendres volantes, puissent encore voir leur résistance s’améliorer au-delà de 90 jours. Selon les observations présentées dans un mémoire de recherche intitulé “Impact du superplastifiant sur les propriétés physico-mécaniques du ciment” à l’université de Blida 1(2022-2023), la résistance à la compression connaît une croissance rapide entre 1 et 7 jours, passant de 20 % de la résistance ultime à près de 70 % autour de la première semaine . Typiquement, un saut d’environ 10 MPa (environ 50 %) est constaté entre 2 et 7 jours. Après ce cap, le rythme de durcissement ralentit, mais on atteint souvent plus de 90 % de la résistance finale à 28 jours.
+Par ailleurs, le laitier de haut fourneau est souvent utilisé pour remplacer une partie du ciment afin d’améliorer certaines propriétés du béton.
+Plusieurs études ont montré que son ajout réduit la résistance du béton dans les premiers jours, car sa réaction est plus lente que celle du ciment classique.
+Cependant, à plus long terme, il aide à renforcer le béton grâce à une réaction chimique qui produit des éléments solides supplémentaires, améliorant ainsi sa résistance (Jin et al., 2003).
+
+De plus, l’utilisation des cendres volantes pour remplacer une partie du ciment a aussi un impact sur la résistance du béton.
+D’après Tan et al. (2016), leur ajout réduit la résistance dans les premiers jours, car elles réagissent plus lentement que le ciment.
+Toutefois, avec le temps, elles renforcent la structure du béton et améliorent sa durabilité grâce à une réaction chimique progressive.
+Zhao et al. (2019) précisent que leur effet dépend de la quantité utilisée et de la finesse des particules, ce qui influence directement la résistance finale du béton.
+
+En outre, Les granulats fins, communément appelés “Fine Aggregate”, constituent la fraction sableuse dans la formulation du béton.
+On considère généralement qu’il s’agit de particules de dimensions inférieures à 5 mm.
+La quantité de granulats fins, principalement constitués de sable, influence la résistance du béton.
+Selon Chatterji (2013), une bonne proportion de granulats fins améliore la compacité du mélange, réduit la porosité et augmente la résistance à la compression.
+Cependant, un excès de sable peut affaiblir la structure en diminuant la cohésion entre les particules de ciment et les granulats plus gros (Neville, 2011).
+Concrètement, une teneur adéquate en sable améliore le contact entre la pâte cimentaire et les grains, réduisant la porosité et favorisant ainsi un meilleur transfert des contraintes.
+Il est donc essentiel de trouver un équilibre pour garantir une répartition homogène des matériaux et optimiser la résistance du béton.
+Quant à l’étude du bulletin des laboratoires des ponts et chaussées (1999) intitulée “Influence du granulat sur la résistance à la compression des bétons”, elle révèle qu’entre 60 % et 75 % de volume total d’agrégats, une variation de la proportion de granulats fins peut entraîner un écart de l’ordre de 2 à 3 MPa en résistance à la compression.
+La raison tient à la formation d’une couche de pâte cimentaire plus ou moins épaisse selon la quantité de sables incorporée, conditionnant ainsi la compacité et la performance mécanique du béton.
+Enfin, L’âge du béton (Age) se définit comme la durée écoulée depuis le coulage et le compactage jusqu’à la réalisation des essais mécaniques, habituellement exprimée en nombre de jours (1, 2, 7, 28, etc.).
+Il revêt une grande importance, car plus le béton mûrit, plus la réaction d’hydratation du ciment se poursuit, consolidant la microstructure et augmentant de manière significative la résistance en compression.
+Plusieurs études, dont celles de Neville (2011), Mindess et Young (2019), montrent que la résistance du béton augmente avec le temps en raison du processus d’hydratation du ciment.
+La majeure partie du gain de résistance se produit au cours des 28 premiers jours, période pendant laquelle le ciment continue de réagir avec l’eau pour former une structure solide.
+Cependant, le taux de durcissement ralentit après cette période, bien que certaines formulations, notamment celles contenant du laitier ou des cendres volantes, puissent encore voir leur résistance s’améliorer au-delà de 90 jours.
+Selon les observations présentées dans un mémoire de recherche intitulé “Impact du superplastifiant sur les propriétés physico-mécaniques du ciment” à l’université de Blida 1(2022-2023), la résistance à la compression connaît une croissance rapide entre 1 et 7 jours, passant de 20 % de la résistance ultime à près de 70 % autour de la première semaine .
+Typiquement, un saut d’environ 10 MPa (environ 50 %) est constaté entre 2 et 7 jours.
+Après ce cap, le rythme de durcissement ralentit, mais on atteint souvent plus de 90 % de la résistance finale à 28 jours.
 
 # Analyse univariée.
 
@@ -87,68 +130,145 @@ names(bdd) <- c('cement',
 verif <- str(bdd)
 ```
 
+## Cement
+
 ```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-#analyse variable à expliquer ( y_concrete_compressive) :
-#distribution
-boite_moust <- ggplot(bdd, aes_string(y= bdd$y_concrete_compresive)) +
-  geom_boxplot(fill = "lightgreen", color = "darkgreen", alpha = 0.7) + 
-  geom_hline(yintercept = mean(bdd$y_concrete_compresive), color = "red", linetype = "dashed") 
+# 1️⃣ Histogramme pour Cement
+p1 <- ggplot(bdd, aes(x = cement)) +
+  geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
+  labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
+  theme_minimal()
+print(p1)
 ```
 
+L'histogramme montre une distribution étalée avec plusieurs pics, indiquant une variabilité dans les proportions de ciment utilisées.
+Les valeurs les plus courantes se situent entre 100 et 400 kg/m³.
+Cette répartition suggère que différentes formulations de béton nécessitent des proportions de ciment variées, influençant potentiellement la résistance finale du béton.
 
-## Première variable.
+## Blast Furnace Slag
 
-La variable qui répertorie les résistances à la compression des bétons étudiés, que nous avons choisi d'expliquer grâce aux autres, est bien distribuée, sans valeurs aberrantes, avec des résistances variant entre 2 MPa (mégapascals) et 80 MPa, pour une moyenne et une médiane autour de 35 MPa. Cette bonne distribution nous sera utile pour la suite de l'étude.
-
-
-## Suite 
-
-```{r, eval = F, echo = F}
-# Boucle pour générer un histogramme des frequences pour chaque variable au lieu de le faire 1 par 1. 
-for (var in colnames(bdd)) {
-    p <- ggplot(bdd, aes_string(x = var)) +
-      geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
-      labs(
-        title = paste("Distribution de la variable", var),
-        x = var,
-        y = "Fréquence"
-      ) +
-      theme_minimal() 
-    
-    print(p)  # Affiche chaque graphique 
-  }
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 2️⃣ Histogramme pour Blast Furnace Slag
+p2 <- ggplot(bdd, aes(x = blast_furnace)) +
+  geom_histogram(bins = 30, fill = "red", color = "darkred") +
+  labs(title = "Distribution de la variable Blast Furnace Slag", x = "Blast Furnace Slag", y = "Fréquence") +
+  theme_minimal()
+print(p2)
 ```
 
+La majorité des valeurs sont proches de zéro, suggérant que le blast furnace slag est rarement utilisé en grande quantité.
+Cependant, quelques observations montrent une présence significative de ce composant, ce qui pourrait indiquer des formulations spécifiques cherchant à améliorer certaines propriétés du béton, comme la durabilité ou la résistance aux sulfates.
 
-Variable resistance du beton("y_concrete_compresive ") :
+## Fly Ash
 
-Variable ("fine_aggr ") :
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 3️⃣ Histogramme pour Fly Ash
+p3 <- ggplot(bdd, aes(x = fly_ash)) +
+  geom_histogram(bins = 30, fill = "purple", color = "darkblue") +
+  labs(title = "Distribution de la variable Fly Ash", x = "Fly Ash", y = "Fréquence") +
+  theme_minimal()
+print(p3)
+```
 
-Variable eau ("Water"):
+La distribution est fortement biaisée vers zéro, montrant que le fly ash est peu utilisé dans la majorité des échantillons.
+Seules quelques observations présentent des valeurs plus élevées, ce qui indique que cet additif est employé dans des mélanges spécifiques, probablement pour optimiser la maniabilité ou réduire les coûts en substituant une partie du cement.
 
+## Water
 
-les variable sont principalements concentrés autour de la médiane ce qui pourrait indiquer par exemple pour la variable de resitance du beton 
-que la plupart  des échantillons de béton ont une résistance similaire
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 4️⃣ Histogramme pour Water
+p4 <- ggplot(bdd, aes(x = water)) +
+  geom_histogram(bins = 30, fill = "cyan", color = "darkblue") +
+  labs(title = "Distribution de la variable Water", x = "Water", y = "Fréquence") +
+  theme_minimal()
+print(p4)
+```
 
+La répartition est relativement normale avec un pic autour de 200 kg/m³, ce qui indique une quantité d’eau standardisée dans la plupart des mélanges.
+Une consommation d’eau bien contrôlée est essentielle pour assurer une bonne hydratation du ciment et éviter une porosité excessive pouvant affaiblir le matériau.
 
-Variable cendre volante("fly_ash "):
+## Superplasticizer
 
-Variable Quantité de laitier("blast_furnace "):
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 5️⃣ Histogramme pour Superplasticizer
+p5 <- ggplot(bdd, aes(x = super_plast)) +
+  geom_histogram(bins = 30, fill = "orange", color = "darkorange") +
+  labs(title = "Distribution de la variable Superplasticizer", x = "Superplasticizer", y = "Fréquence") +
+  theme_minimal()
+print(p5)
+```
 
-Variable cendre volante("fly_ash "):
+La plupart des valeurs sont proches de zéro, ce qui signifie que le superplasticizer est peu utilisé dans de nombreux échantillons.
+Cependant, certaines observations indiquent une utilisation plus importante, ce qui peut être lié à des mélanges nécessitant une meilleure fluidité tout en réduisant le rapport water/cement pour maximiser la résistance finale.
 
-Variable superplastique("super_plast "):
+## Coarse Aggregate
 
-Ces variables sont fortements concentrés surdes données faibles et minimales
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 6️⃣ Histogramme pour Coarse Aggregate
+p6 <- ggplot(bdd, aes(x = coarse)) +
+  geom_histogram(bins = 30, fill = "yellow", color = "gold") +
+  labs(title = "Distribution de la variable Coarse Aggregate", x = "Coarse Aggregate", y = "Fréquence") +
+  theme_minimal()
+print(p6)
+```
 
+Le coarse aggregate suit une distribution centrée autour de 950-1000 kg/m³, ce qui montre une standardisation dans son utilisation.
+La présence d’une quantité relativement constante de coarse aggregate est essentielle pour garantir la stabilité et la résistance mécanique du béton tout en minimisant la fissuration.
+
+## Fine Aggregate
+
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 7️⃣ Histogramme pour Fine Aggregate
+p7 <- ggplot(bdd, aes(x = fine_aggr)) +
+  geom_histogram(bins = 30, fill = "pink", color = "black") +
+  labs(title = "Distribution de la variable Fine Aggregate", x = "Fine Aggregate", y = "Fréquence") +
+  theme_minimal()
+print(p7)
+```
+
+La distribution est également centrée autour de 750-800 kg/m³, suggérant une utilisation homogène du fine aggregate dans les différents mélanges de béton.
+Une quantité bien maîtrisée de fine aggregate améliore la compacité du béton et influe sur sa capacité de mise en œuvre et son imperméabilité.
+
+## Age
+
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 8️⃣ Histogramme pour Age
+p8 <- ggplot(bdd, aes(x = age)) +
+  geom_histogram(bins = 30, fill = "brown", color = "black") +
+  labs(title = "Distribution de la variable Age", x = "Age (jours)", y = "Fréquence") +
+  theme_minimal()
+print(p8)
+```
+
+L'âge du béton est majoritairement faible, avec une concentration autour de 28 jours.
+Quelques échantillons présentent des âges plus avancés, jusqu'à un an.
+Cela reflète l'importance de la période de cure du béton, puisque la résistance continue d’augmenter avec le temps grâce à l’hydratation prolongée du cement.
+
+## Concrete Compressive Strength
+
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 9️⃣ Histogramme pour Concrete Compressive Strength
+p9 <- ggplot(bdd, aes(x = y_concrete_compresive)) +
+  geom_histogram(bins = 30, fill = "darkgreen", color = "black") +
+  labs(title = "Distribution de la variable Concrete Compressive Strength", x = "Concrete Compressive Strength (MPa)", y = "Fréquence") +
+  theme_minimal()
+print(p9)
+```
+
+La concrete compressive strength suit une distribution proche d’une loi normale, avec un pic autour de 40 MPa.
+Cela indique une variabilité contrôlée de la résistance du béton.
+La concrete compressive strength étant un paramètre clé, cette distribution montre que la plupart des mélanges atteignent une performance attendue, bien qu’il existe des échantillons avec des valeurs plus élevées ou plus faibles en fonction des formulations utilisées.
 
 # Analyse bivariée.
 
-La matrice de corrélation en annexe va nous aider à voir les différents liens de corrélation potentiels entre nos variables. Dans cette partie, nous allons étudier et essayer de trouver les couples de variables significativement dépendants. Il est important de trouver tous les couples liés afin d'expliquer de manière optimale comment les variables de notre base peuvent influer sur la résistance à la compression du béton.
+La matrice de corrélation en annexe va nous aider à voir les différents liens de corrélation potentiels entre nos variables.
+Dans cette partie, nous allons étudier et essayer de trouver les couples de variables significativement dépendants.
+Il est important de trouver tous les couples liés afin d'expliquer de manière optimale comment les variables de notre base peuvent influer sur la résistance à la compression du béton.
 
-##  Quantité de ciment et résistance du béton.
+## Quantité de ciment et résistance du béton.
 
-Nous allons ici examiner si la quantité de ciment utilisée pour créer le béton est significativement reliée à la résistance à la compression du béton. En effet, nous pouvons d'abord observer la distribution de ces deux variables à l'aide du graphique ci-dessous :
+Nous allons ici examiner si la quantité de ciment utilisée pour créer le béton est significativement reliée à la résistance à la compression du béton.
+En effet, nous pouvons d'abord observer la distribution de ces deux variables à l'aide du graphique ci-dessous :
 
 ```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
 par(cex=0.5)
@@ -158,15 +278,22 @@ plot(bdd$cement, bdd$y_concrete_compresive,
      ylab = "Concrete Compressive Strength",
      pch = 16, col = "black")
 ```
-Cette visualisation des données nous donne une première impression du lien potentiel entre ces deux variables. En étudiant plus précisément ces deux variables avec un test de corrélation de Pearson, on se rend compte qu'il y a un lien significatif : ces deux variables sont positivement liées.
 
-On peut alors dire que plus la quantité de ciment utilisée pour la fabrication du béton est grande, plus la résistance à la compression de ce béton sera importante. Le test final a donné un coefficient de corrélation $\rho$ de Pearson égal à **0,5** (annexe), ce qui indique un lien relativement fort et non négligeable. Ainsi, une fabrication de béton comprenant une grande quantité de ciment favoriserait grandement sa résistance à la compression.
- 
-##  Additif chimique et eau.
+Cette visualisation des données nous donne une première impression du lien potentiel entre ces deux variables.
+En étudiant plus précisément ces deux variables avec un test de corrélation de Pearson, on se rend compte qu'il y a un lien significatif : ces deux variables sont positivement liées.
 
-Dans le processus de fabrication du béton, il est parfois nécessaire d'ajouter un additif chimique pour améliorer sa fluidité et sa maniabilité. La réflexion porte ici sur la corrélation entre l'ajout de cet additif chimique et la quantité d'eau utilisée pour la fabrication : y aurait-il un quelconque lien entre ces deux variables ?
+On peut alors dire que plus la quantité de ciment utilisée pour la fabrication du béton est grande, plus la résistance à la compression de ce béton sera importante.
+Le test final a donné un coefficient de corrélation $\rho$ de Pearson égal à **0,5** (annexe), ce qui indique un lien relativement fort et non négligeable.
+Ainsi, une fabrication de béton comprenant une grande quantité de ciment favoriserait grandement sa résistance à la compression.
 
-Pour ce faire, il semble juste d'examiner les différents ajouts d'additif en fonction de la quantité d'eau utilisée pour chaque béton. Le graphique ci-dessous illustre cette relation, et nous pouvons aisément supposer qu'il existe une corrélation entre ces deux variables. En effet, dans l'ensemble, on remarque une diminution de l'ajout d'additif lorsque la quantité d'eau augmente.
+## Additif chimique et eau.
+
+Dans le processus de fabrication du béton, il est parfois nécessaire d'ajouter un additif chimique pour améliorer sa fluidité et sa maniabilité.
+La réflexion porte ici sur la corrélation entre l'ajout de cet additif chimique et la quantité d'eau utilisée pour la fabrication : y aurait-il un quelconque lien entre ces deux variables ?
+
+Pour ce faire, il semble juste d'examiner les différents ajouts d'additif en fonction de la quantité d'eau utilisée pour chaque béton.
+Le graphique ci-dessous illustre cette relation, et nous pouvons aisément supposer qu'il existe une corrélation entre ces deux variables.
+En effet, dans l'ensemble, on remarque une diminution de l'ajout d'additif lorsque la quantité d'eau augmente.
 
 ```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
 par(cex = 0.5) 
@@ -177,15 +304,19 @@ plot(bdd$water, bdd$super_plast,
      pch = 16, col = "black")
 ```
 
-Pour avoir une certitude, nous effectuons alors un test de corrélation de Kendall, qui nous indique, premièrement, qu'il existe un lien significatif entre ces deux variables et, deuxièmement, que le coefficient de corrélation $\tau$ étant de **-0.53** (annexe), la négativité de la liaison est prouvée. 
+Pour avoir une certitude, nous effectuons alors un test de corrélation de Kendall, qui nous indique, premièrement, qu'il existe un lien significatif entre ces deux variables et, deuxièmement, que le coefficient de corrélation $\tau$ étant de **-0.53** (annexe), la négativité de la liaison est prouvée.
 
-En clair, plus la quantité d'eau utilisée pour la fabrication du béton est importante, moins d'additif chimique a été ajouté lors de cette fabrication. Ce lien fort nous aidera dans la suite de notre étude.
+En clair, plus la quantité d'eau utilisée pour la fabrication du béton est importante, moins d'additif chimique a été ajouté lors de cette fabrication.
+Ce lien fort nous aidera dans la suite de notre étude.
 
 ## L'age, une variable importante.
 
-Il serait tout à fait naturel de penser que l'âge ait une quelconque importance sur la résistance à la compression du béton. En effet, l'imaginaire collectif nous amène d'abord à penser que ce béton, en conséquence de l'âge, deviendrait de plus en plus fragile et, de ce fait, moins résistant à la compression. Notre hypothèse serait alors de dire que l'âge est négativement lié à la résistance à la compression du béton, $i.e.$, plus l'âge augmente, moins le béton est résistant.
+Il serait tout à fait naturel de penser que l'âge ait une quelconque importance sur la résistance à la compression du béton.
+En effet, l'imaginaire collectif nous amène d'abord à penser que ce béton, en conséquence de l'âge, deviendrait de plus en plus fragile et, de ce fait, moins résistant à la compression.
+Notre hypothèse serait alors de dire que l'âge est négativement lié à la résistance à la compression du béton, $i.e.$, plus l'âge augmente, moins le béton est résistant.
 
-Dans un premier temps, l'observation de la distribution du temps par rapport à la compression nous aiderait à confirmer ou infirmer l'hypothèse de cette partie. Voyons le graphique ci-dessous.
+Dans un premier temps, l'observation de la distribution du temps par rapport à la compression nous aiderait à confirmer ou infirmer l'hypothèse de cette partie.
+Voyons le graphique ci-dessous.
 
 ```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
 par(cex = 0.5)
@@ -196,11 +327,12 @@ plot(bdd$water, bdd$y_concrete_compresive,
      pch = 16, col = "black")
 ```
 
-Cette première visualisation ne nous permet pas de dire s'il y aurait en réalité un quelconque lien entre ces deux variables. En conséquence, il est nécessaire de réaliser un test de corrélation.
+Cette première visualisation ne nous permet pas de dire s'il y aurait en réalité un quelconque lien entre ces deux variables.
+En conséquence, il est nécessaire de réaliser un test de corrélation.
 
-Ici, le test réalisé nous permet de voir que notre hypothèse est infirmée, car il y a en effet un lien significatif entre ces deux variables, et la corrélation indique que ce lien est positif. Cette corrélation est positive mais modérée, avec un coefficient de Kendall $\tau$ de **0,449** (annexe). Les valeurs croissent significativement ensemble, mais il y aura tout de même quelques exceptions.
-
-
+Ici, le test réalisé nous permet de voir que notre hypothèse est infirmée, car il y a en effet un lien significatif entre ces deux variables, et la corrélation indique que ce lien est positif.
+Cette corrélation est positive mais modérée, avec un coefficient de Kendall $\tau$ de **0,449** (annexe).
+Les valeurs croissent significativement ensemble, mais il y aura tout de même quelques exceptions.
 
 ## `blast_furnace` et résistance du béton.
 
@@ -220,8 +352,8 @@ test1 ;
 ```{r}
 cor.test(bdd$blast_furnace, bdd$y_concrete_compresive, method = "spearman")
 ```
- -> Significatif mais (tau plutot proche de zero et positif donc lien positif )
 
+-\> Significatif mais (tau plutot proche de zero et positif donc lien positif )
 
 ```{r, echo = FALSE, fig.align='center'}
 par(cex=0.5)
@@ -235,9 +367,8 @@ plot(bdd$fly_ash, bdd$y_concrete_compresive,
 ```{r}
 cor.test(bdd$fly_ash, bdd$y_concrete_compresive, method = "spearman")
 ```
- -> pvalue a 0.01 donc seuil de significativité et pour le tau on est a -0.07 donc inversement proportionel
 
-
+-\> pvalue a 0.01 donc seuil de significativité et pour le tau on est a -0.07 donc inversement proportionel
 
 ```{r, echo = FALSE, fig.align='center'}
 par(cex=0.5)
@@ -248,16 +379,11 @@ plot(bdd$water, bdd$y_concrete_compresive,
      pch = 16, col = "black")
 ```
 
-
-
 ```{r}
 cor.test(bdd$water, bdd$y_concrete_compresive, method = "spearman")
 ```
 
--> significatif car <2.2e-16 donc et inversement proportionel : moins il y a d'eau, plus la resistance est importante
-
-
-
+-\> significatif car \<2.2e-16 donc et inversement proportionel : moins il y a d'eau, plus la resistance est importante
 
 ```{r, echo = FALSE, fig.align='center'}
 par(cex=0.5)
@@ -268,12 +394,9 @@ plot(bdd$super_plast, bdd$y_concrete_compresive,
      pch = 16, col = "black")
 ```
 
-
 ```{r}
 cor.test(bdd$super_plast, bdd$y_concrete_compresive, method = "kendall")
 ```
-
-
 
 ```{r, echo = FALSE, fig.align='center'}
 par(cex=0.5)
@@ -287,7 +410,8 @@ plot(bdd$coarse, bdd$y_concrete_compresive,
 ```{r}
 cor.test(bdd$coarse, bdd$y_concrete_compresive, method = "kendall")
 ```
--> lien significatif, tau a -0.123 donc fort lien négatif
+
+-\> lien significatif, tau a -0.123 donc fort lien négatif
 
 ```{r, echo = FALSE, fig.align='center'}
 par(cex=0.5)
@@ -301,13 +425,13 @@ plot(bdd$fine_aggr, bdd$y_concrete_compresive,
 ```{r}
 cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
 ```
--> lein significatif,tau négatif donc moins il y a de granulat fin, plus la resistance est grande
+
+-\> lein significatif,tau négatif donc moins il y a de granulat fin, plus la resistance est grande
 
 # Analyse Multivariée
 
-Dans cette partie, nous allons étudier l'ensemble des variables en utilisant une analyse en composantes principales (ACP). La variable à expliquer ("y_concrete_compresive") est également considérée comme active, aux côtés des huit autres variables explicatives.
-
-
+Dans cette partie, nous allons étudier l'ensemble des variables en utilisant une analyse en composantes principales (ACP).
+La variable à expliquer ("y_concrete_compresive") est également considérée comme active, aux côtés des huit autres variables explicatives.
 
 ## Histogramme des valeurs propres
 
@@ -337,10 +461,10 @@ barplot(
 
 Le graphique illustre l’histogramme des valeurs propres issu de l’ACP, permettant d’identifier le nombre d’axes principaux à retenir.
 
-- Le premier axe capte une part importante de la variance totale.
-- Le deuxième axe conserve également une proportion significative d’information.
-- Le troisième axe ajoute un complément notable de variance.
-- À partir du quatrième axe, la contribution devient plus marginale.
+-   Le premier axe capte une part importante de la variance totale.
+-   Le deuxième axe conserve également une proportion significative d’information.
+-   Le troisième axe ajoute un complément notable de variance.
+-   À partir du quatrième axe, la contribution devient plus marginale.
 
 En appliquant la **règle du coude**, il est pertinent de retenir les **trois premiers axes** pour l’analyse.
 
@@ -360,62 +484,56 @@ plot.PCA(
 )
 ```
 
-Le cercle de corrélation met en évidence les relations entre les variables étudiées, projetées sur les deux premiers axes principaux de l’ACP. Ces axes capturent ensemble **46,94 %** de la variance totale des données (**25,42 % pour Dim 1 et 21,52 % pour Dim 2**). 
+Le cercle de corrélation met en évidence les relations entre les variables étudiées, projetées sur les deux premiers axes principaux de l’ACP.
+Ces axes capturent ensemble **46,94 %** de la variance totale des données (**25,42 % pour Dim 1 et 21,52 % pour Dim 2**).
 
 ### Interprétation du Premier Axe (Dim 1 : 25,42 %)
 
 Le premier axe distingue **les formulations riches en eau (`water`) et l’âge du béton (`age`)** de celles utilisant **des superplastifiants (`super_plast`), des cendres volantes (`fly_ash`), et une proportion plus élevée de granulats fins (`fine_aggr`)**.
 
-- `water` (31,82 % de contribution, cos² = 0.73) est la variable la plus influente sur Dim 1. Son orientation négative indique qu’une teneur élevée en eau tend à être associée à une baisse de la résistance à la compression.
-- `super_plast` (28,74 % de contribution, cos² = 0.66) est projeté dans la direction opposée à `water`, traduisant son rôle de réduction du besoin en eau, favorisant ainsi la résistance.
-- `fly_ash` (13,68 % de contribution, cos² = 0.31) et `fine_aggr` (14,57 % de contribution, cos² = 0.33) sont également bien projetés sur cet axe, suggérant que ces composants influencent la résistence du béton.
-- `age` (6,86 % de contribution, cos² = 0.16) est aussi bien représenté sur Dim 1, confirmant que la résistance du béton augmente avec le temps de durcissement.
-- `y_concrete_compresive` (1,15 % de contribution, cos² = 0.03) est légèrement projetée sur Dim 1, mais son faible cos² indique qu’elle est mieux représentée sur un autre axe.
+-   `water` (31,82 % de contribution, cos² = 0.73) est la variable la plus influente sur Dim 1. Son orientation négative indique qu’une teneur élevée en eau tend à être associée à une baisse de la résistance à la compression.
+-   `super_plast` (28,74 % de contribution, cos² = 0.66) est projeté dans la direction opposée à `water`, traduisant son rôle de réduction du besoin en eau, favorisant ainsi la résistance.
+-   `fly_ash` (13,68 % de contribution, cos² = 0.31) et `fine_aggr` (14,57 % de contribution, cos² = 0.33) sont également bien projetés sur cet axe, suggérant que ces composants influencent la résistence du béton.
+-   `age` (6,86 % de contribution, cos² = 0.16) est aussi bien représenté sur Dim 1, confirmant que la résistance du béton augmente avec le temps de durcissement.
+-   `y_concrete_compresive` (1,15 % de contribution, cos² = 0.03) est légèrement projetée sur Dim 1, mais son faible cos² indique qu’elle est mieux représentée sur un autre axe.
 
 ### Interprétation du Deuxième Axe (Dim 2 : 21,52 %)
 
 Le deuxième axe distingue **les formulations riches en ciment (`cement`) et associées à une plus grande résistance (`y_concrete_compresive`)** des formulations utilisant **une proportion plus élevée de granulats grossiers (`coarse`)**.
 
-- `y_concrete_compresive` (39,70 % de contribution, cos² = 0.77) est la variable la plus influente sur Dim 2. Cela signifie que la résistance à la compression est fortement expliquée par cette dimension.
-- `cement` (28,78 % de contribution, cos² = 0.56) est bien représenté sur Dim 2, indiquant que la quantité de ciment influence fortement la résistance mécanique.
-- `coarse` (5,05 % de contribution, cos² = 0.10) est projeté dans la direction opposée à `cement` et `y_concrete_compresive`, suggérant que les formulations contenant une proportion élevée de granulats grossiers sont associées à une résistance plus faible.
-
-
+-   `y_concrete_compresive` (39,70 % de contribution, cos² = 0.77) est la variable la plus influente sur Dim 2. Cela signifie que la résistance à la compression est fortement expliquée par cette dimension.
+-   `cement` (28,78 % de contribution, cos² = 0.56) est bien représenté sur Dim 2, indiquant que la quantité de ciment influence fortement la résistance mécanique.
+-   `coarse` (5,05 % de contribution, cos² = 0.10) est projeté dans la direction opposée à `cement` et `y_concrete_compresive`, suggérant que les formulations contenant une proportion élevée de granulats grossiers sont associées à une résistance plus faible.
 
 ## Interprétation du Troisième Axe
 
 ### Dim(1-3) : 45 % de la Variance Totale (Voir annexe : Partie E)
 
-- `cement` est très bien représenté (cos² = 0.88) et contribue en grande partie à la construction de cet axe (66 %).
-- `fly_ash` contribue à hauteur de 17 % à la construction de cet axe et est bien représenté avec cos² = 0.22.
-- `y_concrete_compresive` suit la même direction que `cement`, suggérant une influence positive sur la résistance à la compression.
+-   `cement` est très bien représenté (cos² = 0.88) et contribue en grande partie à la construction de cet axe (66 %).
+-   `fly_ash` contribue à hauteur de 17 % à la construction de cet axe et est bien représenté avec cos² = 0.22.
+-   `y_concrete_compresive` suit la même direction que `cement`, suggérant une influence positive sur la résistance à la compression.
 
 ### Dim(2-3) : 35 % de la Variance Totale (Voir annexe : Partie D)
 
-- Contrairement à la précédente interprétation, on remarque que **la combinaison de `cement` et `fly_ash` augmente la résistance du béton**.
-- Ce contraste sera analysé plus précisément après la construction du modèle.
-
+-   Contrairement à la précédente interprétation, on remarque que **la combinaison de `cement` et `fly_ash` augmente la résistance du béton**.
+-   Ce contraste sera analysé plus précisément après la construction du modèle.
 
 Cette ACP met en évidence trois dimensions principales dans la composition du béton :
 
-1. **Axe 1 (Dim 1)** : Opposition entre l'eau et les superplastifiants, cendres volantes et granulats fins.
-2. **Axe 2 (Dim 2)** : Opposition entre le laitier de haut fourneau et les granulats grossiers.
-3. **Axe 3 (Dim 3)** : Influence du lien `cement-fly_ash` sur la résistance à la compression du béton.
+1.  **Axe 1 (Dim 1)** : Opposition entre l'eau et les superplastifiants, cendres volantes et granulats fins.
+2.  **Axe 2 (Dim 2)** : Opposition entre le laitier de haut fourneau et les granulats grossiers.
+3.  **Axe 3 (Dim 3)** : Influence du lien `cement-fly_ash` sur la résistance à la compression du béton.
 
 ## Implications pour la Modélisation de la Résistance du Béton
 
-- L’opposition entre `water` et `super_plast` sur Dim 1 indique qu’un **terme d’interaction** entre ces deux variables pourrait être testé dans le modèle linéaire.
-- `fine_aggr` étant bien projeté sur Dim 1, son interaction avec `super_plast` pourrait être pertinente pour examiner leur effet combiné sur la compacité et la résistance.
-- `age` étant bien représenté sur Dim 1, une interaction avec `water` pourrait être étudiée pour voir comment l’évolution du béton avec le temps est influencée par l’eau.
-- `y_concrete_compresive` étant principalement projeté sur Dim 2, un modèle linéaire devrait inclure **`cement`** comme facteur explicatif principal.
-- L’opposition entre `coarse` et `cement` sur Dim 2 suggère qu’un effet combiné de ces deux variables pourrait influencer la résistance mécanique.
-
-
+-   L’opposition entre `water` et `super_plast` sur Dim 1 indique qu’un **terme d’interaction** entre ces deux variables pourrait être testé dans le modèle linéaire.
+-   `fine_aggr` étant bien projeté sur Dim 1, son interaction avec `super_plast` pourrait être pertinente pour examiner leur effet combiné sur la compacité et la résistance.
+-   `age` étant bien représenté sur Dim 1, une interaction avec `water` pourrait être étudiée pour voir comment l’évolution du béton avec le temps est influencée par l’eau.
+-   `y_concrete_compresive` étant principalement projeté sur Dim 2, un modèle linéaire devrait inclure **`cement`** comme facteur explicatif principal.
+-   L’opposition entre `coarse` et `cement` sur Dim 2 suggère qu’un effet combiné de ces deux variables pourrait influencer la résistance mécanique.
 
 # Modélisation Linéaire
- 
 
- 
 ```{r}
 
 # Construction du modèle
@@ -428,13 +546,12 @@ summary(regression.lineaire)
 
 Les résultats de la régression montrent que :
 
-- **Intercept** : La p-value est de **0.38**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H₀**, selon laquelle cette valeur n'est **pas significative**.
-- **Variables significatives (p < 0.05)** : `cement`, `blast_furnace`, `fly_ash`, `water`, `super_plast` et `age`. Nous acceptons l'**hypothèse H₁**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
-- **Variables non significatives au seuil de 5 %** : `coarse` et `fine_aggr`. Toutefois, elles deviennent **significatives pour un seuil de 10 %**.
+-   **Intercept** : La p-value est de **0.38**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H₀**, selon laquelle cette valeur n'est **pas significative**.
+-   **Variables significatives (p \< 0.05)** : `cement`, `blast_furnace`, `fly_ash`, `water`, `super_plast` et `age`. Nous acceptons l'**hypothèse H₁**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
+-   **Variables non significatives au seuil de 5 %** : `coarse` et `fine_aggr`. Toutefois, elles deviennent **significatives pour un seuil de 10 %**.
 
 Ces résultats suggèrent que certaines variables ont un impact plus marqué sur la **résistance à la compression du béton**, tandis que d'autres jouent un rôle moins déterminant.
 
- 
 ```{r}
 dwtest(regression.lineaire, alternative = "two.sided")
 
@@ -442,19 +559,18 @@ dwtest(regression.lineaire, alternative = "two.sided")
 
 ## Test de Durbin-Watson
 
-- **Durbin-Watson statistic (DW)** : **1.2815**  
-- **p-value** : **< 2.2e-16**  
-- **Hypothèse alternative** : L'autocorrélation des erreurs est **différente de 0**.  
+-   **Durbin-Watson statistic (DW)** : **1.2815**\
+-   **p-value** : **\< 2.2e-16**\
+-   **Hypothèse alternative** : L'autocorrélation des erreurs est **différente de 0**.
 
-La p-value étant inférieure à 0.05, nous rejetons l'**hypothèse H₀** et acceptons l'**hypothèse H₁**,  
+La p-value étant inférieure à 0.05, nous rejetons l'**hypothèse H₀** et acceptons l'**hypothèse H₁**,\
 ce qui signifie que **les erreurs sont fortement corrélées**.
-
 
 ```{r}
 acf(regression.lineaire$residuals, main = "Autocorrélation des erreurs")
 ```
 
-On remarque que plusieurs barres sortent de l'intervalle de confiance, ce qui vient soutenir la conclusion  
+On remarque que plusieurs barres sortent de l'intervalle de confiance, ce qui vient soutenir la conclusion\
 du test de Durbin-Watson selon laquelle les erreurs sont **autocorrélées**.
 
 ## Test de Breusch-Pagan
@@ -463,12 +579,13 @@ du test de Durbin-Watson selon laquelle les erreurs sont **autocorrélées**.
 bptest(regression.lineaire, studentize = FALSE)
 ```
 
-- **Breusch-Pagan statistic (BP)** : **140.25**  
-- **Degrés de liberté (df)** : **8**  
-- **p-value** : **< 2.2e-16**  
+-   **Breusch-Pagan statistic (BP)** : **140.25**\
+-   **Degrés de liberté (df)** : **8**\
+-   **p-value** : **\< 2.2e-16**
 
-D'après les résultats du **test de Breusch-Pagan**, nous acceptons l'**hypothèse H₁**,  
-ce qui signifie que **l'erreur est hétéroscédastique**. Cela indique qu'il existe une **dépendance**  
+D'après les résultats du **test de Breusch-Pagan**, nous acceptons l'**hypothèse H₁**,\
+ce qui signifie que **l'erreur est hétéroscédastique**.
+Cela indique qu'il existe une **dépendance**\
 entre la variance des erreurs et les **variables explicatives**.
 
 ## Test de Normalité de Shapiro-Wilk
@@ -477,14 +594,12 @@ entre la variance des erreurs et les **variables explicatives**.
 shapiro.test(regression.lineaire$residuals)
 ```
 
-- **Shapiro-Wilk statistic (W)** : **0.99532**  
-- **p-value** : **0.002986**  
+-   **Shapiro-Wilk statistic (W)** : **0.99532**\
+-   **p-value** : **0.002986**
 
-D'après les résultats du **test de Shapiro-Wilk**, la p-value est **inférieure au seuil de 5 %**.  
-Nous rejetons donc l'**hypothèse nulle (H₀)** de normalité des erreurs.  
+D'après les résultats du **test de Shapiro-Wilk**, la p-value est **inférieure au seuil de 5 %**.\
+Nous rejetons donc l'**hypothèse nulle (H₀)** de normalité des erreurs.\
 Par conséquent, **les erreurs ne suivent pas une distribution normale**.
-
-
 
 ```{r}
 regression.lineaire.metriques <- augment(regression.lineaire)
@@ -492,28 +607,30 @@ head(regression.lineaire.metriques[,10:15])
 
 plot(regression.lineaire,1)
 ```
-D'après ce plot, il **n'existe aucune linéarité** entre la variable réponse et les variables explicatives.  
-La **courbe rouge n'est pas horizontale**, ce qui indique que la relation **n'est pas linéaire**.  
+
+D'après ce plot, il **n'existe aucune linéarité** entre la variable réponse et les variables explicatives.\
+La **courbe rouge n'est pas horizontale**, ce qui indique que la relation **n'est pas linéaire**.
 
 Les observations **382, 384 et 115** sont les **bétons présentant les plus grandes valeurs en termes de résidus**.
-
 
 ```{r}
 plot(regression.lineaire,3)
 abline(h=sqrt(3), col = "green", lty = 2, lwd = 3)
 ```
-Dans notre cas, la **courbe rouge n'est pas horizontale** et ne sépare pas les points de manière homogène  
-de part et d'autre. Cela indique que **les erreurs ne sont pas homogènes**, ce qui confirme la conclusion  
+
+Dans notre cas, la **courbe rouge n'est pas horizontale** et ne sépare pas les points de manière homogène\
+de part et d'autre.
+Cela indique que **les erreurs ne sont pas homogènes**, ce qui confirme la conclusion\
 du **test de Breusch-Pagan**.
 
 ```{r}
 plot(regression.lineaire, 2)
 ```
 
-Ce plot de l'**hypothèse de normalité** montre que plusieurs points **ne suivent pas la ligne**,  
-bien qu'ils en soient proches.  
+Ce plot de l'**hypothèse de normalité** montre que plusieurs points **ne suivent pas la ligne**,\
+bien qu'ils en soient proches.
 
-Cela confirme les résultats du **test de normalité de Shapiro-Wilk**,  
+Cela confirme les résultats du **test de normalité de Shapiro-Wilk**,\
 indiquant que les erreurs **ne suivent pas une distribution normale**.
 
 ```{r}
@@ -521,30 +638,28 @@ plot(regression.lineaire, 5)
 abline(h = c(-3, 3), v = 2 * (8 + 1) / 1030, col = c("yellow", "yellow", "blue"), lty = c(2, 2, 2), lwd = c(3, 3, 3))
 ```
 
-Tous les points situés **à droite de la droite verticale bleue** sont des **points leviers extrêmes**,  
-c'est-à-dire des **valeurs extrêmes des variables explicatives**.  
+Tous les points situés **à droite de la droite verticale bleue** sont des **points leviers extrêmes**,\
+c'est-à-dire des **valeurs extrêmes des variables explicatives**.
 
-De plus, tous les points **en dehors de l'intervalle formé par les pointillés jaunes** sont des **outliers**,  
-c'est-à-dire des **valeurs extrêmes de la variable cible**.  
+De plus, tous les points **en dehors de l'intervalle formé par les pointillés jaunes** sont des **outliers**,\
+c'est-à-dire des **valeurs extrêmes de la variable cible**.
 
 Dans notre cas, nous avons **deux outliers** et **plusieurs points leviers extrêmes**.
-
-
 
 ```{r}
 plot(regression.lineaire,4)
 abline(h= 4/( 1030-8-1 ), col = c( "red" ), lty = 2, lwd = 3)
 ```
 
-Suite à l'observation des résultats donnés par le graphique, on remarque que **plusieurs points dépassent la ligne**  
-formée par les **pointillés rouges**, qui représente le seuil à partir duquel un point est **considéré comme influent**.  
+Suite à l'observation des résultats donnés par le graphique, on remarque que **plusieurs points dépassent la ligne**\
+formée par les **pointillés rouges**, qui représente le seuil à partir duquel un point est **considéré comme influent**.
 
 Les **bétons 57, 225 et 611** sont les **plus influents**.
 
- 
-
 # Regression .
-(lm(formula = , data = )..  + REGARDER Intercept + faire graphique + regarder coeffs + retirer des variable a cause de l'analyse bivairée
+
+(lm(formula = , data = )..
++ REGARDER Intercept + faire graphique + regarder coeffs + retirer des variable a cause de l'analyse bivairée
 
 # Conclusion
 
@@ -585,15 +700,12 @@ cor.test(bdd$water, bdd$super_plast, method = "kendall")
 #test de Kendall car n'ont pas de distribution pseudo- normale
 ```
 
-
 test de correlation entre variable `water` et `y`
 
 ```{r}
 cor.test(bdd$age, bdd$y_concrete_compresive, method = "kendall")
 #test de Kendall car n'ont pas de distribution pseudo- normale
 ```
-
-
 
 ## Analyse multivariée
 
@@ -615,7 +727,7 @@ cos2_var <- as.data.frame(res_pca$var$cos2)
 print(cos2_var)
 ```
 
-### partie D 
+### partie D
 
 ```{r, fig.align='center'}
 
@@ -632,6 +744,7 @@ plot.PCA(
 ```
 
 ### Partie E
+
 ```{r, fig.align='center'}
 # Représentation des variables sur le plan factoriel (axes 1 et 3)
 plot.PCA(
