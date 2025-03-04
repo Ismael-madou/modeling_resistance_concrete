@@ -667,12 +667,88 @@ Les **bétons 57, 225 et 611** sont les **plus influents**.
 
 ## Analyse univariée
 
-Boite à moustache pour la variable `Concrete compressive strength`.
-
-```{r, echo = F, eval = T,fig.width=4, fig.height=3, fig.align='center',fig.width=3, fig.height=2}
-par(cex = 0.5)
-boite_moust
+Histogramme pour la variable `Cement`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 1️⃣ Histogramme pour Cement
+p1 <- ggplot(bdd, aes(x = cement)) +
+  geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
+  labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
+  theme_minimal()
+print(p1)
 ```
+Histogramme pour la variable `Blast Furnace Slag`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 2️⃣ Histogramme pour Blast Furnace Slag
+p2 <- ggplot(bdd, aes(x = blast_furnace)) +
+  geom_histogram(bins = 30, fill = "red", color = "darkred") +
+  labs(title = "Distribution de la variable Blast Furnace Slag", x = "Blast Furnace Slag", y = "Fréquence") +
+  theme_minimal()
+print(p2)
+```
+Histogramme pour la variable `Fly Ash`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 3️⃣ Histogramme pour Fly Ash
+p3 <- ggplot(bdd, aes(x = fly_ash)) +
+  geom_histogram(bins = 30, fill = "purple", color = "darkblue") +
+  labs(title = "Distribution de la variable Fly Ash", x = "Fly Ash", y = "Fréquence") +
+  theme_minimal()
+print(p3)
+```
+Histogramme pour la variable `Water`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 4️⃣ Histogramme pour Water
+p4 <- ggplot(bdd, aes(x = water)) +
+  geom_histogram(bins = 30, fill = "cyan", color = "darkblue") +
+  labs(title = "Distribution de la variable Water", x = "Water", y = "Fréquence") +
+  theme_minimal()
+print(p4)
+```
+Histogramme pour la variable `Superplasticizer`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 5️⃣ Histogramme pour Superplasticizer
+p5 <- ggplot(bdd, aes(x = super_plast)) +
+  geom_histogram(bins = 30, fill = "orange", color = "darkorange") +
+  labs(title = "Distribution de la variable Superplasticizer", x = "Superplasticizer", y = "Fréquence") +
+  theme_minimal()
+print(p5)
+```
+Histogramme pour la variable `Coarse Aggregate`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 6️⃣ Histogramme pour Coarse Aggregate
+p6 <- ggplot(bdd, aes(x = coarse)) +
+  geom_histogram(bins = 30, fill = "yellow", color = "gold") +
+  labs(title = "Distribution de la variable Coarse Aggregate", x = "Coarse Aggregate", y = "Fréquence") +
+  theme_minimal()
+print(p6)
+```
+Histogramme pour la variable `Fine Aggregate`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 7️⃣ Histogramme pour Fine Aggregate
+p7 <- ggplot(bdd, aes(x = fine_aggr)) +
+  geom_histogram(bins = 30, fill = "pink", color = "black") +
+  labs(title = "Distribution de la variable Fine Aggregate", x = "Fine Aggregate", y = "Fréquence") +
+  theme_minimal()
+print(p7)
+```
+Histogramme pour la variable `Age`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 8️⃣ Histogramme pour Age
+p8 <- ggplot(bdd, aes(x = age)) +
+  geom_histogram(bins = 30, fill = "brown", color = "black") +
+  labs(title = "Distribution de la variable Age", x = "Age (jours)", y = "Fréquence") +
+  theme_minimal()
+print(p8)
+```
+Histogramme pour la variable `Concrete Compressive Strength`
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
+# 9️⃣ Histogramme pour Concrete Compressive Strength
+p9 <- ggplot(bdd, aes(x = y_concrete_compresive)) +
+  geom_histogram(bins = 30, fill = "darkgreen", color = "black") +
+  labs(title = "Distribution de la variable Concrete Compressive Strength", x = "Concrete Compressive Strength (MPa)", y = "Fréquence") +
+  theme_minimal()
+print(p9)
+```
+
 
 ## Analyse bivariee
 
