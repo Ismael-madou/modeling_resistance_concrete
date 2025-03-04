@@ -527,78 +527,160 @@ Cette ACP met en évidence trois dimensions principales dans la composition du b
 -   `y_concrete_compresive` étant principalement projeté sur Dim 2, un modèle linéaire devrait inclure **`cement`** comme facteur explicatif principal.
 -   L’opposition entre `coarse` et `cement` sur Dim 2 suggère qu’un effet combiné de ces deux variables pourrait influencer la résistance mécanique.
 
+
+
+
 # Modélisation Linéaire
 
-```{r}
+```{r , echo=FALSE}
 
-# Construction du modèle
 regression.lineaire <- lm(formula = y_concrete_compresive ~ ., data=bdd)
-summary(regression.lineaire)
-
 ```
 
-## Interprétation des p-values
+
+```{r table_regression, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Chargement du package knitr pour créer un tableau
+library(knitr)
+
+# Création du data frame contenant les résultats du modèle
+results <- data.frame(
+  Coefficient = c("(Intercept)", "cement", "blast_furnace", "fly_ash", "water", 
+                  "super_plast", "coarse", "fine_aggr", "age"),
+  Estimate = c(-23.163756, 0.119785, 0.103847, 0.087943, -0.150298, 
+               0.290687, 0.018030, 0.020154, 0.114226),
+  Std_Error = c(26.588421, 0.008489, 0.010136, 0.012585, 0.040179, 
+                0.093460, 0.009394, 0.010703, 0.005427),
+  t_value = c(-0.871, 14.110, 10.245, 6.988, -3.741, 
+              3.110, 1.919, 1.883, 21.046),
+  Pr = c("0.383851", "< 2e-16", "< 2e-16", "5.03e-12", "0.000194", 
+         "0.001921", "0.055227", "0.059968", "< 2e-16")
+)
+
+# Création du tableau avec un titre
+kable(results, caption = "Tableau des résultats de la régression linéaire")
+```
+
+
+
+**Interprétation des p-values**
 
 Les résultats de la régression montrent que :
 
--   **Intercept** : La p-value est de **0.38**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H**, selon laquelle cette valeur n'est **pas significative**.
--   **Variables significatives (p \< 0.05)** : `cement`, `blast_furnace`, `fly_ash`, `water`, `super_plast` et `age`. Nous acceptons l'**hypothèse H1**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
--   **Variables non significatives au seuil de 5 %** : `coarse` et `fine_aggr`. Toutefois, elles deviennent **significatives pour un seuil de 10 %**.
+
+- **Intercept** : La p-value est de **0.38**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H0**, selon laquelle cette valeur n'est **pas significative**.
+- **Variables significatives (p < 0.05)** : `cement`, `blast_furnace`, `fly_ash`, `water`, `super_plast` et `age`. Nous acceptons l'**hypothèse H1**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
+- **Variables non significatives au seuil de 5 %** : `coarse` et `fine_aggr`. Toutefois, elles deviennent **significatives pour un seuil de 10 %**.
+
 
 Ces résultats suggèrent que certaines variables ont un impact plus marqué sur la **résistance à la compression du béton**, tandis que d'autres jouent un rôle moins déterminant.
 
-```{r}
-dwtest(regression.lineaire, alternative = "two.sided")
+Au regard de ces variables significatives, nous avons constaté des effets diverses sur la variable réponse. Pour la variable **Cement**(ciment), on remarque un effet positif sur la variable réponse qui n'est rien d'autre que la résistance à la compression. La valeur de cette relation est de l'ordre de 0.119785, cela signifie que si le ciment augmente d'une unité alors la résistence à la compression augmente moins proportionnellement que l'augmentation du ciment (0.12 unité). Ensuite, pour la variable blast_furnace (laitier de haut fourneau), la relation est positive. Cela signifie qu'une hausse de la variable en question d'une unité entraine une augmentation de 0.12 unité de la variable cible. Puis, on s'interesse à la variable fly_ash (cendres volantes) qui est positivement corrélée avec la variable endogène (0.087943). Cela porrait être traduit comme étant une augmentation moins proportionnelle de la résistence comparé aux cendres volantes. De plus, nous remarquons une relation negative entre la variable water et la resistance à la compression. cette relation est de l'ordre de -0.15 c'est-à-dire que l'augmentation de l'eau d'une unite entraine une baisse de la resistance de 0.15. ce qui rejoint notre conclusion de l'analyse multivariee. Par ailleurs, la relation de notre variable cible avec la variable super_plast est de 0.29, qui est la relation la plus importante dans notre modele. cette relation est positive, ce qui signifie que Additif chimique est tres important pour augmenter la resistance de notre beton. cela confirme nos propos suite a l'analyse multivariee. Enfin, on s'apercoit que la variable age est positivement correlee avec la variable reponse, Ce qui confirme les resultats des revues qui stipulent qu'avec la resistance augmente avec le temps.
+
+
+
+**Test de Durbin-Watson**
+
+```{r, echo=FALSE}
+
+# Création du tableau avec les résultats du test
+resultats <- data.frame(
+  Description = c("DW", "p-value", "Alternative hypothesis"),
+  Valeur = c("1.2815", "< 2.2e-16", "true autocorrelation is not 0"),
+  stringsAsFactors = FALSE
+)
+
+# Affichage du tableau
+kable(resultats, caption = "Durbin-Watson Test Results")
 
 ```
 
-## Test de Durbin-Watson
 
 -   **Durbin-Watson statistic (DW)** : **1.2815**\
 -   **p-value** : **\< 2.2e-16**\
 -   **Hypothèse alternative** : L'autocorrélation des erreurs est **différente de 0**.
 
-La p-value étant inférieure à 0.05, nous rejetons l'**hypothèse H0** et acceptons l'**hypothèse H1**,\
+
+La p-value étant inférieure à 0.05, nous rejetons l'**hypothèse H0** et acceptons l'**hypothèse H1**,  
 ce qui signifie que **les erreurs sont fortement corrélées**.
 
-```{r}
+
+```{r, echo=FALSE}
+
 acf(regression.lineaire$residuals, main = "Autocorrélation des erreurs")
 ```
 
 On remarque que plusieurs barres sortent de l'intervalle de confiance, ce qui vient soutenir la conclusion\
 du test de Durbin-Watson selon laquelle les erreurs sont **autocorrélées**.
 
-## Test de Breusch-Pagan
+**Test de Breusch-Pagan**
 
-```{r}
-bptest(regression.lineaire, studentize = FALSE)
+```{r, echo=FALSE}
+# Création du tableau avec les résultats du test
+resultats_bp <- data.frame(
+  Description = c("Breusch-Pagan statistic (BP)", "Degrés de liberté (df)", "p-value"),
+  Valeur = c("140.25", "8", "< 2.2e-16"),
+  stringsAsFactors = FALSE
+)
+
+# Affichage du tableau
+kable(resultats_bp, caption = "Breusch-Pagan Test Results")
 ```
 
 -   **Breusch-Pagan statistic (BP)** : **140.25**\
 -   **Degrés de liberté (df)** : **8**\
 -   **p-value** : **\< 2.2e-16**
 
-D'après les résultats du **test de Breusch-Pagan**, nous acceptons l'**hypothèse H1**,\
-ce qui signifie que **l'erreur est hétéroscédastique**.
-Cela indique qu'il existe une **dépendance**\
+
+D'après les résultats du **test de Breusch-Pagan**, nous acceptons l'**hypothèse H1**,  
+ce qui signifie que **l'erreur est hétéroscédastique**. Cela indique qu'il existe une **dépendance**  
 entre la variance des erreurs et les **variables explicatives**.
 
-## Test de Normalité de Shapiro-Wilk
+**Test de Normalité de Shapiro-Wilk**
 
-```{r}
-shapiro.test(regression.lineaire$residuals)
+```{r, echo=FALSE}
+# Création du tableau avec les résultats du test
+resultats_sw <- data.frame(
+  Description = c("Shapiro-Wilk statistic (W)", "p-value"),
+  Valeur = c("0.99532", "0.002986"),
+  stringsAsFactors = FALSE
+)
+
+# Affichage du tableau
+kable(resultats_sw, caption = "Shapiro-Wilk Normality Test Results")
 ```
 
 -   **Shapiro-Wilk statistic (W)** : **0.99532**\
 -   **p-value** : **0.002986**
 
-D'après les résultats du **test de Shapiro-Wilk**, la p-value est **inférieure au seuil de 5 %**.\
-Nous rejetons donc l'**hypothèse nulle (H0)** de normalité des erreurs.\
+
+D'après les résultats du **test de Shapiro-Wilk**, la p-value est **inférieure au seuil de 5 %**.  
+Nous rejetons donc l'**hypothèse nulle (H0)** de normalité des erreurs.  
 Par conséquent, **les erreurs ne suivent pas une distribution normale**.
 
-```{r}
+
+
+```{r, echo=FALSE}
+# Création du tibble avec les données fournies
+data_tibble <- data.frame(
+  `.fitted`   = c(53.5, 53.7, 56.8, 67.7, 60.9, 26.9),
+  `.resid`    = c(26.5, 8.14, -16.5, -26.6, -16.6, 20.2),
+  `.hat`      = c(0.0137, 0.0129, 0.0170, 0.0287, 0.0306, 0.00694),
+  `.sigma`    = rep(10.4, 6),
+  `.cooksd`   = c(0.0102, 0.000902, 0.00495, 0.0221, 0.00923, 0.00294),
+  `.std.resid`= c(2.57, 0.788, -1.60, -2.60, -1.62, 1.95)
+)
+
+# Affichage du tableau
+kable(data_tibble, caption = "A tibble: 6 x 6")
+```
+
+
+```{r, echo=FALSE}
+
 regression.lineaire.metriques <- augment(regression.lineaire)
 head(regression.lineaire.metriques[,10:15])
+
 
 plot(regression.lineaire,1)
 ```
@@ -608,7 +690,8 @@ La **courbe rouge n'est pas horizontale**, ce qui indique que la relation **n'es
 
 Les observations **382, 384 et 115** sont les **bétons présentant les plus grandes valeurs en termes de résidus**.
 
-```{r}
+
+```{r, echo=FALSE}
 plot(regression.lineaire,3)
 abline(h=sqrt(3), col = "green", lty = 2, lwd = 3)
 ```
@@ -618,7 +701,7 @@ de part et d'autre.
 Cela indique que **les erreurs ne sont pas homogènes**, ce qui confirme la conclusion\
 du **test de Breusch-Pagan**.
 
-```{r}
+```{r, echo=FALSE}
 plot(regression.lineaire, 2)
 ```
 
@@ -628,7 +711,7 @@ bien qu'ils en soient proches.
 Cela confirme les résultats du **test de normalité de Shapiro-Wilk**,\
 indiquant que les erreurs **ne suivent pas une distribution normale**.
 
-```{r}
+```{r, echo=FALSE}
 plot(regression.lineaire, 5)
 abline(h = c(-3, 3), v = 2 * (8 + 1) / 1030, col = c("yellow", "yellow", "blue"), lty = c(2, 2, 2), lwd = c(3, 3, 3))
 ```
@@ -641,7 +724,10 @@ c'est-à-dire des **valeurs extrêmes de la variable cible**.
 
 Dans notre cas, nous avons **deux outliers** et **plusieurs points leviers extrêmes**.
 
-```{r}
+
+
+```{r, echo=FALSE}
+
 plot(regression.lineaire,4)
 abline(h= 4/( 1030-8-1 ), col = c( "red" ), lty = 2, lwd = 3)
 ```
@@ -651,12 +737,7 @@ formée par les **pointillés rouges**, qui représente le seuil à partir duque
 
 Les **bétons 57, 225 et 611** sont les **plus influents**.
 
-# Regression .
 
-(lm(formula = , data = )..
-+ REGARDER Intercept + faire graphique + regarder coeffs + retirer des variable a cause de l'analyse bivairée
-
-# Conclusion
 
 # Annexe
 

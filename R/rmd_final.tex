@@ -282,37 +282,84 @@ résistance finale à 28 jours.
 
 \section{Analyse univariée.}\label{analyse-univariuxe9e.}
 
-\subsection{Première variable.}\label{premiuxe8re-variable.}
+\subsection{Cement}\label{cement}
 
-La variable qui répertorie les résistances à la compression des bétons
-étudiés, que nous avons choisi d'expliquer grâce aux autres, est bien
-distribuée, sans valeurs aberrantes, avec des résistances variant entre
-2 MPa (mégapascals) et 80 MPa, pour une moyenne et une médiane autour de
-35 MPa. Cette bonne distribution nous sera utile pour la suite de
-l'étude.
+L'histogramme montre une distribution étalée avec plusieurs pics,
+indiquant une variabilité dans les proportions de ciment utilisées. Les
+valeurs les plus courantes se situent entre 100 et 400 kg/m³. Cette
+répartition suggère que différentes formulations de béton nécessitent
+des proportions de ciment variées, influençant potentiellement la
+résistance finale du béton.
 
-\subsection{Suite}\label{suite}
+\subsection{Blast Furnace Slag}\label{blast-furnace-slag}
 
-Variable resistance du beton(``y\_concrete\_compresive'') :
+La majorité des valeurs sont proches de zéro, suggérant que le blast
+furnace slag est rarement utilisé en grande quantité. Cependant,
+quelques observations montrent une présence significative de ce
+composant, ce qui pourrait indiquer des formulations spécifiques
+cherchant à améliorer certaines propriétés du béton, comme la durabilité
+ou la résistance aux sulfates.
 
-Variable (``fine\_aggr'') :
+\subsection{Fly Ash}\label{fly-ash}
 
-Variable eau (``Water''):
+La distribution est fortement biaisée vers zéro, montrant que le fly ash
+est peu utilisé dans la majorité des échantillons. Seules quelques
+observations présentent des valeurs plus élevées, ce qui indique que cet
+additif est employé dans des mélanges spécifiques, probablement pour
+optimiser la maniabilité ou réduire les coûts en substituant une partie
+du cement.
 
-les variable sont principalements concentrés autour de la médiane ce qui
-pourrait indiquer par exemple pour la variable de resitance du beton que
-la plupart des échantillons de béton ont une résistance similaire
+\subsection{Water}\label{water}
 
-Variable cendre volante(``fly\_ash''):
+La répartition est relativement normale avec un pic autour de 200 kg/m³,
+ce qui indique une quantité d'eau standardisée dans la plupart des
+mélanges. Une consommation d'eau bien contrôlée est essentielle pour
+assurer une bonne hydratation du ciment et éviter une porosité excessive
+pouvant affaiblir le matériau.
 
-Variable Quantité de laitier(``blast\_furnace''):
+\subsection{Superplasticizer}\label{superplasticizer}
 
-Variable cendre volante(``fly\_ash''):
+La plupart des valeurs sont proches de zéro, ce qui signifie que le
+superplasticizer est peu utilisé dans de nombreux échantillons.
+Cependant, certaines observations indiquent une utilisation plus
+importante, ce qui peut être lié à des mélanges nécessitant une
+meilleure fluidité tout en réduisant le rapport water/cement pour
+maximiser la résistance finale.
 
-Variable superplastique(``super\_plast''):
+\subsection{Coarse Aggregate}\label{coarse-aggregate}
 
-Ces variables sont fortements concentrés surdes données faibles et
-minimales
+Le coarse aggregate suit une distribution centrée autour de 950-1000
+kg/m³, ce qui montre une standardisation dans son utilisation. La
+présence d'une quantité relativement constante de coarse aggregate est
+essentielle pour garantir la stabilité et la résistance mécanique du
+béton tout en minimisant la fissuration.
+
+\subsection{Fine Aggregate}\label{fine-aggregate}
+
+La distribution est également centrée autour de 750-800 kg/m³, suggérant
+une utilisation homogène du fine aggregate dans les différents mélanges
+de béton. Une quantité bien maîtrisée de fine aggregate améliore la
+compacité du béton et influe sur sa capacité de mise en œuvre et son
+imperméabilité.
+
+\subsection{Age}\label{age}
+
+L'âge du béton est majoritairement faible, avec une concentration autour
+de 28 jours. Quelques échantillons présentent des âges plus avancés,
+jusqu'à un an. Cela reflète l'importance de la période de cure du béton,
+puisque la résistance continue d'augmenter avec le temps grâce à
+l'hydratation prolongée du cement.
+
+\subsection{Concrete Compressive
+Strength}\label{concrete-compressive-strength}
+
+La concrete compressive strength suit une distribution proche d'une loi
+normale, avec un pic autour de 40 MPa. Cela indique une variabilité
+contrôlée de la résistance du béton. La concrete compressive strength
+étant un paramètre clé, cette distribution montre que la plupart des
+mélanges atteignent une performance attendue, bien qu'il existe des
+échantillons avec des valeurs plus élevées ou plus faibles en fonction
+des formulations utilisées.
 
 \section{Analyse bivariée.}\label{analyse-bivariuxe9e.}
 
@@ -332,7 +379,7 @@ béton est significativement reliée à la résistance à la compression du
 béton. En effet, nous pouvons d'abord observer la distribution de ces
 deux variables à l'aide du graphique ci-dessous :
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 Cette visualisation des données nous donne une première impression du
 lien potentiel entre ces deux variables. En étudiant plus précisément
@@ -363,7 +410,7 @@ aisément supposer qu'il existe une corrélation entre ces deux variables.
 En effet, dans l'ensemble, on remarque une diminution de l'ajout
 d'additif lorsque la quantité d'eau augmente.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 Pour avoir une certitude, nous effectuons alors un test de corrélation
 de Kendall, qui nous indique, premièrement, qu'il existe un lien
@@ -390,7 +437,7 @@ Dans un premier temps, l'observation de la distribution du temps par
 rapport à la compression nous aiderait à confirmer ou infirmer
 l'hypothèse de cette partie. Voyons le graphique ci-dessous.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 Cette première visualisation ne nous permet pas de dire s'il y aurait en
 réalité un quelconque lien entre ces deux variables. En conséquence, il
@@ -409,7 +456,7 @@ béton.}{blast\_furnace et résistance du béton.}}\label{blast_furnace-et-ruxe9
 
 graph1 ; On
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 test1 ;
 
@@ -439,7 +486,7 @@ test1 ;
 -\textgreater{} Significatif mais (tau plutot proche de zero et positif
 donc lien positif )
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -467,7 +514,7 @@ donc lien positif )
 -\textgreater{} pvalue a 0.01 donc seuil de significativité et pour le
 tau on est a -0.07 donc inversement proportionel
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -495,7 +542,7 @@ tau on est a -0.07 donc inversement proportionel
 -\textgreater{} significatif car \textless2.2e-16 donc et inversement
 proportionel : moins il y a d'eau, plus la resistance est importante
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -515,7 +562,7 @@ proportionel : moins il y a d'eau, plus la resistance est importante
 ## 0.2490572
 \end{verbatim}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-13-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -537,7 +584,7 @@ proportionel : moins il y a d'eau, plus la resistance est importante
 
 -\textgreater{} lien significatif, tau a -0.123 donc fort lien négatif
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -557,7 +604,7 @@ proportionel : moins il y a d'eau, plus la resistance est importante
 ## -0.1222597
 \end{verbatim}
 
--\textgreater{} lein significatif,tau négatif donc moins il y a de
+-\textgreater lien n significatif,tau négatif donc moins il y a de
 granulat fin, plus la resistance est grande
 
 \section{Analyse Multivariée}\label{analyse-multivariuxe9e}
@@ -570,7 +617,7 @@ active, aux côtés des huit autres variables explicatives.
 \subsection{Histogramme des valeurs
 propres}\label{histogramme-des-valeurs-propres}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
 Le graphique illustre l'histogramme des valeurs propres issu de l'ACP,
 permettant d'identifier le nombre d'axes principaux à retenir.
@@ -594,7 +641,7 @@ les \textbf{trois premiers axes} pour l'analyse.
 \subsection{Analyse sur les 2 Premiers
 Axes}\label{analyse-sur-les-2-premiers-axes}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 Le cercle de corrélation met en évidence les relations entre les
 variables étudiées, projetées sur les deux premiers axes principaux de
@@ -743,8 +790,6 @@ Béton}\label{implications-pour-la-moduxe9lisation-de-la-ruxe9sistance-du-buxe9t
   la résistance mécanique.
 \end{itemize}
 
-\newpage
-
 \section{Modélisation Linéaire}\label{moduxe9lisation-linuxe9aire}
 
 \begin{longtable}[]{@{}lrrrl@{}}
@@ -796,6 +841,34 @@ Ces résultats suggèrent que certaines variables ont un impact plus
 marqué sur la \textbf{résistance à la compression du béton}, tandis que
 d'autres jouent un rôle moins déterminant.
 
+Au regard de ces variables significatives, nous avons constaté des
+effets diverses sur la variable réponse. Pour la variable
+\textbf{Cement}(ciment), on remarque un effet positif sur la variable
+réponse qui n'est rien d'autre que la résistance à la compression. La
+valeur de cette relation est de l'ordre de 0.119785, cela signifie que
+si le ciment augmente d'une unité alors la résistence à la compression
+augmente moins proportionnellement que l'augmentation du ciment (0.12
+unité). Ensuite, pour la variable blast\_furnace (laitier de haut
+fourneau), la relation est positive. Cela signifie qu'une hausse de la
+variable en question d'une unité entraine une augmentation de 0.12 unité
+de la variable cible. Puis, on s'interesse à la variable fly\_ash
+(cendres volantes) qui est positivement corrélée avec la variable
+endogène (0.087943). Cela porrait être traduit comme étant une
+augmentation moins proportionnelle de la résistence comparé aux cendres
+volantes. De plus, nous remarquons une relation negative entre la
+variable water et la resistance à la compression. cette relation est de
+l'ordre de -0.15 c'est-à-dire que l'augmentation de l'eau d'une unite
+entraine une baisse de la resistance de 0.15. ce qui rejoint notre
+conclusion de l'analyse multivariee. Par ailleurs, la relation de notre
+variable cible avec la variable super\_plast est de 0.29, qui est la
+relation la plus importante dans notre modele. cette relation est
+positive, ce qui signifie que Additif chimique est tres important pour
+augmenter la resistance de notre beton. cela confirme nos propos suite a
+l'analyse multivariee. Enfin, on s'apercoit que la variable age est
+positivement correlee avec la variable reponse, Ce qui confirme les
+resultats des revues qui stipulent qu'avec la resistance augmente avec
+le temps.
+
 \textbf{Test de Durbin-Watson}
 
 \begin{longtable}[]{@{}ll@{}}
@@ -830,7 +903,7 @@ La p-value étant inférieure à 0.05, nous rejetons l'\textbf{hypothèse
 H0} et acceptons l'\textbf{hypothèse H1},\\
 ce qui signifie que \textbf{les erreurs sont fortement corrélées}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-21-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-28-1.pdf}
 
 On remarque que plusieurs barres sortent de l'intervalle de confiance,
 ce qui vient soutenir la conclusion\\
@@ -925,7 +998,20 @@ normale}.
 26.9 & 20.20 & 0.00694 & 10.4 & 0.002940 & 1.950 \\
 \end{longtable}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-25-1.pdf}
+\begin{verbatim}
+## # A tibble: 6 x 6
+##   .fitted .resid    .hat .sigma  .cooksd .std.resid
+##     <dbl>  <dbl>   <dbl>  <dbl>    <dbl>      <dbl>
+## 1    53.5  26.5  0.0137    10.4 0.0102        2.57 
+## 2    53.7   8.14 0.0129    10.4 0.000902      0.788
+## 3    56.8 -16.5  0.0170    10.4 0.00495      -1.60 
+## 4    67.7 -26.6  0.0287    10.4 0.0221       -2.60 
+## 5    60.9 -16.6  0.0306    10.4 0.00923      -1.62 
+## 6    26.9  20.2  0.00694   10.4 0.00294       1.95
+\end{verbatim}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-32-1.pdf}
+
 D'après ce plot, il \textbf{n'existe aucune linéarité} entre la variable
 réponse et les variables explicatives.\\
 La \textbf{courbe rouge n'est pas horizontale}, ce qui indique que la
@@ -934,14 +1020,15 @@ relation \textbf{n'est pas linéaire}.
 Les observations \textbf{382, 384 et 115} sont les \textbf{bétons
 présentant les plus grandes valeurs en termes de résidus}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-26-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-33-1.pdf}
+
 Dans notre cas, la \textbf{courbe rouge n'est pas horizontale} et ne
 sépare pas les points de manière homogène\\
 de part et d'autre. Cela indique que \textbf{les erreurs ne sont pas
 homogènes}, ce qui confirme la conclusion\\
 du \textbf{test de Breusch-Pagan}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-27-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-34-1.pdf}
 
 Ce plot de l'\textbf{hypothèse de normalité} montre que plusieurs points
 \textbf{ne suivent pas la ligne},\\
@@ -952,7 +1039,7 @@ Shapiro-Wilk},\\
 indiquant que les erreurs \textbf{ne suivent pas une distribution
 normale}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-35-1.pdf}
 
 Tous les points situés \textbf{à droite de la droite verticale bleue}
 sont des \textbf{points leviers extrêmes},\\
@@ -965,7 +1052,7 @@ c'est-à-dire des \textbf{valeurs extrêmes de la variable cible}.
 Dans notre cas, nous avons \textbf{deux outliers} et \textbf{plusieurs
 points leviers extrêmes}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-29-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-36-1.pdf}
 
 Suite à l'observation des résultats donnés par le graphique, on remarque
 que \textbf{plusieurs points dépassent la ligne}\\
@@ -974,16 +1061,45 @@ partir duquel un point est \textbf{considéré comme influent}.
 
 Les \textbf{bétons 57, 225 et 611} sont les \textbf{plus influents}.
 
-\section{Conclusion}\label{conclusion}
-
 \section{Annexe}\label{annexe}
 
 \subsection{Analyse univariée}\label{analyse-univariuxe9e}
 
-Boite à moustache pour la variable
-\texttt{Concrete\ compressive\ strength}.
+Histogramme pour la variable \texttt{Cement}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-37-1.pdf}
+
+Histogramme pour la variable \texttt{Blast\ Furnace\ Slag}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-38-1.pdf}
+
+Histogramme pour la variable \texttt{Fly\ Ash}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-39-1.pdf}
+
+Histogramme pour la variable \texttt{Water}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-40-1.pdf}
+
+Histogramme pour la variable \texttt{Superplasticizer}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-41-1.pdf}
+
+Histogramme pour la variable \texttt{Coarse\ Aggregate}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-42-1.pdf}
+
+Histogramme pour la variable \texttt{Fine\ Aggregate}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+Histogramme pour la variable \texttt{Age}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-44-1.pdf}
+
+Histogramme pour la variable \texttt{Concrete\ Compressive\ Strength}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-45-1.pdf}
 
 \subsection{Analyse bivariee}\label{analyse-bivariee}
 
@@ -1151,7 +1267,7 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 \subsubsection{Partie E}\label{partie-e}
 
@@ -1171,6 +1287,6 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-37-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 \end{document}
