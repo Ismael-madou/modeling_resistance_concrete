@@ -1,5 +1,5 @@
 ---
-title: "\\fbox{\\huge Regression Linéaire}"  # Encadre et agrandit le titre
+title: "\\fbox{\\huge Regression Linéaire}"
 author:
 - Dimitri DELPECH,
 - Timothé FADENIPO,
@@ -7,25 +7,27 @@ author:
 - Ismael MADOU GAGI GREMA,
 - Cheikh LO
 date: "`r Sys.Date()`"
-output: 
+output:
   pdf_document:
-    toc: true       # Génère le sommaire
-    toc_depth: 2    # Niveau de profondeur du sommaire
-    number_sections: true  # Numérotation des sections
-    keep_tex: true  # Garde le fichier LaTeX (utile pour debug)
-   
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    keep_tex: true
+  word_document:
+    toc: true
+    toc_depth: '2'
 fontsize: 12pt
 geometry: a4paper
-titlepage: true  # Ajoute une page de titre (nécessite le package LaTeX titlepage)
+titlepage: true
 header-includes:
-  - \usepackage{fancyhdr}  # Ajoute un en-tête personnalisé
-  - \pagestyle{fancy}  
-  - \fancyhead{}  # Réinitialise les en-têtes
-  - \fancyhead[R]{\small `r Sys.Date()`}  # Date en haut à droite
-  - \fancyhead[L]{\small Regression Linéaire}  # Titre en haut à gauche
-  - \renewcommand{\headrulewidth}{0.4pt}  # Ligne sous l'en-tête
-editor_options: 
-  markdown: 
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \fancyhead{}
+- \fancyhead[R]{\small `r Sys.Date()`}
+- \fancyhead[L]{\small Regression Linéaire}
+- \renewcommand{\headrulewidth}{0.4pt}
+editor_options:
+  markdown:
     wrap: sentence
 ---
 
@@ -133,13 +135,13 @@ verif <- str(bdd)
 
 ## Cement
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 1️⃣ Histogramme pour Cement
+```{r boxplot_y,echo = FALSE, message=FALSE, warning=F}
+
+#Histogramme pour Cement
 p1 <- ggplot(bdd, aes(x = cement)) +
   geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
   labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
   theme_minimal()
-print(p1)
 ```
 
 L'histogramme montre une distribution étalée avec plusieurs pics, indiquant une variabilité dans les proportions de ciment utilisées.
@@ -148,13 +150,12 @@ Cette répartition suggère que différentes formulations de béton nécessitent
 
 ## Blast Furnace Slag
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 2️⃣ Histogramme pour Blast Furnace Slag
+```{r , echo = FALSE, message=FALSE, warning=F}
+# 2 Histogramme pour Blast Furnace Slag
 p2 <- ggplot(bdd, aes(x = blast_furnace)) +
   geom_histogram(bins = 30, fill = "red", color = "darkred") +
   labs(title = "Distribution de la variable Blast Furnace Slag", x = "Blast Furnace Slag", y = "Fréquence") +
   theme_minimal()
-print(p2)
 ```
 
 La majorité des valeurs sont proches de zéro, suggérant que le blast furnace slag est rarement utilisé en grande quantité.
@@ -162,13 +163,12 @@ Cependant, quelques observations montrent une présence significative de ce comp
 
 ## Fly Ash
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 3️⃣ Histogramme pour Fly Ash
+```{r , echo = FALSE, message=FALSE, warning=F }
+# 3 Histogramme pour Fly Ash
 p3 <- ggplot(bdd, aes(x = fly_ash)) +
   geom_histogram(bins = 30, fill = "purple", color = "darkblue") +
   labs(title = "Distribution de la variable Fly Ash", x = "Fly Ash", y = "Fréquence") +
   theme_minimal()
-print(p3)
 ```
 
 La distribution est fortement biaisée vers zéro, montrant que le fly ash est peu utilisé dans la majorité des échantillons.
@@ -176,13 +176,12 @@ Seules quelques observations présentent des valeurs plus élevées, ce qui indi
 
 ## Water
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 4️⃣ Histogramme pour Water
+```{r , echo = FALSE, message=FALSE, warning=F }
+# 4 Histogramme pour Water
 p4 <- ggplot(bdd, aes(x = water)) +
   geom_histogram(bins = 30, fill = "cyan", color = "darkblue") +
   labs(title = "Distribution de la variable Water", x = "Water", y = "Fréquence") +
   theme_minimal()
-print(p4)
 ```
 
 La répartition est relativement normale avec un pic autour de 200 kg/m³, ce qui indique une quantité d’eau standardisée dans la plupart des mélanges.
@@ -190,13 +189,12 @@ Une consommation d’eau bien contrôlée est essentielle pour assurer une bonne
 
 ## Superplasticizer
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 5️⃣ Histogramme pour Superplasticizer
+```{r , echo = FALSE, message=FALSE, warning=F}
+#5 Histogramme pour Superplasticizer
 p5 <- ggplot(bdd, aes(x = super_plast)) +
   geom_histogram(bins = 30, fill = "orange", color = "darkorange") +
   labs(title = "Distribution de la variable Superplasticizer", x = "Superplasticizer", y = "Fréquence") +
   theme_minimal()
-print(p5)
 ```
 
 La plupart des valeurs sont proches de zéro, ce qui signifie que le superplasticizer est peu utilisé dans de nombreux échantillons.
@@ -204,13 +202,12 @@ Cependant, certaines observations indiquent une utilisation plus importante, ce 
 
 ## Coarse Aggregate
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 6️⃣ Histogramme pour Coarse Aggregate
+```{r , echo = FALSE, message=FALSE, warning=F}
+# 6 Histogramme pour Coarse Aggregate
 p6 <- ggplot(bdd, aes(x = coarse)) +
   geom_histogram(bins = 30, fill = "yellow", color = "gold") +
   labs(title = "Distribution de la variable Coarse Aggregate", x = "Coarse Aggregate", y = "Fréquence") +
   theme_minimal()
-print(p6)
 ```
 
 Le coarse aggregate suit une distribution centrée autour de 950-1000 kg/m³, ce qui montre une standardisation dans son utilisation.
@@ -218,13 +215,12 @@ La présence d’une quantité relativement constante de coarse aggregate est es
 
 ## Fine Aggregate
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 7️⃣ Histogramme pour Fine Aggregate
+```{r , echo = FALSE, message=FALSE, warning=F}
+# 7 Histogramme pour Fine Aggregate
 p7 <- ggplot(bdd, aes(x = fine_aggr)) +
   geom_histogram(bins = 30, fill = "pink", color = "black") +
   labs(title = "Distribution de la variable Fine Aggregate", x = "Fine Aggregate", y = "Fréquence") +
   theme_minimal()
-print(p7)
 ```
 
 La distribution est également centrée autour de 750-800 kg/m³, suggérant une utilisation homogène du fine aggregate dans les différents mélanges de béton.
@@ -232,13 +228,12 @@ Une quantité bien maîtrisée de fine aggregate améliore la compacité du bét
 
 ## Age
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 8️⃣ Histogramme pour Age
+```{r , echo = FALSE, message=FALSE, warning=F}
+# 8 Histogramme pour Age
 p8 <- ggplot(bdd, aes(x = age)) +
   geom_histogram(bins = 30, fill = "brown", color = "black") +
   labs(title = "Distribution de la variable Age", x = "Age (jours)", y = "Fréquence") +
   theme_minimal()
-print(p8)
 ```
 
 L'âge du béton est majoritairement faible, avec une concentration autour de 28 jours.
@@ -247,8 +242,8 @@ Cela reflète l'importance de la période de cure du béton, puisque la résista
 
 ## Concrete Compressive Strength
 
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 9️⃣ Histogramme pour Concrete Compressive Strength
+```{r , echo = FALSE, message=FALSE, warning=F}
+#  Histogramme pour Concrete Compressive Strength
 p9 <- ggplot(bdd, aes(x = y_concrete_compresive)) +
   geom_histogram(bins = 30, fill = "darkgreen", color = "black") +
   labs(title = "Distribution de la variable Concrete Compressive Strength", x = "Concrete Compressive Strength (MPa)", y = "Fréquence") +
@@ -427,7 +422,7 @@ plot(bdd$fine_aggr, bdd$y_concrete_compresive,
 cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
 ```
 
--\> lein significatif,tau négatif donc moins il y a de granulat fin, plus la resistance est grande
+-\>lien n significatif,tau négatif donc moins il y a de granulat fin, plus la resistance est grande
 
 # Analyse Multivariée
 
@@ -527,200 +522,84 @@ Cette ACP met en évidence trois dimensions principales dans la composition du b
 
 ## Implications pour la Modélisation de la Résistance du Béton
 
-<<<<<<< HEAD
-- L’opposition entre `water` et `super_plast` sur Dim 1 indique qu’un **terme d’interaction** entre ces deux variables pourrait être testé dans le modèle linéaire.
-- `fine_aggr` étant bien projeté sur Dim 1, son interaction avec `super_plast` pourrait être pertinente pour examiner leur effet combiné sur la compacité et la résistance.
-- `age` étant bien représenté sur Dim 1, une interaction avec `water` pourrait être étudiée pour voir comment l’évolution du béton avec le temps est influencée par l’eau.
-- `y_concrete_compresive` étant principalement projeté sur Dim 2, un modèle linéaire devrait inclure **`cement`** comme facteur explicatif principal.
-- L’opposition entre `coarse` et `cement` sur Dim 2 suggère qu’un effet combiné de ces deux variables pourrait influencer la résistance mécanique.
-
-\newpage
-
-=======
 -   L’opposition entre `water` et `super_plast` sur Dim 1 indique qu’un **terme d’interaction** entre ces deux variables pourrait être testé dans le modèle linéaire.
 -   `fine_aggr` étant bien projeté sur Dim 1, son interaction avec `super_plast` pourrait être pertinente pour examiner leur effet combiné sur la compacité et la résistance.
 -   `age` étant bien représenté sur Dim 1, une interaction avec `water` pourrait être étudiée pour voir comment l’évolution du béton avec le temps est influencée par l’eau.
 -   `y_concrete_compresive` étant principalement projeté sur Dim 2, un modèle linéaire devrait inclure **`cement`** comme facteur explicatif principal.
 -   L’opposition entre `coarse` et `cement` sur Dim 2 suggère qu’un effet combiné de ces deux variables pourrait influencer la résistance mécanique.
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 
 # Modélisation Linéaire
 
-<<<<<<< HEAD
-```{r , echo=FALSE}
-=======
 ```{r}
 
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 # Construction du modèle
 regression.lineaire <- lm(formula = y_concrete_compresive ~ ., data=bdd)
+summary(regression.lineaire)
+
 ```
 
-
-```{r table_regression, echo=FALSE, message=FALSE, warning=FALSE}
-
-# Chargement du package knitr pour créer un tableau
-library(knitr)
-
-# Création du data frame contenant les résultats du modèle
-results <- data.frame(
-  Coefficient = c("(Intercept)", "cement", "blast_furnace", "fly_ash", "water", 
-                  "super_plast", "coarse", "fine_aggr", "age"),
-  Estimate = c(-23.163756, 0.119785, 0.103847, 0.087943, -0.150298, 
-               0.290687, 0.018030, 0.020154, 0.114226),
-  Std_Error = c(26.588421, 0.008489, 0.010136, 0.012585, 0.040179, 
-                0.093460, 0.009394, 0.010703, 0.005427),
-  t_value = c(-0.871, 14.110, 10.245, 6.988, -3.741, 
-              3.110, 1.919, 1.883, 21.046),
-  Pr = c("0.383851", "< 2e-16", "< 2e-16", "5.03e-12", "0.000194", 
-         "0.001921", "0.055227", "0.059968", "< 2e-16")
-)
-
-# Création du tableau avec un titre
-kable(results, caption = "Tableau des résultats de la régression linéaire")
-```
-
-
-
-**Interprétation des p-values**
+## Interprétation des p-values
 
 Les résultats de la régression montrent que :
 
-<<<<<<< HEAD
-- **Intercept** : La p-value est de **0.38**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H0**, selon laquelle cette valeur n'est **pas significative**.
-- **Variables significatives (p < 0.05)** : `cement`, `blast_furnace`, `fly_ash`, `water`, `super_plast` et `age`. Nous acceptons l'**hypothèse H1**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
-- **Variables non significatives au seuil de 5 %** : `coarse` et `fine_aggr`. Toutefois, elles deviennent **significatives pour un seuil de 10 %**.
-
-Ces résultats suggèrent que certaines variables ont un impact plus marqué sur la **résistance à la compression du béton**, tandis que d'autres jouent un rôle moins déterminant.
-
-
-**Test de Durbin-Watson**
-
-```{r, echo=FALSE}
-
-# Création du tableau avec les résultats du test
-resultats <- data.frame(
-  Description = c("DW", "p-value", "Alternative hypothesis"),
-  Valeur = c("1.2815", "< 2.2e-16", "true autocorrelation is not 0"),
-  stringsAsFactors = FALSE
-)
-
-# Affichage du tableau
-kable(resultats, caption = "Durbin-Watson Test Results")
-=======
--   **Intercept** : La p-value est de **0.38**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H₀**, selon laquelle cette valeur n'est **pas significative**.
--   **Variables significatives (p \< 0.05)** : `cement`, `blast_furnace`, `fly_ash`, `water`, `super_plast` et `age`. Nous acceptons l'**hypothèse H₁**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
+-   **Intercept** : La p-value est de **0.38**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H**, selon laquelle cette valeur n'est **pas significative**.
+-   **Variables significatives (p \< 0.05)** : `cement`, `blast_furnace`, `fly_ash`, `water`, `super_plast` et `age`. Nous acceptons l'**hypothèse H1**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
 -   **Variables non significatives au seuil de 5 %** : `coarse` et `fine_aggr`. Toutefois, elles deviennent **significatives pour un seuil de 10 %**.
 
 Ces résultats suggèrent que certaines variables ont un impact plus marqué sur la **résistance à la compression du béton**, tandis que d'autres jouent un rôle moins déterminant.
 
 ```{r}
 dwtest(regression.lineaire, alternative = "two.sided")
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 
 ```
 
+## Test de Durbin-Watson
 
 -   **Durbin-Watson statistic (DW)** : **1.2815**\
 -   **p-value** : **\< 2.2e-16**\
 -   **Hypothèse alternative** : L'autocorrélation des erreurs est **différente de 0**.
 
-<<<<<<< HEAD
-La p-value étant inférieure à 0.05, nous rejetons l'**hypothèse H0** et acceptons l'**hypothèse H1**,  
-ce qui signifie que **les erreurs sont fortement corrélées**.
-
-
-```{r, echo=FALSE}
-=======
-La p-value étant inférieure à 0.05, nous rejetons l'**hypothèse H₀** et acceptons l'**hypothèse H₁**,\
+La p-value étant inférieure à 0.05, nous rejetons l'**hypothèse H0** et acceptons l'**hypothèse H1**,\
 ce qui signifie que **les erreurs sont fortement corrélées**.
 
 ```{r}
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 acf(regression.lineaire$residuals, main = "Autocorrélation des erreurs")
 ```
 
 On remarque que plusieurs barres sortent de l'intervalle de confiance, ce qui vient soutenir la conclusion\
 du test de Durbin-Watson selon laquelle les erreurs sont **autocorrélées**.
 
-**Test de Breusch-Pagan**
+## Test de Breusch-Pagan
 
-```{r, echo=FALSE}
-# Création du tableau avec les résultats du test
-resultats_bp <- data.frame(
-  Description = c("Breusch-Pagan statistic (BP)", "Degrés de liberté (df)", "p-value"),
-  Valeur = c("140.25", "8", "< 2.2e-16"),
-  stringsAsFactors = FALSE
-)
-
-# Affichage du tableau
-kable(resultats_bp, caption = "Breusch-Pagan Test Results")
+```{r}
+bptest(regression.lineaire, studentize = FALSE)
 ```
 
 -   **Breusch-Pagan statistic (BP)** : **140.25**\
 -   **Degrés de liberté (df)** : **8**\
 -   **p-value** : **\< 2.2e-16**
 
-<<<<<<< HEAD
-D'après les résultats du **test de Breusch-Pagan**, nous acceptons l'**hypothèse H1**,  
-ce qui signifie que **l'erreur est hétéroscédastique**. Cela indique qu'il existe une **dépendance**  
-=======
-D'après les résultats du **test de Breusch-Pagan**, nous acceptons l'**hypothèse H₁**,\
+D'après les résultats du **test de Breusch-Pagan**, nous acceptons l'**hypothèse H1**,\
 ce qui signifie que **l'erreur est hétéroscédastique**.
 Cela indique qu'il existe une **dépendance**\
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 entre la variance des erreurs et les **variables explicatives**.
 
-**Test de Normalité de Shapiro-Wilk**
+## Test de Normalité de Shapiro-Wilk
 
-```{r, echo=FALSE}
-# Création du tableau avec les résultats du test
-resultats_sw <- data.frame(
-  Description = c("Shapiro-Wilk statistic (W)", "p-value"),
-  Valeur = c("0.99532", "0.002986"),
-  stringsAsFactors = FALSE
-)
-
-# Affichage du tableau
-kable(resultats_sw, caption = "Shapiro-Wilk Normality Test Results")
+```{r}
+shapiro.test(regression.lineaire$residuals)
 ```
 
 -   **Shapiro-Wilk statistic (W)** : **0.99532**\
 -   **p-value** : **0.002986**
 
-<<<<<<< HEAD
-D'après les résultats du **test de Shapiro-Wilk**, la p-value est **inférieure au seuil de 5 %**.  
-Nous rejetons donc l'**hypothèse nulle (H0)** de normalité des erreurs.  
-Par conséquent, **les erreurs ne suivent pas une distribution normale**.
-
-
-
-```{r, echo=FALSE}
-# Création du tibble avec les données fournies
-data_tibble <- data.frame(
-  `.fitted`   = c(53.5, 53.7, 56.8, 67.7, 60.9, 26.9),
-  `.resid`    = c(26.5, 8.14, -16.5, -26.6, -16.6, 20.2),
-  `.hat`      = c(0.0137, 0.0129, 0.0170, 0.0287, 0.0306, 0.00694),
-  `.sigma`    = rep(10.4, 6),
-  `.cooksd`   = c(0.0102, 0.000902, 0.00495, 0.0221, 0.00923, 0.00294),
-  `.std.resid`= c(2.57, 0.788, -1.60, -2.60, -1.62, 1.95)
-)
-
-# Affichage du tableau
-kable(data_tibble, caption = "A tibble: 6 x 6")
-```
-
-
-```{r, echo=FALSE}
-=======
 D'après les résultats du **test de Shapiro-Wilk**, la p-value est **inférieure au seuil de 5 %**.\
-Nous rejetons donc l'**hypothèse nulle (H₀)** de normalité des erreurs.\
+Nous rejetons donc l'**hypothèse nulle (H0)** de normalité des erreurs.\
 Par conséquent, **les erreurs ne suivent pas une distribution normale**.
 
 ```{r}
 regression.lineaire.metriques <- augment(regression.lineaire)
 head(regression.lineaire.metriques[,10:15])
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 
 plot(regression.lineaire,1)
 ```
@@ -730,12 +609,7 @@ La **courbe rouge n'est pas horizontale**, ce qui indique que la relation **n'es
 
 Les observations **382, 384 et 115** sont les **bétons présentant les plus grandes valeurs en termes de résidus**.
 
-<<<<<<< HEAD
-
-```{r, echo=FALSE}
-=======
 ```{r}
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 plot(regression.lineaire,3)
 abline(h=sqrt(3), col = "green", lty = 2, lwd = 3)
 ```
@@ -745,7 +619,7 @@ de part et d'autre.
 Cela indique que **les erreurs ne sont pas homogènes**, ce qui confirme la conclusion\
 du **test de Breusch-Pagan**.
 
-```{r, echo=FALSE}
+```{r}
 plot(regression.lineaire, 2)
 ```
 
@@ -755,7 +629,7 @@ bien qu'ils en soient proches.
 Cela confirme les résultats du **test de normalité de Shapiro-Wilk**,\
 indiquant que les erreurs **ne suivent pas une distribution normale**.
 
-```{r, echo=FALSE}
+```{r}
 plot(regression.lineaire, 5)
 abline(h = c(-3, 3), v = 2 * (8 + 1) / 1030, col = c("yellow", "yellow", "blue"), lty = c(2, 2, 2), lwd = c(3, 3, 3))
 ```
@@ -768,13 +642,7 @@ c'est-à-dire des **valeurs extrêmes de la variable cible**.
 
 Dans notre cas, nous avons **deux outliers** et **plusieurs points leviers extrêmes**.
 
-<<<<<<< HEAD
-
-
-```{r, echo=FALSE}
-=======
 ```{r}
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 plot(regression.lineaire,4)
 abline(h= 4/( 1030-8-1 ), col = c( "red" ), lty = 2, lwd = 3)
 ```
@@ -784,15 +652,10 @@ formée par les **pointillés rouges**, qui représente le seuil à partir duque
 
 Les **bétons 57, 225 et 611** sont les **plus influents**.
 
-<<<<<<< HEAD
- 
-
-=======
 # Regression .
 
 (lm(formula = , data = )..
 + REGARDER Intercept + faire graphique + regarder coeffs + retirer des variable a cause de l'analyse bivairée
->>>>>>> b7dc8a2afd4edd13980dda4c43470292f2f80c63
 
 # Conclusion
 
@@ -801,84 +664,75 @@ Les **bétons 57, 225 et 611** sont les **plus influents**.
 ## Analyse univariée
 
 Histogramme pour la variable `Cement`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 1️⃣ Histogramme pour Cement
-p1 <- ggplot(bdd, aes(x = cement)) +
-  geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
-  labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
-  theme_minimal()
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Cement
 print(p1)
 ```
+
+
+
 Histogramme pour la variable `Blast Furnace Slag`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 2️⃣ Histogramme pour Blast Furnace Slag
-p2 <- ggplot(bdd, aes(x = blast_furnace)) +
-  geom_histogram(bins = 30, fill = "red", color = "darkred") +
-  labs(title = "Distribution de la variable Blast Furnace Slag", x = "Blast Furnace Slag", y = "Fréquence") +
-  theme_minimal()
+
+```{r , echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Blast Furnace Slag
+
 print(p2)
 ```
+
 Histogramme pour la variable `Fly Ash`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 3️⃣ Histogramme pour Fly Ash
-p3 <- ggplot(bdd, aes(x = fly_ash)) +
-  geom_histogram(bins = 30, fill = "purple", color = "darkblue") +
-  labs(title = "Distribution de la variable Fly Ash", x = "Fly Ash", y = "Fréquence") +
-  theme_minimal()
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+#  Histogramme pour Fly Ash
 print(p3)
 ```
+
 Histogramme pour la variable `Water`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 4️⃣ Histogramme pour Water
-p4 <- ggplot(bdd, aes(x = water)) +
-  geom_histogram(bins = 30, fill = "cyan", color = "darkblue") +
-  labs(title = "Distribution de la variable Water", x = "Water", y = "Fréquence") +
-  theme_minimal()
+
+```{r , echo = FALSE, message=FALSE, warning=F}
+#Histogramme pour Water
+
 print(p4)
+
 ```
+
 Histogramme pour la variable `Superplasticizer`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 5️⃣ Histogramme pour Superplasticizer
-p5 <- ggplot(bdd, aes(x = super_plast)) +
-  geom_histogram(bins = 30, fill = "orange", color = "darkorange") +
-  labs(title = "Distribution de la variable Superplasticizer", x = "Superplasticizer", y = "Fréquence") +
-  theme_minimal()
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Superplasticizer
+
 print(p5)
+
 ```
+
 Histogramme pour la variable `Coarse Aggregate`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 6️⃣ Histogramme pour Coarse Aggregate
-p6 <- ggplot(bdd, aes(x = coarse)) +
-  geom_histogram(bins = 30, fill = "yellow", color = "gold") +
-  labs(title = "Distribution de la variable Coarse Aggregate", x = "Coarse Aggregate", y = "Fréquence") +
-  theme_minimal()
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+
 print(p6)
 ```
+
 Histogramme pour la variable `Fine Aggregate`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 7️⃣ Histogramme pour Fine Aggregate
-p7 <- ggplot(bdd, aes(x = fine_aggr)) +
-  geom_histogram(bins = 30, fill = "pink", color = "black") +
-  labs(title = "Distribution de la variable Fine Aggregate", x = "Fine Aggregate", y = "Fréquence") +
-  theme_minimal()
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Fine Aggregate
+
 print(p7)
 ```
+
 Histogramme pour la variable `Age`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 8️⃣ Histogramme pour Age
-p8 <- ggplot(bdd, aes(x = age)) +
-  geom_histogram(bins = 30, fill = "brown", color = "black") +
-  labs(title = "Distribution de la variable Age", x = "Age (jours)", y = "Fréquence") +
-  theme_minimal()
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Age
+
 print(p8)
 ```
+
 Histogramme pour la variable `Concrete Compressive Strength`
-```{r boxplot_y, echo = FALSE, message=FALSE, warning=F}
-# 9️⃣ Histogramme pour Concrete Compressive Strength
-p9 <- ggplot(bdd, aes(x = y_concrete_compresive)) +
-  geom_histogram(bins = 30, fill = "darkgreen", color = "black") +
-  labs(title = "Distribution de la variable Concrete Compressive Strength", x = "Concrete Compressive Strength (MPa)", y = "Fréquence") +
-  theme_minimal()
+
+```{r , echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Concrete Compressive Strength
+
 print(p9)
 ```
 
