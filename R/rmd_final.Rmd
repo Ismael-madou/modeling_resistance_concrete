@@ -745,9 +745,6 @@ kable(data_tibble, caption = "A tibble: 6 x 6")
 
 ```{r, echo=FALSE}
 
-regression.lineaire.metriques <- augment(regression.lineaire)
-head(regression.lineaire.metriques[,10:15])
-
 
 plot(regression.lineaire,1)
 ```

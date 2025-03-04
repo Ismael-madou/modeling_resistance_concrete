@@ -280,9 +280,12 @@ de la première semaine . Typiquement, un saut d'environ 10 MPa (environ
 durcissement ralentit, mais on atteint souvent plus de 90 \% de la
 résistance finale à 28 jours.
 
-\section{Analyse univariée.}\label{analyse-univariuxe9e.}
+\section{Zoom tour à tour sur les composantes de notre base de
+données.}\label{zoom-tour-uxe0-tour-sur-les-composantes-de-notre-base-de-donnuxe9es.}
 
 \subsection{Cement}\label{cement}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/boxplot_y-1} \end{center}
 
 L'histogramme montre une distribution étalée avec plusieurs pics,
 indiquant une variabilité dans les proportions de ciment utilisées. Les
@@ -293,6 +296,8 @@ résistance finale du béton.
 
 \subsection{Blast Furnace Slag}\label{blast-furnace-slag}
 
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-1-1} \end{center}
+
 La majorité des valeurs sont proches de zéro, suggérant que le blast
 furnace slag est rarement utilisé en grande quantité. Cependant,
 quelques observations montrent une présence significative de ce
@@ -301,6 +306,8 @@ cherchant à améliorer certaines propriétés du béton, comme la durabilité
 ou la résistance aux sulfates.
 
 \subsection{Fly Ash}\label{fly-ash}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-2-1} \end{center}
 
 La distribution est fortement biaisée vers zéro, montrant que le fly ash
 est peu utilisé dans la majorité des échantillons. Seules quelques
@@ -311,6 +318,8 @@ du cement.
 
 \subsection{Water}\label{water}
 
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
 La répartition est relativement normale avec un pic autour de 200 kg/m³,
 ce qui indique une quantité d'eau standardisée dans la plupart des
 mélanges. Une consommation d'eau bien contrôlée est essentielle pour
@@ -318,6 +327,8 @@ assurer une bonne hydratation du ciment et éviter une porosité excessive
 pouvant affaiblir le matériau.
 
 \subsection{Superplasticizer}\label{superplasticizer}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 La plupart des valeurs sont proches de zéro, ce qui signifie que le
 superplasticizer est peu utilisé dans de nombreux échantillons.
@@ -328,6 +339,8 @@ maximiser la résistance finale.
 
 \subsection{Coarse Aggregate}\label{coarse-aggregate}
 
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
 Le coarse aggregate suit une distribution centrée autour de 950-1000
 kg/m³, ce qui montre une standardisation dans son utilisation. La
 présence d'une quantité relativement constante de coarse aggregate est
@@ -336,6 +349,8 @@ béton tout en minimisant la fissuration.
 
 \subsection{Fine Aggregate}\label{fine-aggregate}
 
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
 La distribution est également centrée autour de 750-800 kg/m³, suggérant
 une utilisation homogène du fine aggregate dans les différents mélanges
 de béton. Une quantité bien maîtrisée de fine aggregate améliore la
@@ -343,6 +358,8 @@ compacité du béton et influe sur sa capacité de mise en œuvre et son
 imperméabilité.
 
 \subsection{Age}\label{age}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 L'âge du béton est majoritairement faible, avec une concentration autour
 de 28 jours. Quelques échantillons présentent des âges plus avancés,
@@ -353,6 +370,8 @@ l'hydratation prolongée du cement.
 \subsection{Concrete Compressive
 Strength}\label{concrete-compressive-strength}
 
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
 La concrete compressive strength suit une distribution proche d'une loi
 normale, avec un pic autour de 40 MPa. Cela indique une variabilité
 contrôlée de la résistance du béton. La concrete compressive strength
@@ -361,7 +380,8 @@ mélanges atteignent une performance attendue, bien qu'il existe des
 échantillons avec des valeurs plus élevées ou plus faibles en fonction
 des formulations utilisées.
 
-\section{Analyse bivariée.}\label{analyse-bivariuxe9e.}
+\section{Expliquons la résistance à la compression du béton par nos
+variables.}\label{expliquons-la-ruxe9sistance-uxe0-la-compression-du-buxe9ton-par-nos-variables.}
 
 La matrice de corrélation en annexe va nous aider à voir les différents
 liens de corrélation potentiels entre nos variables. Dans cette partie,
@@ -439,173 +459,160 @@ l'hypothèse de cette partie. Voyons le graphique ci-dessous.
 
 \begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
-Cette première visualisation ne nous permet pas de dire s'il y aurait en
-réalité un quelconque lien entre ces deux variables. En conséquence, il
-est nécessaire de réaliser un test de corrélation.
+Cette première visualisation ne nous permet pas de déterminer s'il
+existe réellement un lien entre ces deux variables. Une exagération
+pourrait peut-être nous amener à supposer l'existence d'une relation
+quadratique entre elles, mais cette hypothèse ne peut être vérifiée dans
+cette partie.
 
-Ici, le test réalisé nous permet de voir que notre hypothèse est
-infirmée, car il y a en effet un lien significatif entre ces deux
+En conséquence, il est nécessaire de réaliser un test de corrélation.
+
+Le test effectué nous permet de constater que notre hypothèse est
+infirmée, car il existe bien un lien significatif entre ces deux
 variables, et la corrélation indique que ce lien est positif. Cette
 corrélation est positive mais modérée, avec un coefficient de Kendall
-\(\tau\) de \textbf{0,449} (annexe). Les valeurs croissent
-significativement ensemble, mais il y aura tout de même quelques
-exceptions.
+\(\tau\) de 0,449 (voir annexe). Les valeurs croissent significativement
+ensemble, bien que certaines exceptions subsistent.
 
-\subsection{\texorpdfstring{\texttt{blast\_furnace} et résistance du
-béton.}{blast\_furnace et résistance du béton.}}\label{blast_furnace-et-ruxe9sistance-du-buxe9ton.}
+\subsection{La resistance à la compression du béton peut-elle
+s'expliquer grâce au laitier de haut fournaux
+?}\label{la-resistance-uxe0-la-compression-du-buxe9ton-peut-elle-sexpliquer-gruxe2ce-au-laitier-de-haut-fournaux}
 
-graph1 ; On
+On examine ici la relation entre le laitier de haut fourneau et la
+résistance à la compression du béton :
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
-test1 ;
+Ce graphique ne suggère aucun lien de corrélation entre la quantité de
+laitier de haut fourneau et la résistance à la compression du béton, mis
+à part une légère baisse de la résistance du béton lorsque la quantité
+de laitier de haut fourneau augmente. Afin de détecter une potentielle
+relation de dépendance, il pourrait être judicieux d'effectuer un test
+de corrélation de Spearman.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{blast\_furnace, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"spearman"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+En effet, ce test nous fournit une p-value inférieure à 0.05 et un
+coefficient \(\rho\) de 0.16. Ces valeurs indiquent qu'il existe bien un
+lien significatif positif entre ces deux variables, mais cette
+corrélation reste faible compte tenu de la proximité de \(\rho\) avec
+zéro.
 
-\begin{verbatim}
-## Warning in cor.test.default(bdd$blast_furnace, bdd$y_concrete_compresive, :
-## Impossible de calculer la p-value exacte avec des ex-aequos
-\end{verbatim}
+\subsection{Les cendres volantes peuvent-elles expliquer la resistance
+du béton
+?}\label{les-cendres-volantes-peuvent-elles-expliquer-la-resistance-du-buxe9ton}
 
-\begin{verbatim}
-## 
-##  Spearman's rank correlation rho
-## 
-## data:  bdd$blast_furnace and bdd$y_concrete_compresive
-## S = 152531172, p-value = 1.581e-07
-## alternative hypothesis: true rho is not equal to 0
-## sample estimates:
-##       rho 
-## 0.1624734
-\end{verbatim}
+Pour tenter de répondre à cette question, on peut d'abord examiner la
+distribution de la quantité de cendres volantes en fonction de la
+résistance à la compression du béton.
 
--\textgreater{} Significatif mais (tau plutot proche de zero et positif
-donc lien positif )
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-14-1} \end{center}
+La représentation de la distribution de notre variable à expliquer par
+rapport à la variable explicative suggère une légère corrélation
+linéaire négative. On pourrait alors en déduire que plus la quantité de
+cendres volantes augmente, moins le béton résiste à la compression.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{fly\_ash, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"spearman"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+Pour s'assurer de la justesse de cette analyse, nous réalisons un test
+de corrélation de Spearman, qui met en évidence un lien significatif
+entre ces deux variables. Comme indiqué dans notre interprétation, ce
+lien est négatif, avec un coefficient \(\rho\) de -0.19, indiquant ainsi
+une corrélation faible mais non négligeable.
 
-\begin{verbatim}
-## Warning in cor.test.default(bdd$fly_ash, bdd$y_concrete_compresive, method =
-## "spearman"): Impossible de calculer la p-value exacte avec des ex-aequos
-\end{verbatim}
+\subsection{L'eau, un facteur de résistance
+?}\label{leau-un-facteur-de-ruxe9sistance}
 
-\begin{verbatim}
-## 
-##  Spearman's rank correlation rho
-## 
-## data:  bdd$fly_ash and bdd$y_concrete_compresive
-## S = 196318556, p-value = 0.01233
-## alternative hypothesis: true rho is not equal to 0
-## sample estimates:
-##         rho 
-## -0.07795675
-\end{verbatim}
+Dans l'imaginaire collectif, il est tout à fait logique de penser que si
+l'on ajoute de l'eau lors de la création du béton, celui-ci sera moins
+résistant que si l'on ne le fait pas. Cependant, il est indispensable
+d'incorporer une certaine quantité d'eau. L'objectif est donc de trouver
+un juste milieu dans cette quantité. Examinons d'abord la distribution
+de la résistance des bétons par rapport à leur résistance à la
+compression :
 
--\textgreater{} pvalue a 0.01 donc seuil de significativité et pour le
-tau on est a -0.07 donc inversement proportionel
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-16-1} \end{center}
+Comme dans la partie précédente, le graphique est relativement
+désordonné, mais on peut tout de même y relever une légère dépendance
+négative, comme mentionné dans l'introduction de l'étude de cette
+dépendance. Pour être sûr de nos analyses, il serait nécessaire
+d'effectuer un test de corrélation de Spearman.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{water, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"spearman"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+Le résultat de ce test indique qu'il existe bien une corrélation avec un
+coefficient de corrélation de -0.31, ce qui montre un lien négatif non
+négligeable entre ces deux variables.
 
-\begin{verbatim}
-## Warning in cor.test.default(bdd$water, bdd$y_concrete_compresive, method =
-## "spearman"): Impossible de calculer la p-value exacte avec des ex-aequos
-\end{verbatim}
+En conclusion, moins il y a d'eau dans la création du béton, plus
+celui-ci sera résistant. Cependant, les points situés à l'extrémité
+gauche du graphique suggèrent qu'un minimum d'eau est tout de même
+nécessaire pour que le béton atteigne une résistance suffisante.
 
-\begin{verbatim}
-## 
-##  Spearman's rank correlation rho
-## 
-## data:  bdd$water and bdd$y_concrete_compresive
-## S = 238281768, p-value < 2.2e-16
-## alternative hypothesis: true rho is not equal to 0
-## sample estimates:
-##        rho 
-## -0.3083707
-\end{verbatim}
+\subsection{Superplasticité et
+Résistance}\label{superplasticituxe9-et-ruxe9sistance}
 
--\textgreater{} significatif car \textless2.2e-16 donc et inversement
-proportionel : moins il y a d'eau, plus la resistance est importante
+Le superplastifiant, utilisé dans les mélanges de béton, joue un rôle
+essentiel en améliorant la fluidité du béton sans ajout d'eau
+supplémentaire. Ce composant chimique permet d'augmenter la densité du
+béton, contribuant ainsi à une meilleure résistance à la compression.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{super\_plast, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+Visuellement, le graphique ne permet pas de tirer de conclusions claires
+sur la relation entre la quantité de superplastifiant et la résistance à
+la compression du béton. Bien que la tendance semble indiquer une
+augmentation initiale de la résistance avec l'ajout de superplastifiant,
+la distribution des points reste dispersée. De plus, la présence de
+nombreux points proches du début de la courbe rend difficile
+l'identification d'une tendance nette.
 
-\begin{verbatim}
-## 
-##  Kendall's rank correlation tau
-## 
-## data:  bdd$super_plast and bdd$y_concrete_compresive
-## z = 11.39, p-value < 2.2e-16
-## alternative hypothesis: true tau is not equal to 0
-## sample estimates:
-##       tau 
-## 0.2490572
-\end{verbatim}
+Le test de Kendall révèle une corrélation positive modérée (tau = 0.249)
+entre la quantité de superplastifiant et la résistance à la compression
+du béton. Cette corrélation est significative, comme en témoigne la
+p-value extrêmement faible, bien inférieure à 0.05. Cela suggère que, de
+manière générale, une augmentation de la quantité de superplastifiant
+dans le mélange de béton pourrait être associée à une amélioration de sa
+résistance à la compression.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\subsection{Granulats grossiers et résistance à la
+compression}\label{granulats-grossiers-et-ruxe9sistance-uxe0-la-compression}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{coarse, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+Les granulats grossiers, qui comprennent des particules de grande taille
+comme des graviers ou des pierres concassées, contribuent à la
+résistance à la compression du béton en réduisant les vides dans le
+mélange, augmentant ainsi sa compacité.
 
-\begin{verbatim}
-## 
-##  Kendall's rank correlation tau
-## 
-## data:  bdd$coarse and bdd$y_concrete_compresive
-## z = -5.915, p-value = 3.318e-09
-## alternative hypothesis: true tau is not equal to 0
-## sample estimates:
-##        tau 
-## -0.1237223
-\end{verbatim}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
--\textgreater{} lien significatif, tau a -0.123 donc fort lien négatif
+Le graphique représente la relation entre les granulats grossiers et la
+résistance à la compression du béton. La répartition des données semble
+dispersée. On peut néanmoins observer un lien quadratique entre ces deux
+variables, mais il est difficile d'en tirer une conclusion plus
+approfondie.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-22-1} \end{center}
+Le test de corrélation de Kendall a donné un coefficient tau de -0.124.
+Bien que la p-value soit très faible (3.318e-09), ce faible tau indique
+une relation négative mais modérée. Cela signifie qu'il existe bien une
+certaine corrélation entre ces deux variables.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{fine\_aggr, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\subsection{Une relation floue entre les granulats fins et résistance à
+la
+compression.}\label{une-relation-floue-entre-les-granulats-fins-et-ruxe9sistance-uxe0-la-compression.}
 
-\begin{verbatim}
-## 
-##  Kendall's rank correlation tau
-## 
-## data:  bdd$fine_aggr and bdd$y_concrete_compresive
-## z = -5.8569, p-value = 4.717e-09
-## alternative hypothesis: true tau is not equal to 0
-## sample estimates:
-##        tau 
-## -0.1222597
-\end{verbatim}
+La présence de granulats fins améliore la compacité du mélange, ce qui
+peut influencer ses propriétés, notamment la résistance à la
+compression. Ils remplissent les espaces entre les granulats plus
+grossiers.
 
--\textgreater lien n significatif,tau négatif donc moins il y a de
-granulat fin, plus la resistance est grande
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-23-1} \end{center}
+
+Le graphique des granulats fins ne permet pas de tirer de conclusions
+claires concernant la relation entre cette variable et la résistance à
+la compression, aucune tendance évidente n'y apparaît.
+
+Les résultats du test de corrélation de Kendall indiquent une relation
+significative entre la quantité de granulats fins et la résistance du
+béton. Le coefficient \(\tau\) étant négatif, cela signifie que lorsque
+la proportion de granulats fins diminue, la résistance à la compression
+tend à augmenter. Cette observation suggère qu'un excès de granulats
+fins pourrait réduire la compacité du mélange.
 
 \section{Analyse Multivariée}\label{analyse-multivariuxe9e}
 
@@ -617,7 +624,7 @@ active, aux côtés des huit autres variables explicatives.
 \subsection{Histogramme des valeurs
 propres}\label{histogramme-des-valeurs-propres}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 Le graphique illustre l'histogramme des valeurs propres issu de l'ACP,
 permettant d'identifier le nombre d'axes principaux à retenir.
@@ -641,7 +648,7 @@ les \textbf{trois premiers axes} pour l'analyse.
 \subsection{Analyse sur les 2 Premiers
 Axes}\label{analyse-sur-les-2-premiers-axes}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 Le cercle de corrélation met en évidence les relations entre les
 variables étudiées, projetées sur les deux premiers axes principaux de
@@ -903,7 +910,7 @@ La p-value étant inférieure à 0.05, nous rejetons l'\textbf{hypothèse
 H0} et acceptons l'\textbf{hypothèse H1},\\
 ce qui signifie que \textbf{les erreurs sont fortement corrélées}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-28-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 On remarque que plusieurs barres sortent de l'intervalle de confiance,
 ce qui vient soutenir la conclusion\\
@@ -998,19 +1005,7 @@ normale}.
 26.9 & 20.20 & 0.00694 & 10.4 & 0.002940 & 1.950 \\
 \end{longtable}
 
-\begin{verbatim}
-## # A tibble: 6 x 6
-##   .fitted .resid    .hat .sigma  .cooksd .std.resid
-##     <dbl>  <dbl>   <dbl>  <dbl>    <dbl>      <dbl>
-## 1    53.5  26.5  0.0137    10.4 0.0102        2.57 
-## 2    53.7   8.14 0.0129    10.4 0.000902      0.788
-## 3    56.8 -16.5  0.0170    10.4 0.00495      -1.60 
-## 4    67.7 -26.6  0.0287    10.4 0.0221       -2.60 
-## 5    60.9 -16.6  0.0306    10.4 0.00923      -1.62 
-## 6    26.9  20.2  0.00694   10.4 0.00294       1.95
-\end{verbatim}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-32-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-33-1.pdf}
 
 D'après ce plot, il \textbf{n'existe aucune linéarité} entre la variable
 réponse et les variables explicatives.\\
@@ -1020,7 +1015,7 @@ relation \textbf{n'est pas linéaire}.
 Les observations \textbf{382, 384 et 115} sont les \textbf{bétons
 présentant les plus grandes valeurs en termes de résidus}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-34-1.pdf}
 
 Dans notre cas, la \textbf{courbe rouge n'est pas horizontale} et ne
 sépare pas les points de manière homogène\\
@@ -1028,7 +1023,7 @@ de part et d'autre. Cela indique que \textbf{les erreurs ne sont pas
 homogènes}, ce qui confirme la conclusion\\
 du \textbf{test de Breusch-Pagan}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-34-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-35-1.pdf}
 
 Ce plot de l'\textbf{hypothèse de normalité} montre que plusieurs points
 \textbf{ne suivent pas la ligne},\\
@@ -1039,7 +1034,7 @@ Shapiro-Wilk},\\
 indiquant que les erreurs \textbf{ne suivent pas une distribution
 normale}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-35-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-36-1.pdf}
 
 Tous les points situés \textbf{à droite de la droite verticale bleue}
 sont des \textbf{points leviers extrêmes},\\
@@ -1052,14 +1047,15 @@ c'est-à-dire des \textbf{valeurs extrêmes de la variable cible}.
 Dans notre cas, nous avons \textbf{deux outliers} et \textbf{plusieurs
 points leviers extrêmes}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-36-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-37-1.pdf}
 
 Suite à l'observation des résultats donnés par le graphique, on remarque
 que \textbf{plusieurs points dépassent la ligne}\\
 formée par les \textbf{pointillés rouges}, qui représente le seuil à
 partir duquel un point est \textbf{considéré comme influent}.
 
-Les \textbf{bétons 57, 225 et 611} sont les \textbf{plus influents}.
+Les \textbf{bétons 57, 225 et 611} sont les \textbf{plus influents}. \#
+Conclusion
 
 \section{Annexe}\label{annexe}
 
@@ -1067,43 +1063,76 @@ Les \textbf{bétons 57, 225 et 611} sont les \textbf{plus influents}.
 
 Histogramme pour la variable \texttt{Cement}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-37-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-38-1.pdf}
 
 Histogramme pour la variable \texttt{Blast\ Furnace\ Slag}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-38-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-39-1.pdf}
 
 Histogramme pour la variable \texttt{Fly\ Ash}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-39-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-40-1.pdf}
 
 Histogramme pour la variable \texttt{Water}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-40-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-41-1.pdf}
 
 Histogramme pour la variable \texttt{Superplasticizer}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-41-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-42-1.pdf}
 
 Histogramme pour la variable \texttt{Coarse\ Aggregate}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-42-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-43-1.pdf}
 
 Histogramme pour la variable \texttt{Fine\ Aggregate}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-43-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-44-1.pdf}
 
 Histogramme pour la variable \texttt{Age}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-44-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-45-1.pdf}
 
 Histogramme pour la variable \texttt{Concrete\ Compressive\ Strength}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-45-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-46-1.pdf}
 
 \subsection{Analyse bivariee}\label{analyse-bivariee}
 
 Matrice de correlation
+
+\begin{verbatim}
+##                            cement blast_furnace      fly_ash       water
+## cement                 1.00000000   -0.27519344 -0.397475440 -0.08154361
+## blast_furnace         -0.27519344    1.00000000 -0.323569468  0.10728594
+## fly_ash               -0.39747544   -0.32356947  1.000000000 -0.25704400
+## water                 -0.08154361    0.10728594 -0.257043997  1.00000000
+## super_plast            0.09277137    0.04337574  0.377339559 -0.65746444
+## coarse                -0.10935604   -0.28399823 -0.009976788 -0.18231167
+## fine_aggr             -0.22272017   -0.28159326  0.079076351 -0.45063498
+## age                    0.08194726   -0.04424580 -0.154370165  0.27760443
+## y_concrete_compresive  0.49783272    0.13482445 -0.105753348 -0.28961348
+##                       super_plast       coarse   fine_aggr          age
+## cement                 0.09277137 -0.109356039 -0.22272017  0.081947264
+## blast_furnace          0.04337574 -0.283998230 -0.28159326 -0.044245801
+## fly_ash                0.37733956 -0.009976788  0.07907635 -0.154370165
+## water                 -0.65746444 -0.182311668 -0.45063498  0.277604429
+## super_plast            1.00000000 -0.266302755  0.22250149 -0.192716518
+## coarse                -0.26630276  1.000000000 -0.17850575 -0.003015507
+## fine_aggr              0.22250149 -0.178505755  1.00000000 -0.156094049
+## age                   -0.19271652 -0.003015507 -0.15609405  1.000000000
+## y_concrete_compresive  0.36610230 -0.164927821 -0.16724896  0.328876976
+##                       y_concrete_compresive
+## cement                            0.4978327
+## blast_furnace                     0.1348244
+## fly_ash                          -0.1057533
+## water                            -0.2896135
+## super_plast                       0.3661023
+## coarse                           -0.1649278
+## fine_aggr                        -0.1672490
+## age                               0.3288770
+## y_concrete_compresive             1.0000000
+\end{verbatim}
 
 \begin{center}\includegraphics{rmd_final_files/figure-latex/corr_y-1} \end{center}
 
@@ -1267,7 +1296,7 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 \subsubsection{Partie E}\label{partie-e}
 
@@ -1287,6 +1316,6 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 \end{document}
