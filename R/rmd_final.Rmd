@@ -102,7 +102,7 @@ Selon les observations présentées dans un mémoire de recherche intitulé “I
 Typiquement, un saut d’environ 10 MPa (environ 50 %) est constaté entre 2 et 7 jours.
 Après ce cap, le rythme de durcissement ralentit, mais on atteint souvent plus de 90 % de la résistance finale à 28 jours.
 
-# Analyse univariée.
+# Zoom tour à tour sur les composantes de notre base de données.
 
 ```{r base, echo = FALSE, message=FALSE, warning=F}
 library(readxl)
@@ -111,6 +111,7 @@ library(ggplot2)
 library(readxl)
 library(lmtest)
 library(broom)
+library(dplyr)
 
 # Charger les données ( Verifier si on se trouve bien dans le repertoire juste avant "Data")
 bdd <- read_excel("../Data/Concrete_Data.xls")
@@ -135,13 +136,14 @@ verif <- str(bdd)
 
 ## Cement
 
-```{r boxplot_y,echo = FALSE, message=FALSE, warning=F}
+```{r boxplot_y,echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 
 #Histogramme pour Cement
 p1 <- ggplot(bdd, aes(x = cement)) +
   geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
   labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
   theme_minimal()
+print(p1)
 ```
 
 L'histogramme montre une distribution étalée avec plusieurs pics, indiquant une variabilité dans les proportions de ciment utilisées.
@@ -150,12 +152,13 @@ Cette répartition suggère que différentes formulations de béton nécessitent
 
 ## Blast Furnace Slag
 
-```{r , echo = FALSE, message=FALSE, warning=F}
+```{r , echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 # 2 Histogramme pour Blast Furnace Slag
 p2 <- ggplot(bdd, aes(x = blast_furnace)) +
   geom_histogram(bins = 30, fill = "red", color = "darkred") +
   labs(title = "Distribution de la variable Blast Furnace Slag", x = "Blast Furnace Slag", y = "Fréquence") +
   theme_minimal()
+print(p2)
 ```
 
 La majorité des valeurs sont proches de zéro, suggérant que le blast furnace slag est rarement utilisé en grande quantité.
@@ -163,12 +166,13 @@ Cependant, quelques observations montrent une présence significative de ce comp
 
 ## Fly Ash
 
-```{r , echo = FALSE, message=FALSE, warning=F }
+```{r , echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 # 3 Histogramme pour Fly Ash
 p3 <- ggplot(bdd, aes(x = fly_ash)) +
   geom_histogram(bins = 30, fill = "purple", color = "darkblue") +
   labs(title = "Distribution de la variable Fly Ash", x = "Fly Ash", y = "Fréquence") +
   theme_minimal()
+print(p3)
 ```
 
 La distribution est fortement biaisée vers zéro, montrant que le fly ash est peu utilisé dans la majorité des échantillons.
@@ -176,12 +180,13 @@ Seules quelques observations présentent des valeurs plus élevées, ce qui indi
 
 ## Water
 
-```{r , echo = FALSE, message=FALSE, warning=F }
+```{r , echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 # 4 Histogramme pour Water
 p4 <- ggplot(bdd, aes(x = water)) +
   geom_histogram(bins = 30, fill = "cyan", color = "darkblue") +
   labs(title = "Distribution de la variable Water", x = "Water", y = "Fréquence") +
   theme_minimal()
+print(p4)
 ```
 
 La répartition est relativement normale avec un pic autour de 200 kg/m³, ce qui indique une quantité d’eau standardisée dans la plupart des mélanges.
@@ -189,12 +194,13 @@ Une consommation d’eau bien contrôlée est essentielle pour assurer une bonne
 
 ## Superplasticizer
 
-```{r , echo = FALSE, message=FALSE, warning=F}
+```{r , echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 #5 Histogramme pour Superplasticizer
 p5 <- ggplot(bdd, aes(x = super_plast)) +
   geom_histogram(bins = 30, fill = "orange", color = "darkorange") +
   labs(title = "Distribution de la variable Superplasticizer", x = "Superplasticizer", y = "Fréquence") +
   theme_minimal()
+print(p5)
 ```
 
 La plupart des valeurs sont proches de zéro, ce qui signifie que le superplasticizer est peu utilisé dans de nombreux échantillons.
@@ -202,12 +208,13 @@ Cependant, certaines observations indiquent une utilisation plus importante, ce 
 
 ## Coarse Aggregate
 
-```{r , echo = FALSE, message=FALSE, warning=F}
+```{r , echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 # 6 Histogramme pour Coarse Aggregate
 p6 <- ggplot(bdd, aes(x = coarse)) +
   geom_histogram(bins = 30, fill = "yellow", color = "gold") +
   labs(title = "Distribution de la variable Coarse Aggregate", x = "Coarse Aggregate", y = "Fréquence") +
   theme_minimal()
+print(p6)
 ```
 
 Le coarse aggregate suit une distribution centrée autour de 950-1000 kg/m³, ce qui montre une standardisation dans son utilisation.
@@ -215,12 +222,13 @@ La présence d’une quantité relativement constante de coarse aggregate est es
 
 ## Fine Aggregate
 
-```{r , echo = FALSE, message=FALSE, warning=F}
+```{r , echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 # 7 Histogramme pour Fine Aggregate
 p7 <- ggplot(bdd, aes(x = fine_aggr)) +
   geom_histogram(bins = 30, fill = "pink", color = "black") +
   labs(title = "Distribution de la variable Fine Aggregate", x = "Fine Aggregate", y = "Fréquence") +
   theme_minimal()
+print(p7)
 ```
 
 La distribution est également centrée autour de 750-800 kg/m³, suggérant une utilisation homogène du fine aggregate dans les différents mélanges de béton.
@@ -228,12 +236,13 @@ Une quantité bien maîtrisée de fine aggregate améliore la compacité du bét
 
 ## Age
 
-```{r , echo = FALSE, message=FALSE, warning=F}
+```{r , echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 # 8 Histogramme pour Age
 p8 <- ggplot(bdd, aes(x = age)) +
   geom_histogram(bins = 30, fill = "brown", color = "black") +
   labs(title = "Distribution de la variable Age", x = "Age (jours)", y = "Fréquence") +
   theme_minimal()
+print(p8)
 ```
 
 L'âge du béton est majoritairement faible, avec une concentration autour de 28 jours.
@@ -242,19 +251,20 @@ Cela reflète l'importance de la période de cure du béton, puisque la résista
 
 ## Concrete Compressive Strength
 
-```{r , echo = FALSE, message=FALSE, warning=F}
+```{r , echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 #  Histogramme pour Concrete Compressive Strength
 p9 <- ggplot(bdd, aes(x = y_concrete_compresive)) +
   geom_histogram(bins = 30, fill = "darkgreen", color = "black") +
   labs(title = "Distribution de la variable Concrete Compressive Strength", x = "Concrete Compressive Strength (MPa)", y = "Fréquence") +
   theme_minimal()
+print(p9)
 ```
 
 La concrete compressive strength suit une distribution proche d’une loi normale, avec un pic autour de 40 MPa.
 Cela indique une variabilité contrôlée de la résistance du béton.
 La concrete compressive strength étant un paramètre clé, cette distribution montre que la plupart des mélanges atteignent une performance attendue, bien qu’il existe des échantillons avec des valeurs plus élevées ou plus faibles en fonction des formulations utilisées.
 
-# Analyse bivariée.
+# Expliquons la résistance à la compression du béton par nos variables.
 
 La matrice de corrélation en annexe va nous aider à voir les différents liens de corrélation potentiels entre nos variables.
 Dans cette partie, nous allons étudier et essayer de trouver les couples de variables significativement dépendants.
@@ -315,58 +325,85 @@ Voyons le graphique ci-dessous.
 
 ```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
 par(cex = 0.5)
-plot(bdd$water, bdd$y_concrete_compresive,
-     main = "Relation entre l'eau et la resistance",
-     xlab = "eau",
+plot(bdd$age, bdd$y_concrete_compresive,
+     main = "Relation entre l'age et la resistance",
+     xlab = "age",
      ylab = "Resistance à la compression",
      pch = 16, col = "black")
 ```
 
-Cette première visualisation ne nous permet pas de dire s'il y aurait en réalité un quelconque lien entre ces deux variables.
+Cette première visualisation ne nous permet pas de déterminer s'il existe réellement un lien entre ces deux variables. Une exagération pourrait peut-être nous amener à supposer l’existence d’une relation quadratique entre elles, mais cette hypothèse ne peut être vérifiée dans cette partie.
+
 En conséquence, il est nécessaire de réaliser un test de corrélation.
 
-Ici, le test réalisé nous permet de voir que notre hypothèse est infirmée, car il y a en effet un lien significatif entre ces deux variables, et la corrélation indique que ce lien est positif.
-Cette corrélation est positive mais modérée, avec un coefficient de Kendall $\tau$ de **0,449** (annexe).
-Les valeurs croissent significativement ensemble, mais il y aura tout de même quelques exceptions.
+Le test effectué nous permet de constater que notre hypothèse est infirmée, car il existe bien un lien significatif entre ces deux variables, et la corrélation indique que ce lien est positif.
+Cette corrélation est positive mais modérée, avec un coefficient de Kendall $\tau$ de 0,449 (voir annexe).
+Les valeurs croissent significativement ensemble, bien que certaines exceptions subsistent.
 
-## `blast_furnace` et résistance du béton.
+```{r, warning= F, echo =F}
+test <- cor.test(bdd$age, bdd$y_concrete_compresive, method = "kendall")
+```
 
-graph1 ; On
 
-```{r, echo = FALSE, fig.align='center'}
+## La resistance à la compression du béton peut-elle s'expliquer grâce au laitier de haut fournaux ?
+
+On examine ici la relation entre le laitier de haut fourneau et la résistance à la compression du béton :
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2, fig.align='center'}
+
+data_nul <- bdd %>% 
+  filter(blast_furnace>10)
+
 par(cex=0.5)
-plot(bdd$blast_furnace, bdd$y_concrete_compresive,
+plot(data_nul$blast_furnace, data_nul$y_concrete_compresive,
      main = "Relation entre Cement et Résistance à la Compression",
      xlab = "laitier de haut fourneau",
      ylab = "Concrete Compressive Strength",
      pch = 16, col = "black")
 ```
 
-test1 ;
+Ce graphique ne suggère aucun lien de corrélation entre la quantité de laitier de haut fourneau et la résistance à la compression du béton, mis à part une légère baisse de la résistance du béton lorsque la quantité de laitier de haut fourneau augmente. Afin de détecter une potentielle relation de dépendance, il pourrait être judicieux d'effectuer un test de corrélation de Spearman.
 
-```{r}
-cor.test(bdd$blast_furnace, bdd$y_concrete_compresive, method = "spearman")
+En effet, ce test nous fournit une p-value inférieure à 0.05 et un coefficient $\rho$ de 0.16. Ces valeurs indiquent qu'il existe bien un lien significatif positif entre ces deux variables, mais cette corrélation reste faible compte tenu de la proximité de $\rho$ avec zéro.
+
+```{r, echo = F, warning=F}
+test <- cor.test(bdd$blast_furnace, bdd$y_concrete_compresive, method = "spearman")
 ```
 
--\> Significatif mais (tau plutot proche de zero et positif donc lien positif )
+## Les cendres volantes peuvent-elles expliquer la resistance du béton ?
 
-```{r, echo = FALSE, fig.align='center'}
+Pour tenter de répondre à cette question, on peut d'abord examiner la distribution de la quantité de cendres volantes en fonction de la résistance à la compression du béton.
+
+```{r, echo = FALSE, fig.align='center', fig.width=3, fig.height=2}
+library(dplyr)
+data_nul <- bdd %>% 
+  filter(fly_ash>0)
+
 par(cex=0.5)
-plot(bdd$fly_ash, bdd$y_concrete_compresive,
+plot(data_nul$fly_ash, data_nul$y_concrete_compresive,
      main = "Relation entre Cement et Résistance à la Compression",
      xlab = "cendre volantes",
      ylab = "Concrete Compressive Strength",
      pch = 16, col = "black")
 ```
+La représentation de la distribution de notre variable à expliquer par rapport à la variable explicative suggère une légère corrélation linéaire négative. On pourrait alors en déduire que plus la quantité de cendres volantes augmente, moins le béton résiste à la compression.
 
-```{r}
-cor.test(bdd$fly_ash, bdd$y_concrete_compresive, method = "spearman")
+Pour s'assurer de la justesse de cette analyse, nous réalisons un test de corrélation de Spearman, qui met en évidence un lien significatif entre ces deux variables. Comme indiqué dans notre interprétation, ce lien est négatif, avec un coefficient $\rho$ de -0.19, indiquant ainsi une corrélation faible mais non négligeable.
+
+```{r, echo  = F, warning= F}
+data_nul <- bdd %>% 
+  filter(fly_ash>=30)
+
+test <- cor.test(data_nul$fly_ash, data_nul$y_concrete_compresive, method = "spearman")
 ```
 
--\> pvalue a 0.01 donc seuil de significativité et pour le tau on est a -0.07 donc inversement proportionel
+## L'eau, un facteur de résistance ?
 
-```{r, echo = FALSE, fig.align='center'}
+Dans l'imaginaire collectif, il est tout à fait logique de penser que si l'on ajoute de l'eau lors de la création du béton, celui-ci sera moins résistant que si l'on ne le fait pas. Cependant, il est indispensable d'incorporer une certaine quantité d'eau. L'objectif est donc de trouver un juste milieu dans cette quantité. Examinons d'abord la distribution de la résistance des bétons par rapport à leur résistance à la compression :
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
 par(cex=0.5)
+
 plot(bdd$water, bdd$y_concrete_compresive,
      main = "Relation entre Cement et Résistance à la Compression",
      xlab = "quantité d'eau",
@@ -374,26 +411,50 @@ plot(bdd$water, bdd$y_concrete_compresive,
      pch = 16, col = "black")
 ```
 
-```{r}
-cor.test(bdd$water, bdd$y_concrete_compresive, method = "spearman")
+Comme dans la partie précédente, le graphique est relativement désordonné, mais on peut tout de même y relever une légère dépendance négative, comme mentionné dans l'introduction de l'étude de cette dépendance. Pour être sûr de nos analyses, il serait nécessaire d'effectuer un test de corrélation de Spearman.
+
+Le résultat de ce test indique qu'il existe bien une corrélation avec un coefficient de corrélation de -0.31, ce qui montre un lien négatif non négligeable entre ces deux variables.
+
+En conclusion, moins il y a d'eau dans la création du béton, plus celui-ci sera résistant. Cependant, les points situés à l'extrémité gauche du graphique suggèrent qu'un minimum d'eau est tout de même nécessaire pour que le béton atteigne une résistance suffisante.
+
+
+```{r, echo = F, warning= F}
+test <- cor.test(bdd$water, bdd$y_concrete_compresive, method = "spearman")
 ```
 
--\> significatif car \<2.2e-16 donc et inversement proportionel : moins il y a d'eau, plus la resistance est importante
+## Superplasticité et Résistance
 
-```{r, echo = FALSE, fig.align='center'}
+Le superplastifiant, utilisé dans les mélanges de béton, joue un rôle essentiel en améliorant la fluidité du béton sans ajout d'eau supplémentaire. Ce composant chimique permet d’augmenter la densité du béton, contribuant ainsi à une meilleure résistance à la compression.
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
 par(cex=0.5)
-plot(bdd$super_plast, bdd$y_concrete_compresive,
+library(dplyr)
+
+data_nul <- bdd %>%
+  filter(super_plast>0)
+
+plot(data_nul$super_plast, data_nul$y_concrete_compresive,
      main = "Relation entre Cement et Résistance à la Compression",
      xlab = "additif chimique",
      ylab = "Concrete Compressive Strength",
      pch = 16, col = "black")
 ```
 
-```{r}
-cor.test(bdd$super_plast, bdd$y_concrete_compresive, method = "kendall")
+
+Visuellement, le graphique ne permet pas de tirer de conclusions claires sur la relation entre la quantité de superplastifiant et la résistance à la compression du béton. Bien que la tendance semble indiquer une augmentation initiale de la résistance avec l'ajout de superplastifiant, la distribution des points reste dispersée. De plus, la présence de nombreux points proches du début de la courbe rend difficile l'identification d'une tendance nette.
+
+```{r, echo = F, eval = F}
+t <- cor.test(bdd$super_plast, bdd$y_concrete_compresive, method = "kendall")
 ```
 
-```{r, echo = FALSE, fig.align='center'}
+Le test de Kendall révèle une corrélation positive modérée (tau = 0.249) entre la quantité de superplastifiant et la résistance à la compression du béton. Cette corrélation est significative, comme en témoigne la p-value extrêmement faible, bien inférieure à 0.05. Cela suggère que, de manière générale, une augmentation de la quantité de superplastifiant dans le mélange de béton pourrait être associée à une amélioration de sa résistance à la compression.
+
+
+##  Granulats grossiers et résistance à la compression
+
+Les granulats grossiers, qui comprennent des particules de grande taille comme des graviers ou des pierres concassées, contribuent à la résistance à la compression du béton en réduisant les vides dans le mélange, augmentant ainsi sa compacité.
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
 par(cex=0.5)
 plot(bdd$coarse, bdd$y_concrete_compresive,
      main = "Relation entre Cement et Résistance à la Compression",
@@ -402,26 +463,36 @@ plot(bdd$coarse, bdd$y_concrete_compresive,
      pch = 16, col = "black")
 ```
 
-```{r}
-cor.test(bdd$coarse, bdd$y_concrete_compresive, method = "kendall")
+Le graphique représente la relation entre les granulats grossiers et la résistance à la compression du béton. La répartition des données semble dispersée. On peut néanmoins observer un lien quadratique entre ces deux variables, mais il est difficile d’en tirer une conclusion plus approfondie.
+
+
+```{r, echo = F, eval = F}
+tes <- cor.test(bdd$coarse, bdd$y_concrete_compresive, method = "kendall")
 ```
 
--\> lien significatif, tau a -0.123 donc fort lien négatif
+Le test de corrélation de Kendall a donné un coefficient tau de -0.124. Bien que la p-value soit très faible (3.318e-09), ce faible tau indique une relation négative mais modérée. Cela signifie qu'il existe bien une certaine corrélation entre ces deux variables.
 
-```{r, echo = FALSE, fig.align='center'}
+
+## Une relation floue entre les granulats fins et résistance à la compression.
+
+La présence de granulats fins améliore la compacité du mélange, ce qui peut influencer ses propriétés, notamment la résistance à la compression. Ils remplissent les espaces entre les granulats plus grossiers.
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
 par(cex=0.5)
 plot(bdd$fine_aggr, bdd$y_concrete_compresive,
-     main = "Relation entre Cement et Résistance à la Compression",
+     main = "",
      xlab = "granulat fins",
      ylab = "Concrete Compressive Strength",
      pch = 16, col = "black")
 ```
 
-```{r}
-cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
+Le graphique des granulats fins ne permet pas de tirer de conclusions claires concernant la relation entre cette variable et la résistance à la compression, aucune tendance évidente n’y apparaît.
+
+```{r, echo = F, eval = F}
+test <- cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
 ```
 
--\>lien n significatif,tau négatif donc moins il y a de granulat fin, plus la resistance est grande
+Les résultats du test de corrélation de Kendall indiquent une relation significative entre la quantité de granulats fins et la résistance du béton. Le coefficient $\tau$ étant négatif, cela signifie que lorsque la proportion de granulats fins diminue, la résistance à la compression tend à augmenter. Cette observation suggère qu'un excès de granulats fins pourrait réduire la compacité du mélange.
 
 # Analyse Multivariée
 
@@ -527,9 +598,6 @@ Cette ACP met en évidence trois dimensions principales dans la composition du b
 -   `y_concrete_compresive` étant principalement projeté sur Dim 2, un modèle linéaire devrait inclure **`cement`** comme facteur explicatif principal.
 -   L’opposition entre `coarse` et `cement` sur Dim 2 suggère qu’un effet combiné de ces deux variables pourrait influencer la résistance mécanique.
 
-
-
-
 # Modélisation Linéaire
 
 ```{r , echo=FALSE}
@@ -560,7 +628,6 @@ results <- data.frame(
 # Création du tableau avec un titre
 kable(results, caption = "Tableau des résultats de la régression linéaire")
 ```
-
 
 
 **Interprétation des p-values**
@@ -736,8 +803,7 @@ Suite à l'observation des résultats donnés par le graphique, on remarque que 
 formée par les **pointillés rouges**, qui représente le seuil à partir duquel un point est **considéré comme influent**.
 
 Les **bétons 57, 225 et 611** sont les **plus influents**.
-
-
+# Conclusion
 
 # Annexe
 
@@ -822,10 +888,22 @@ print(p9)
 Matrice de correlation
 
 ```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center',,fig.width=4, fig.height=3}
-par(cex=0.4)
+par(cex=0.3)
 library(corrplot)
-cor_matrix <- cor(bdd, use = "complete.obs", method = "kendall")
-cor <- corrplot(cor_matrix)
+library(ggcorrplot)
+
+# Calcul de la matrice de corrélation ----
+cor_matrix <- cor(bdd, use = "complete.obs")
+print(cor_matrix)
+
+
+#Graphe de la matrice de corelation
+ggcorrplot(cor_matrix,
+           hc.order = TRUE,        # Réorganise en clustering hiérarchique
+           type = "upper",         # Affiche uniquement la moitié 
+           lab = TRUE,             # Ajout des valeurs de corrélation
+           lab_size = 2.5,         # Réduit la taille du texte
+           tl.cex = 8)             # Réduit la taille des variables
 
 ```
 
