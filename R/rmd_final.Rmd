@@ -437,16 +437,6 @@ barplot(
 )
 
 
-res_pca$eig²
-
-# Tableau des contributions des variables
-contrib_var <- as.data.frame(res_pca$var$contrib)
-print(contrib_var)
-
-# Tableau des cos² des variables
-cos2_var <- as.data.frame(res_pca$var$cos2)
-print(cos2_var)
-
 ```
 
 Le graphique illustre l’histogramme des valeurs propres issu de l’ACP, permettant d’identifier le nombre d’axes principaux à retenir.
@@ -498,7 +488,7 @@ Le deuxième axe distingue **les formulations riches en ciment (`cement`) et ass
 
 ## Interprétation du Troisième Axe
 
-### Dim(1-3) : 40.5%  % de la Variance Totale (Voir annexe : Partie D)
+### Dim(1-3) : 40.5%  % de la Variance Totale (Voir annexe : fig 21)
 
 Le troisième axe distingue **les formulations riches en laitier du haut fourneau (`blast_frunace`) et associées à une plus grande résistance (`y_concrete_compresive`)** des formulations utilisant **une proportion plus élevée des granulats grossiers (`Coarse`) et du ciment (`Cement`)**. ces deux axes representent 40.5% de la varaince totale.
 
@@ -511,7 +501,7 @@ Le troisième axe distingue **les formulations riches en laitier du haut fournea
 
 
 
-### Dim(2-3) : 36.14 % de la Variance Totale (Voir annexe : Partie E)
+### Dim(2-3) : 36.14 % de la Variance Totale (Voir annexe : Partie 22)
 
 Le troisième axe distingue **les formulations riches en laitier du haut fourneau (`blast_frunace`) et associées à une plus grande résistance (`y_concrete_compresive`)** des formulations utilisant **une proportion plus élevée des granulats grossiers (`Coarse`) et du ciment (`Cement`)**. ces deux axes representent 40.5% de la varaince totale.
 
@@ -749,6 +739,10 @@ Les **bétons 57, 225 et 611** sont les **plus influents**.
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Cement
+p1 <- ggplot(bdd, aes(x = cement)) +
+  geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
+  labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
+  theme_minimal()
 print(p1)
 ```
 
@@ -759,14 +753,24 @@ print(p1)
 ```{r , echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Blast Furnace Slag
 
+p2 <- ggplot(bdd, aes(x = blast_furnace)) +
+  geom_histogram(bins = 30, fill = "red", color = "darkred") +
+  labs(title = "Distribution de la variable Blast Furnace Slag", x = "Blast Furnace Slag", y = "Fréquence") +
+  theme_minimal()
 print(p2)
+
 ```
 
 ###  Fig 3 :Histogramme pour la variable `Fly Ash`
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
 #  Histogramme pour Fly Ash
+p3 <- ggplot(bdd, aes(x = fly_ash)) +
+  geom_histogram(bins = 30, fill = "purple", color = "darkblue") +
+  labs(title = "Distribution de la variable Fly Ash", x = "Fly Ash", y = "Fréquence") +
+  theme_minimal()
 print(p3)
+
 ```
 
 ###  Fig 4: Histogramme pour la variable `Water`
@@ -774,7 +778,12 @@ print(p3)
 ```{r , echo = FALSE, message=FALSE, warning=F}
 #Histogramme pour Water
 
+p4 <- ggplot(bdd, aes(x = water)) +
+  geom_histogram(bins = 30, fill = "cyan", color = "darkblue") +
+  labs(title = "Distribution de la variable Water", x = "Water", y = "Fréquence") +
+  theme_minimal()
 print(p4)
+
 
 ```
 
@@ -783,6 +792,10 @@ print(p4)
 ```{r, echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Superplasticizer
 
+p5 <- ggplot(bdd, aes(x = super_plast)) +
+  geom_histogram(bins = 30, fill = "orange", color = "darkorange") +
+  labs(title = "Distribution de la variable Superplasticizer", x = "Superplasticizer", y = "Fréquence") +
+  theme_minimal()
 print(p5)
 
 ```
@@ -790,7 +803,10 @@ print(p5)
 ###  Fig 6 : Histogramme pour la variable `Coarse Aggregate`
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
-
+p6 <- ggplot(bdd, aes(x = coarse)) +
+  geom_histogram(bins = 30, fill = "yellow", color = "gold") +
+  labs(title = "Distribution de la variable Coarse Aggregate", x = "Coarse Aggregate", y = "Fréquence") +
+  theme_minimal()
 print(p6)
 ```
 
@@ -799,7 +815,12 @@ print(p6)
 ```{r, echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Fine Aggregate
 
+p7 <- ggplot(bdd, aes(x = fine_aggr)) +
+  geom_histogram(bins = 30, fill = "pink", color = "black") +
+  labs(title = "Distribution de la variable Fine Aggregate", x = "Fine Aggregate", y = "Fréquence") +
+  theme_minimal()
 print(p7)
+
 ```
 
 ###  Fig 8 : Histogramme pour la variable `Age`
@@ -807,6 +828,10 @@ print(p7)
 ```{r, echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Age
 
+p8 <- ggplot(bdd, aes(x = age)) +
+  geom_histogram(bins = 30, fill = "brown", color = "black") +
+  labs(title = "Distribution de la variable Age", x = "Age (jours)", y = "Fréquence") +
+  theme_minimal()
 print(p8)
 ```
 
@@ -815,7 +840,13 @@ print(p8)
 ```{r , echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Concrete Compressive Strength
 
+p9 <- ggplot(bdd, aes(x = y_concrete_compresive)) +
+  geom_histogram(bins = 30, fill = "darkgreen", color = "black") +
+  labs(title = "Distribution de la variable Concrete Compressive Strength", x = "Concrete Compressive Strength (MPa)", y = "Fréquence") +
+  theme_minimal()
 print(p9)
+
+
 ```
 
 
@@ -1025,7 +1056,7 @@ cos2_var <- as.data.frame(res_pca$var$cos2)
 print(cos2_var)
 ```
 
-### partie D
+### Fig 21 : PCA sur  la dimension 1-3
 
 ```{r, fig.align='center'}
 
@@ -1041,7 +1072,7 @@ plot.PCA(
   )
 ```
 
-### Partie E
+### Fig 22 : PCA sur  la dimension 2-3
 
 ```{r, fig.align='center'}
 # Représentation des variables sur le plan factoriel (axes 1 et 3)
