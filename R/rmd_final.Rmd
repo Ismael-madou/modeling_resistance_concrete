@@ -13,19 +13,18 @@ output:
     toc_depth: 2
     number_sections: true
     keep_tex: true
-  word_document:
-    toc: true
-    toc_depth: '2'
+    fig_caption: yes
 fontsize: 12pt
 geometry: a4paper
 titlepage: true
 header-includes:
-- \usepackage{fancyhdr}
-- \pagestyle{fancy}
-- \fancyhead{}
-- \fancyhead[R]{\small `r Sys.Date()`}
-- \fancyhead[L]{\small Regression Linéaire}
-- \renewcommand{\headrulewidth}{0.4pt}
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancy}
+  - \fancyhead{}
+  - \fancyhead[R]{\small `r Sys.Date()`}
+  - \fancyhead[L]{\small Regression Linéaire}
+  - \renewcommand{\headrulewidth}{0.4pt}
+  - \usepackage[labelfont=bf, labelsep=colon, position=top]{caption} % Place la légende au-dessus de la figure
 editor_options:
   markdown:
     wrap: sentence
@@ -34,6 +33,10 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+\listoffigures
+
+\listoftables
 
 \newpage
 
@@ -102,7 +105,7 @@ Selon les observations présentées dans un mémoire de recherche intitulé “I
 Typiquement, un saut d’environ 10 MPa (environ 50 %) est constaté entre 2 et 7 jours.
 Après ce cap, le rythme de durcissement ralentit, mais on atteint souvent plus de 90 % de la résistance finale à 28 jours.
 
-# Zoom tour à tour sur les composantes de notre base de données.
+
 
 ```{r base, echo = FALSE, message=FALSE, warning=F}
 library(readxl)
@@ -134,16 +137,27 @@ names(bdd) <- c('cement',
 verif <- str(bdd)
 ```
 
+
+
+
+
+
+# Zoom tour à tour sur les composantes de notre base de données.
+
 ## Cement
 
-```{r boxplot_y,echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
 
-#Histogramme pour Cement
+```{r boxplot_y, echo = FALSE, message=FALSE, warning=F,fig.width=3, fig.height=2, fig.align='center'}
+
+# Création de l'histogramme pour la variable Cement
 p1 <- ggplot(bdd, aes(x = cement)) +
   geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
-  labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
+  labs(x = "Cement", y = "Fréquence") +
   theme_minimal()
+
+# Affichage de la figure
 print(p1)
+
 ```
 
 L'histogramme montre une distribution étalée avec plusieurs pics, indiquant une variabilité dans les proportions de ciment utilisées.
@@ -494,6 +508,82 @@ test <- cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
 
 Les résultats du test de corrélation de Kendall indiquent une relation significative entre la quantité de granulats fins et la résistance du béton. Le coefficient $\tau$ étant négatif, cela signifie que lorsque la proportion de granulats fins diminue, la résistance à la compression tend à augmenter. Cette observation suggère qu'un excès de granulats fins pourrait réduire la compacité du mélange.
 
+
+# Ingénierie des Données  
+
+La base de données contient **1030 observations et 9 variables numériques** initialement. Dans cette partie, nous préparons les données pour garantir leur qualité et leur pertinence. Cette étape comprend deux étapes principales :  
+
+- **Détection et traitement des valeurs aberrantes** à l’aide de boxplots.  
+- **Analyse des corrélations** pour éviter la redondance des variables.  
+
+## Détection des valeurs aberrantes  
+
+Les valeurs aberrantes peuvent fausser l’analyse et influencer la modélisation. Les **boxplots** (voir [Analyse univariée](#détection-des-valeurs-aberrantes-boxplots)) permettent d’identifier des observations extrêmes.
+
+Certaines variables comme **Cement, Fly Ash** et **Coarse Aggregate** ont une distribution homogène et sont conservées sans modification.
+
+La variable **Water** présente quelques valeurs extrêmes. Plutôt que de les exclure, nous analysons leur impact.
+
+La variable **Superplasticizer** contient des valeurs très éloignées du reste des observations. Pour éviter toute influence excessive, ces valeurs extrêmes sont exclues en utilisant la règle des 1.5*IQR :  
+
+```{r}
+# Calcul des seuils avec la règle des 1.5*IQR pour Superplasticizer
+Q1_sp <- quantile(bdd$super_plast, 0.25)
+Q3_sp <- quantile(bdd$super_plast, 0.75)
+IQR_sp <- Q3_sp - Q1_sp
+
+seuil_sup_sp <- Q3_sp + 1.5 * IQR_sp
+
+# Filtrer les valeurs aberrantes pour Superplasticizer
+bdd_ing <- bdd %>% filter(super_plast <= seuil_sup_sp)
+```
+
+Concernant **Blast Furnace Slag**, quelques valeurs sont élevées mais restent plausibles. Elles sont conservées sans modification.
+
+La variable **Age** présente des valeurs extrêmes qu’il faut filtrer. En utilisant la règle des 1.5*IQR, nous identifions les observations anormalement élevées et les supprimons pour assurer une meilleure cohérence des données :
+
+
+```{r}
+# Calcul des seuils avec la règle des 1.5*IQR pour Age
+Q1_age <- quantile(bdd_ing$age, 0.25)
+Q3_age <- quantile(bdd_ing$age, 0.75)
+IQR_age <- Q3_age - Q1_age
+
+seuil_sup_age <- Q3_age + 1.5 * IQR_age
+
+# Filtrer les valeurs aberrantes pour Age
+bdd_ing <- bdd_ing %>% filter(age <= seuil_sup_age)
+```
+
+## Analyse des corrélations  
+
+L’objectif est d’identifier les variables fortement corrélées entre elles pour éviter la **multicolinéarité** dans le modèle.  
+
+La **matrice de corrélation** (voir [Analyse bivariée](#matrice-de-correlation)) permet d’observer les liens entre les différentes variables.  
+
+La variable cible **y_concrete_compresive** présente des corrélations notables avec certaines variables explicatives :
+- **cement (0.50)** : Forte corrélation positive, suggérant une relation directe entre la quantité de ciment et la résistance à la compression.  
+- **cater (-0.29)** : Corrélation négative, ce qui est cohérent avec l’hypothèse qu’un excès d’eau diminue la résistance du béton.  
+- **super_plast (0.37)** : Corrélation indiquant que cet additif pourrait améliorer la résistance du béton.  
+- **age (0.33)** : Relation positive, confirmant que la résistance augmente avec le temps. 
+
+Certaines variables explicatives montrent également des **corrélations importantes entre elles**, ce qui peut poser problème :
+- **water et super_plast (-0.65)** : Corrélation négative forte, ce qui est logique car le superplastifiant permet de réduire la quantité d’eau nécessaire.  
+- **blast_furnace et fly_ash (-0.32)** : Corrélation négative modérée, indiquant que ces composants sont parfois utilisés en substitution l’un de l’autre.  
+
+Nous devons **évaluer l'impact de ces relations dans le modèle**. Si deux variables sont trop fortement corrélées, l’une d’elles pourrait être supprimée pour éviter des problèmes de multicolinéarité.  
+
+Ces observations pourront nous aider lors de la sélection des variables dans la prochaine étape.  
+
+## Synthèse de l’Ingénierie des Données  
+
+Après le traitement des valeurs aberrantes et l’analyse des corrélations, la base de données passe de **1030 à 961 observations**.
+
+Les valeurs extrêmes des variables **Age** et **Superplasticizer** ont été supprimées en appliquant la règle des 1.5*IQR, garantissant une meilleure cohérence des données.  
+
+L’analyse des corrélations a révélé des relations notables entre plusieurs variables, notamment une forte corrélation entre **Water et Superplasticizer (-0.65)** et un lien important entre **Cement et la résistance à la compression (0.50)**.
+
+
 # Analyse Multivariée
 
 Dans cette partie, nous allons étudier l'ensemble des variables en utilisant une analyse en composantes principales (ACP).
@@ -806,7 +896,7 @@ Les **bétons 57, 225 et 611** sont les **plus influents**.
 
 ## Analyse univariée
 
-Histogramme pour la variable `Cement`
+### Histogramme pour la variable `Cement`
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Cement
@@ -815,7 +905,7 @@ print(p1)
 
 
 
-Histogramme pour la variable `Blast Furnace Slag`
+### Histogramme pour la variable `Blast Furnace Slag`
 
 ```{r , echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Blast Furnace Slag
@@ -823,14 +913,14 @@ Histogramme pour la variable `Blast Furnace Slag`
 print(p2)
 ```
 
-Histogramme pour la variable `Fly Ash`
+### Histogramme pour la variable `Fly Ash`
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
 #  Histogramme pour Fly Ash
 print(p3)
 ```
 
-Histogramme pour la variable `Water`
+### Histogramme pour la variable `Water`
 
 ```{r , echo = FALSE, message=FALSE, warning=F}
 #Histogramme pour Water
@@ -839,7 +929,7 @@ print(p4)
 
 ```
 
-Histogramme pour la variable `Superplasticizer`
+### Histogramme pour la variable `Superplasticizer`
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Superplasticizer
@@ -848,14 +938,14 @@ print(p5)
 
 ```
 
-Histogramme pour la variable `Coarse Aggregate`
+### Histogramme pour la variable `Coarse Aggregate`
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
 
 print(p6)
 ```
 
-Histogramme pour la variable `Fine Aggregate`
+### Histogramme pour la variable `Fine Aggregate`
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Fine Aggregate
@@ -863,7 +953,7 @@ Histogramme pour la variable `Fine Aggregate`
 print(p7)
 ```
 
-Histogramme pour la variable `Age`
+### Histogramme pour la variable `Age`
 
 ```{r, echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Age
@@ -871,7 +961,7 @@ Histogramme pour la variable `Age`
 print(p8)
 ```
 
-Histogramme pour la variable `Concrete Compressive Strength`
+### Histogramme pour la variable `Concrete Compressive Strength`
 
 ```{r , echo = FALSE, message=FALSE, warning=F}
 # Histogramme pour Concrete Compressive Strength
@@ -880,9 +970,28 @@ print(p9)
 ```
 
 
+### Détection des valeurs aberrantes (Boxplots)  
+
+```{r boxplots_outliers, echo = FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=6}
+par(mfrow=c(3,3))
+
+boxplot(bdd$cement, main="Cement", col="lightblue")
+boxplot(bdd$blast_furnace, main="Blast Furnace Slag", col="lightgreen")
+boxplot(bdd$fly_ash, main="Fly Ash", col="lightcoral")
+boxplot(bdd$water, main="Water", col="cyan")
+boxplot(bdd$super_plast, main="Superplasticizer", col="orange")
+boxplot(bdd$coarse, main="Coarse Aggregate", col="gold")
+boxplot(bdd$fine_aggr, main="Fine Aggregate", col="pink")
+boxplot(bdd$age, main="Age", col="brown")
+boxplot(bdd$y_concrete_compresive, main="Concrete Strength", col="darkgreen")
+```
+
+
 ## Analyse bivariee
 
-Matrice de correlation
+
+
+### Matrice de correlation
 
 ```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center',,fig.width=4, fig.height=3}
 par(cex=0.3)

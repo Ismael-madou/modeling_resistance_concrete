@@ -108,9 +108,10 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhead{}
-\fancyhead[R]{\small 2025-03-04}
+\fancyhead[R]{\small 2025-03-16}
 \fancyhead[L]{\small Regression Linéaire}
 \renewcommand{\headrulewidth}{0.4pt}
+\usepackage[labelfont=bf, labelsep=colon, position=top]{caption} % Place la légende au-dessus de la figure
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -125,7 +126,7 @@
 \title{\fbox{\huge Regression Linéaire}}
 \author{Dimitri DELPECH, \and Timothé FADENIPO, \and Matthis
 ARVOIS, \and Ismael MADOU GAGI GREMA, \and Cheikh LO}
-\date{2025-03-04}
+\date{2025-03-16}
 
 \begin{document}
 \maketitle
@@ -134,6 +135,10 @@ ARVOIS, \and Ismael MADOU GAGI GREMA, \and Cheikh LO}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\listoffigures
+
+\listoftables
+
 \newpage
 
 \section{Introduction}\label{introduction}
@@ -614,6 +619,132 @@ la proportion de granulats fins diminue, la résistance à la compression
 tend à augmenter. Cette observation suggère qu'un excès de granulats
 fins pourrait réduire la compacité du mélange.
 
+\section{Ingénierie des Données}\label{inguxe9nierie-des-donnuxe9es}
+
+La base de données contient \textbf{1030 observations et 9 variables
+numériques} initialement. Dans cette partie, nous préparons les données
+pour garantir leur qualité et leur pertinence. Cette étape comprend deux
+étapes principales :
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Détection et traitement des valeurs aberrantes} à l'aide de
+  boxplots.\\
+\item
+  \textbf{Analyse des corrélations} pour éviter la redondance des
+  variables.
+\end{itemize}
+
+\subsection{Détection des valeurs
+aberrantes}\label{duxe9tection-des-valeurs-aberrantes}
+
+Les valeurs aberrantes peuvent fausser l'analyse et influencer la
+modélisation. Les \textbf{boxplots} (voir
+\hyperref[duxe9tection-des-valeurs-aberrantes-boxplots]{Analyse
+univariée}) permettent d'identifier des observations extrêmes.
+
+Certaines variables comme \textbf{Cement, Fly Ash} et \textbf{Coarse
+Aggregate} ont une distribution homogène et sont conservées sans
+modification.
+
+La variable \textbf{Water} présente quelques valeurs extrêmes. Plutôt
+que de les exclure, nous analysons leur impact.
+
+La variable \textbf{Superplasticizer} contient des valeurs très
+éloignées du reste des observations. Pour éviter toute influence
+excessive, ces valeurs extrêmes sont exclues en utilisant la règle des
+1.5*IQR :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcul des seuils avec la règle des 1.5*IQR pour Superplasticizer}
+\NormalTok{Q1\_sp }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{super\_plast, }\FloatTok{0.25}\NormalTok{)}
+\NormalTok{Q3\_sp }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{super\_plast, }\FloatTok{0.75}\NormalTok{)}
+\NormalTok{IQR\_sp }\OtherTok{\textless{}{-}}\NormalTok{ Q3\_sp }\SpecialCharTok{{-}}\NormalTok{ Q1\_sp}
+
+\NormalTok{seuil\_sup\_sp }\OtherTok{\textless{}{-}}\NormalTok{ Q3\_sp }\SpecialCharTok{+} \FloatTok{1.5} \SpecialCharTok{*}\NormalTok{ IQR\_sp}
+
+\CommentTok{\# Filtrer les valeurs aberrantes pour Superplasticizer}
+\NormalTok{bdd\_ing }\OtherTok{\textless{}{-}}\NormalTok{ bdd }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(super\_plast }\SpecialCharTok{\textless{}=}\NormalTok{ seuil\_sup\_sp)}
+\end{Highlighting}
+\end{Shaded}
+
+Concernant \textbf{Blast Furnace Slag}, quelques valeurs sont élevées
+mais restent plausibles. Elles sont conservées sans modification.
+
+La variable \textbf{Age} présente des valeurs extrêmes qu'il faut
+filtrer. En utilisant la règle des 1.5*IQR, nous identifions les
+observations anormalement élevées et les supprimons pour assurer une
+meilleure cohérence des données :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcul des seuils avec la règle des 1.5*IQR pour Age}
+\NormalTok{Q1\_age }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(bdd\_ing}\SpecialCharTok{$}\NormalTok{age, }\FloatTok{0.25}\NormalTok{)}
+\NormalTok{Q3\_age }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(bdd\_ing}\SpecialCharTok{$}\NormalTok{age, }\FloatTok{0.75}\NormalTok{)}
+\NormalTok{IQR\_age }\OtherTok{\textless{}{-}}\NormalTok{ Q3\_age }\SpecialCharTok{{-}}\NormalTok{ Q1\_age}
+
+\NormalTok{seuil\_sup\_age }\OtherTok{\textless{}{-}}\NormalTok{ Q3\_age }\SpecialCharTok{+} \FloatTok{1.5} \SpecialCharTok{*}\NormalTok{ IQR\_age}
+
+\CommentTok{\# Filtrer les valeurs aberrantes pour Age}
+\NormalTok{bdd\_ing }\OtherTok{\textless{}{-}}\NormalTok{ bdd\_ing }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(age }\SpecialCharTok{\textless{}=}\NormalTok{ seuil\_sup\_age)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Analyse des corrélations}\label{analyse-des-corruxe9lations}
+
+L'objectif est d'identifier les variables fortement corrélées entre
+elles pour éviter la \textbf{multicolinéarité} dans le modèle.
+
+La \textbf{matrice de corrélation} (voir
+\hyperref[matrice-de-correlation]{Analyse bivariée}) permet d'observer
+les liens entre les différentes variables.
+
+La variable cible \textbf{y\_concrete\_compresive} présente des
+corrélations notables avec certaines variables explicatives : -
+\textbf{cement (0.50)} : Forte corrélation positive, suggérant une
+relation directe entre la quantité de ciment et la résistance à la
+compression.\\
+- \textbf{cater (-0.29)} : Corrélation négative, ce qui est cohérent
+avec l'hypothèse qu'un excès d'eau diminue la résistance du béton.\\
+- \textbf{super\_plast (0.37)} : Corrélation indiquant que cet additif
+pourrait améliorer la résistance du béton.\\
+- \textbf{age (0.33)} : Relation positive, confirmant que la résistance
+augmente avec le temps.
+
+Certaines variables explicatives montrent également des
+\textbf{corrélations importantes entre elles}, ce qui peut poser
+problème : - \textbf{water et super\_plast (-0.65)} : Corrélation
+négative forte, ce qui est logique car le superplastifiant permet de
+réduire la quantité d'eau nécessaire.\\
+- \textbf{blast\_furnace et fly\_ash (-0.32)} : Corrélation négative
+modérée, indiquant que ces composants sont parfois utilisés en
+substitution l'un de l'autre.
+
+Nous devons \textbf{évaluer l'impact de ces relations dans le modèle}.
+Si deux variables sont trop fortement corrélées, l'une d'elles pourrait
+être supprimée pour éviter des problèmes de multicolinéarité.
+
+Ces observations pourront nous aider lors de la sélection des variables
+dans la prochaine étape.
+
+\subsection{Synthèse de l'Ingénierie des
+Données}\label{synthuxe8se-de-linguxe9nierie-des-donnuxe9es}
+
+Après le traitement des valeurs aberrantes et l'analyse des
+corrélations, la base de données passe de \textbf{1030 à 961
+observations}.
+
+Les valeurs extrêmes des variables \textbf{Age} et
+\textbf{Superplasticizer} ont été supprimées en appliquant la règle des
+1.5*IQR, garantissant une meilleure cohérence des données.
+
+L'analyse des corrélations a révélé des relations notables entre
+plusieurs variables, notamment une forte corrélation entre \textbf{Water
+et Superplasticizer (-0.65)} et un lien important entre \textbf{Cement
+et la résistance à la compression (0.50)}.
+
 \section{Analyse Multivariée}\label{analyse-multivariuxe9e}
 
 Dans cette partie, nous allons étudier l'ensemble des variables en
@@ -624,7 +755,7 @@ active, aux côtés des huit autres variables explicatives.
 \subsection{Histogramme des valeurs
 propres}\label{histogramme-des-valeurs-propres}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 Le graphique illustre l'histogramme des valeurs propres issu de l'ACP,
 permettant d'identifier le nombre d'axes principaux à retenir.
@@ -648,7 +779,7 @@ les \textbf{trois premiers axes} pour l'analyse.
 \subsection{Analyse sur les 2 Premiers
 Axes}\label{analyse-sur-les-2-premiers-axes}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-28-1} \end{center}
 
 Le cercle de corrélation met en évidence les relations entre les
 variables étudiées, projetées sur les deux premiers axes principaux de
@@ -910,7 +1041,7 @@ La p-value étant inférieure à 0.05, nous rejetons l'\textbf{hypothèse
 H0} et acceptons l'\textbf{hypothèse H1},\\
 ce qui signifie que \textbf{les erreurs sont fortement corrélées}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-29-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-31-1.pdf}
 
 On remarque que plusieurs barres sortent de l'intervalle de confiance,
 ce qui vient soutenir la conclusion\\
@@ -1005,7 +1136,7 @@ normale}.
 26.9 & 20.20 & 0.00694 & 10.4 & 0.002940 & 1.950 \\
 \end{longtable}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-33-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-35-1.pdf}
 
 D'après ce plot, il \textbf{n'existe aucune linéarité} entre la variable
 réponse et les variables explicatives.\\
@@ -1015,7 +1146,7 @@ relation \textbf{n'est pas linéaire}.
 Les observations \textbf{382, 384 et 115} sont les \textbf{bétons
 présentant les plus grandes valeurs en termes de résidus}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-34-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-36-1.pdf}
 
 Dans notre cas, la \textbf{courbe rouge n'est pas horizontale} et ne
 sépare pas les points de manière homogène\\
@@ -1023,7 +1154,7 @@ de part et d'autre. Cela indique que \textbf{les erreurs ne sont pas
 homogènes}, ce qui confirme la conclusion\\
 du \textbf{test de Breusch-Pagan}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-35-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-37-1.pdf}
 
 Ce plot de l'\textbf{hypothèse de normalité} montre que plusieurs points
 \textbf{ne suivent pas la ligne},\\
@@ -1034,7 +1165,7 @@ Shapiro-Wilk},\\
 indiquant que les erreurs \textbf{ne suivent pas une distribution
 normale}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-36-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-38-1.pdf}
 
 Tous les points situés \textbf{à droite de la droite verticale bleue}
 sont des \textbf{points leviers extrêmes},\\
@@ -1047,7 +1178,7 @@ c'est-à-dire des \textbf{valeurs extrêmes de la variable cible}.
 Dans notre cas, nous avons \textbf{deux outliers} et \textbf{plusieurs
 points leviers extrêmes}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-37-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-39-1.pdf}
 
 Suite à l'observation des résultats donnés par le graphique, on remarque
 que \textbf{plusieurs points dépassent la ligne}\\
@@ -1061,45 +1192,59 @@ Conclusion
 
 \subsection{Analyse univariée}\label{analyse-univariuxe9e}
 
-Histogramme pour la variable \texttt{Cement}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-38-1.pdf}
-
-Histogramme pour la variable \texttt{Blast\ Furnace\ Slag}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-39-1.pdf}
-
-Histogramme pour la variable \texttt{Fly\ Ash}
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Cement}}{Histogramme pour la variable Cement}}\label{histogramme-pour-la-variable-cement}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-40-1.pdf}
 
-Histogramme pour la variable \texttt{Water}
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Blast\ Furnace\ Slag}}{Histogramme pour la variable Blast Furnace Slag}}\label{histogramme-pour-la-variable-blast-furnace-slag}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-41-1.pdf}
 
-Histogramme pour la variable \texttt{Superplasticizer}
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Fly\ Ash}}{Histogramme pour la variable Fly Ash}}\label{histogramme-pour-la-variable-fly-ash}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-42-1.pdf}
 
-Histogramme pour la variable \texttt{Coarse\ Aggregate}
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Water}}{Histogramme pour la variable Water}}\label{histogramme-pour-la-variable-water}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-43-1.pdf}
 
-Histogramme pour la variable \texttt{Fine\ Aggregate}
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Superplasticizer}}{Histogramme pour la variable Superplasticizer}}\label{histogramme-pour-la-variable-superplasticizer}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-44-1.pdf}
 
-Histogramme pour la variable \texttt{Age}
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Coarse\ Aggregate}}{Histogramme pour la variable Coarse Aggregate}}\label{histogramme-pour-la-variable-coarse-aggregate}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-45-1.pdf}
 
-Histogramme pour la variable \texttt{Concrete\ Compressive\ Strength}
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Fine\ Aggregate}}{Histogramme pour la variable Fine Aggregate}}\label{histogramme-pour-la-variable-fine-aggregate}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-46-1.pdf}
 
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Age}}{Histogramme pour la variable Age}}\label{histogramme-pour-la-variable-age}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-47-1.pdf}
+
+\subsubsection{\texorpdfstring{Histogramme pour la variable
+\texttt{Concrete\ Compressive\ Strength}}{Histogramme pour la variable Concrete Compressive Strength}}\label{histogramme-pour-la-variable-concrete-compressive-strength}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-48-1.pdf}
+
+\subsubsection{Détection des valeurs aberrantes
+(Boxplots)}\label{duxe9tection-des-valeurs-aberrantes-boxplots}
+
+\includegraphics{rmd_final_files/figure-latex/boxplots_outliers-1.pdf}
+
 \subsection{Analyse bivariee}\label{analyse-bivariee}
 
-Matrice de correlation
+\subsubsection{Matrice de correlation}\label{matrice-de-correlation}
 
 \begin{verbatim}
 ##                            cement blast_furnace      fly_ash       water
@@ -1296,7 +1441,7 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 \subsubsection{Partie E}\label{partie-e}
 
@@ -1316,6 +1461,6 @@ sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 \end{document}
