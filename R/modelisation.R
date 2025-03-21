@@ -17,7 +17,7 @@ names(donnee) <- c('cement',
 str(donnee)
 
 #contruction du modèle
-regression.lineaire <- lm(formula = y_concrete_compresive ~ ., data=donnee)
+regression.lineaire <- lm(formula = y_concrete_compresive ~ ., data=bdd_ing)
 summary(regression.lineaire)
 
 # pour intercept, la p-value est de 0.38 qui est superieure à 0.05, donc on decide l'hypothèse H0
@@ -108,4 +108,5 @@ abline(h= 4/( 1030-8-1 ), col = c( "red" ), lty = 2, lwd = 3)
 # sont les plus influents.
 
 #----------------------------------test du modèle global------------------------------------#
+
 

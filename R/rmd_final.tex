@@ -108,7 +108,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhead{}
-\fancyhead[R]{\small 2025-03-16}
+\fancyhead[R]{\small 2025-03-21}
 \fancyhead[L]{\small Regression Linéaire}
 \renewcommand{\headrulewidth}{0.4pt}
 \usepackage[labelfont=bf, labelsep=colon, position=top]{caption} % Place la légende au-dessus de la figure
@@ -126,7 +126,7 @@
 \title{\fbox{\huge Regression Linéaire}}
 \author{Dimitri DELPECH, \and Timothé FADENIPO, \and Matthis
 ARVOIS, \and Ismael MADOU GAGI GREMA, \and Cheikh LO}
-\date{2025-03-16}
+\date{2025-03-21}
 
 \begin{document}
 \maketitle
@@ -372,9 +372,10 @@ mélanges atteignent une performance attendue, bien qu'il existe des
 échantillons avec des valeurs plus élevées ou plus faibles en fonction
 des formulations utilisées.
 
-\section{Analyse Bivariéé : Expliquons la résistance à la compression du
-béton par nos
-variables.}\label{analyse-bivariuxe9uxe9-expliquons-la-ruxe9sistance-uxe0-la-compression-du-buxe9ton-par-nos-variables.}
+\newpage
+
+\section{Expliquons la résistance à la compression du béton par nos
+variables.}\label{expliquons-la-ruxe9sistance-uxe0-la-compression-du-buxe9ton-par-nos-variables.}
 
 La matrice de corrélation en annexe va nous aider à voir les différents
 liens de corrélation potentiels entre nos variables. Dans cette partie,
@@ -591,7 +592,7 @@ la proportion de granulats fins diminue, la résistance à la compression
 tend à augmenter. Cette observation suggère qu'un excès de granulats
 fins pourrait réduire la compacité du mélange.
 
-\section{Ingénierie des Données}\label{inguxe9nierie-des-donnuxe9es}
+\section{Ingénierie des données}\label{inguxe9nierie-des-donnuxe9es}
 
 La base de données contient \textbf{1030 observations et 9 variables
 numériques} initialement. Dans cette partie, nous préparons les données
@@ -717,7 +718,8 @@ plusieurs variables, notamment une forte corrélation entre \textbf{Water
 et Superplasticizer (-0.65)} et un lien important entre \textbf{Cement
 et la résistance à la compression (0.50)}.
 
-\section{Analyse Multivariée}\label{analyse-multivariuxe9e}
+\section{Exploration des corrélations et des influences
+combinées}\label{exploration-des-corruxe9lations-et-des-influences-combinuxe9es}
 
 Dans cette partie, nous allons étudier l'ensemble des variables en
 utilisant une analyse en composantes principales (ACP). La variable à
@@ -726,10 +728,6 @@ active, aux côtés des huit autres variables explicatives.
 
 \subsection{Histogramme des valeurs
 propres}\label{histogramme-des-valeurs-propres}
-
-\begin{verbatim}
-## Warning: package 'FactoMineR' was built under R version 4.4.2
-\end{verbatim}
 
 \begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
@@ -927,7 +925,20 @@ Béton}\label{implications-pour-la-moduxe9lisation-de-la-ruxe9sistance-du-buxe9t
   la résistance mécanique.
 \end{itemize}
 
-\section{Modélisation Linéaire}\label{moduxe9lisation-linuxe9aire}
+\newpage
+
+\section{Modélisation linéaire}\label{moduxe9lisation-linuxe9aire}
+
+Dans cette section, nous nous concentrons sur l'application de la
+régression linéaire pour modéliser la relation entre la résistance à la
+compression du béton et ses différentes variables explicatives. Cette
+approche permet de comprendre l'impact de chaque variable exogène sur la
+variable cible, d'identifier les relations significatives ainsi que
+d'évaluer leur pertinence statistique et les hypothèses qui en
+découlent.
+
+\subsection{Résultats de la
+Régression}\label{ruxe9sultats-de-la-ruxe9gression}
 
 \begin{longtable}[]{@{}lrrrl@{}}
 \caption{Tableau des résultats de la régression linéaire}\tabularnewline
@@ -941,37 +952,46 @@ Coefficient & Estimate & Std\_Error & t\_value & Pr \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-(Intercept) & -23.163756 & 26.588421 & -0.871 & 0.383851 \\
-cement & 0.119785 & 0.008489 & 14.110 & \textless{} 2e-16 \\
-blast\_furnace & 0.103847 & 0.010136 & 10.245 & \textless{} 2e-16 \\
-fly\_ash & 0.087943 & 0.012585 & 6.988 & 5.03e-12 \\
-water & -0.150298 & 0.040179 & -3.741 & 0.000194 \\
-super\_plast & 0.290687 & 0.093460 & 3.110 & 0.001921 \\
-coarse & 0.018030 & 0.009394 & 1.919 & 0.055227 \\
-fine\_aggr & 0.020154 & 0.010703 & 1.883 & 0.059968 \\
-age & 0.114226 & 0.005427 & 21.046 & \textless{} 2e-16 \\
+(Intercept) & 13.5338116 & 21.7514794 & 0.622 & 0.534 \\
+cement & 0.1104577 & 0.0069542 & 15.884 & \textless{} 2e-16 \\
+blast\_furnace & 0.0840965 & 0.0084035 & 10.007 & \textless{} 2e-16 \\
+fly\_ash & 0.0571293 & 0.0104619 & 5.461 & 6.05e-08 \\
+water & -0.1748622 & 0.0323918 & -5.398 & 8.49e-08 \\
+super\_plast & 0.3208792 & 0.0814200 & 3.941 & 8.71e-05 \\
+coarse & 0.0012942 & 0.0077510 & 0.167 & 0.867 \\
+fine\_aggr & -0.0005301 & 0.0088325 & -0.060 & 0.952 \\
+age & 0.3112546 & 0.0093762 & 33.196 & \textless{} 2e-16 \\
 \end{longtable}
+
+\subsection{Interprétations de la
+régression}\label{interpruxe9tations-de-la-ruxe9gression}
 
 \textbf{Interprétation des p-values}
 
 Les résultats de la régression montrent que :
 
 \begin{itemize}
-\tightlist
 \item
-  \textbf{Intercept} : La p-value est de \textbf{0.38}, ce qui est
+  \textbf{Intercept} : La p-value est de \textbf{0.534}, ce qui est
   \textbf{supérieur à 0.05}. Nous retenons donc l'\textbf{hypothèse H0},
   selon laquelle cette valeur n'est \textbf{pas significative}.
 \item
-  \textbf{Variables significatives (p \textless{} 0.05)} :
-  \texttt{cement}, \texttt{blast\_furnace}, \texttt{fly\_ash},
-  \texttt{water}, \texttt{super\_plast} et \texttt{age}. Nous acceptons
-  l'\textbf{hypothèse H1}, qui indique que ces variables ont un
-  \textbf{effet significatif} sur la résistance du béton.
+  \textbf{Les variables qui sont significatives (p \textless{} 0.05)} :
+  \texttt{cement},
+  \texttt{blast\_furnace},\texttt{fly\_ash},\texttt{water},
+  \texttt{super\_plast} et \texttt{age}.
+\end{itemize}
+
+Nous acceptons l'\textbf{hypothèse H1}, qui indique que ces variables
+ont un \textbf{effet significatif} sur la résistance du béton.
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{Variables non significatives au seuil de 5 \%} :
-  \texttt{coarse} et \texttt{fine\_aggr}. Toutefois, elles deviennent
-  \textbf{significatives pour un seuil de 10 \%}.
+  \texttt{coarse} et \texttt{fine\_aggr}. Elles ne sont pas
+  significatives, même au seuil de 10 \%, et n'ont donc \textbf{aucun
+  effet statistique} sur la résistance du béton.
 \end{itemize}
 
 Ces résultats suggèrent que certaines variables ont un impact plus
@@ -979,32 +999,45 @@ marqué sur la \textbf{résistance à la compression du béton}, tandis que
 d'autres jouent un rôle moins déterminant.
 
 Au regard de ces variables significatives, nous avons constaté des
-effets diverses sur la variable réponse. Pour la variable
-\textbf{Cement}(ciment), on remarque un effet positif sur la variable
-réponse qui n'est rien d'autre que la résistance à la compression. La
-valeur de cette relation est de l'ordre de 0.119785, cela signifie que
-si le ciment augmente d'une unité alors la résistence à la compression
-augmente moins proportionnellement que l'augmentation du ciment (0.12
-unité). Ensuite, pour la variable blast\_furnace (laitier de haut
+effets divers sur la variable réponse.
+
+Pour la variable \textbf{Cement} (ciment), on remarque un effet positif
+sur la variable réponse qui n'est rien d'autre que la résistance à la
+compression. La valeur de cette relation est de l'ordre de
+\textbf{0.110}, cela signifie que si le ciment augmente d'une unité
+alors la résistance à la compression augmente de \textbf{0.110 unité}.
+
+Ensuite, pour la variable \textbf{blast\_furnace} (laitier de haut
 fourneau), la relation est positive. Cela signifie qu'une hausse de la
-variable en question d'une unité entraine une augmentation de 0.12 unité
-de la variable cible. Puis, on s'interesse à la variable fly\_ash
-(cendres volantes) qui est positivement corrélée avec la variable
-endogène (0.087943). Cela porrait être traduit comme étant une
-augmentation moins proportionnelle de la résistence comparé aux cendres
-volantes. De plus, nous remarquons une relation negative entre la
-variable water et la resistance à la compression. cette relation est de
-l'ordre de -0.15 c'est-à-dire que l'augmentation de l'eau d'une unite
-entraine une baisse de la resistance de 0.15. ce qui rejoint notre
-conclusion de l'analyse multivariee. Par ailleurs, la relation de notre
-variable cible avec la variable super\_plast est de 0.29, qui est la
-relation la plus importante dans notre modele. cette relation est
-positive, ce qui signifie que Additif chimique est tres important pour
-augmenter la resistance de notre beton. cela confirme nos propos suite a
-l'analyse multivariee. Enfin, on s'apercoit que la variable age est
-positivement correlee avec la variable reponse, Ce qui confirme les
-resultats des revues qui stipulent qu'avec la resistance augmente avec
-le temps.
+variable en question d'une unité entraîne une augmentation de
+\textbf{0.084 unité} de la variable cible.
+
+Puis, on s'intéresse à la variable \textbf{fly\_ash} (cendres volantes)
+qui est positivement corrélée avec la variable endogène
+(\textbf{0.057}). Cela pourrait être traduit comme étant une
+augmentation moins proportionnelle de la résistance comparée aux cendres
+volantes.
+
+Par la suite, nous remarquons une relation négative entre la variable
+\textbf{water} et la résistance à la compression. Cette relation est de
+l'ordre de \textbf{-0.175}, c'est-à-dire que l'augmentation de l'eau
+d'une unité entraîne une baisse de la résistance de \textbf{0.175
+unité}. Cela rejoint notre conclusion de l'analyse multivariée.
+
+Par ailleurs, la relation de notre variable cible avec la variable
+\textbf{super\_plast} est de \textbf{0.321}, qui est la relation la plus
+importante dans notre modèle ! Cette relation est positive, ce qui
+signifie que l'\textbf{additif chimique est très important pour
+augmenter la résistance de notre béton}. Cela confirme nos propos suite
+à l'analyse multivariée.
+
+Enfin, on s'aperçoit que la variable \textbf{age} est positivement
+corrélée avec la variable réponse avec une valeur de \textbf{0.311}, ce
+qui confirme les résultats des revues qui stipulent que la résistance
+augmente avec le temps.
+
+\subsection{Tests de diagnostic et vérification des
+hypothèses}\label{tests-de-diagnostic-et-vuxe9rification-des-hypothuxe8ses}
 
 \textbf{Test de Durbin-Watson}
 
@@ -1020,7 +1053,7 @@ Description & Valeur \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-DW & 1.2815 \\
+DW & 1.235 \\
 p-value & \textless{} 2.2e-16 \\
 Alternative hypothesis & true autocorrelation is not 0 \\
 \end{longtable}
@@ -1028,7 +1061,7 @@ Alternative hypothesis & true autocorrelation is not 0 \\
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Durbin-Watson statistic (DW)} : \textbf{1.2815}\\
+  \textbf{Durbin-Watson statistic (DW)} : \textbf{1.235}\\
 \item
   \textbf{p-value} : \textbf{\textless{} 2.2e-16}\\
 \item
@@ -1061,7 +1094,7 @@ Description & Valeur \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Breusch-Pagan statistic (BP) & 140.25 \\
+Breusch-Pagan statistic (BP) & 137.02 \\
 Degrés de liberté (df) & 8 \\
 p-value & \textless{} 2.2e-16 \\
 \end{longtable}
@@ -1069,7 +1102,7 @@ p-value & \textless{} 2.2e-16 \\
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Breusch-Pagan statistic (BP)} : \textbf{140.25}\\
+  \textbf{Breusch-Pagan statistic (BP)} : \textbf{137.02}\\
 \item
   \textbf{Degrés de liberté (df)} : \textbf{8}\\
 \item
@@ -1096,16 +1129,16 @@ Description & Valeur \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Shapiro-Wilk statistic (W) & 0.99532 \\
-p-value & 0.002986 \\
+Shapiro-Wilk statistic (W) & 0.99324 \\
+p-value & 0.0002368 \\
 \end{longtable}
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Shapiro-Wilk statistic (W)} : \textbf{0.99532}\\
+  \textbf{Shapiro-Wilk statistic (W)} : \textbf{0.99324}\\
 \item
-  \textbf{p-value} : \textbf{0.002986}
+  \textbf{p-value} : \textbf{0.0002368}
 \end{itemize}
 
 D'après les résultats du \textbf{test de Shapiro-Wilk}, la p-value est
@@ -1414,7 +1447,7 @@ test de correlation entre variable \texttt{water} et \texttt{y}
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{Analyse multivariée}\label{analyse-multivariuxe9e-1}
+\subsection{Analyse multivariée}\label{analyse-multivariuxe9e}
 
 \subsubsection{Contribution des
 variables}\label{contribution-des-variables}

@@ -193,7 +193,11 @@ La concrete compressive strength suit une distribution proche d’une loi normal
 Cela indique une variabilité contrôlée de la résistance du béton.
 La concrete compressive strength étant un paramètre clé, cette distribution montre que la plupart des mélanges atteignent une performance attendue, bien qu’il existe des échantillons avec des valeurs plus élevées ou plus faibles en fonction des formulations utilisées.
 
-# Analyse Bivariéé : Expliquons la résistance à la compression du béton par nos variables.
+
+\newpage
+
+
+# Expliquons la résistance à la compression du béton par nos variables. 
 
 La matrice de corrélation en annexe va nous aider à voir les différents liens de corrélation potentiels entre nos variables.
 Dans cette partie, nous allons étudier et essayer de trouver les couples de variables significativement dépendants.
@@ -331,7 +335,7 @@ test <- cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
 Les résultats du test de corrélation de Kendall indiquent une relation significative entre la quantité de granulats fins et la résistance du béton. Le coefficient $\tau$ étant négatif, cela signifie que lorsque la proportion de granulats fins diminue, la résistance à la compression tend à augmenter. Cette observation suggère qu'un excès de granulats fins pourrait réduire la compacité du mélange.
 
 
-# Ingénierie des Données  
+# Ingénierie des données  
 
 La base de données contient **1030 observations et 9 variables numériques** initialement. Dans cette partie, nous préparons les données pour garantir leur qualité et leur pertinence. Cette étape comprend deux étapes principales :  
 
@@ -406,7 +410,7 @@ Les valeurs extrêmes des variables **Age** et **Superplasticizer** ont été su
 L’analyse des corrélations a révélé des relations notables entre plusieurs variables, notamment une forte corrélation entre **Water et Superplasticizer (-0.65)** et un lien important entre **Cement et la résistance à la compression (0.50)**.
 
 
-# Analyse Multivariée
+# Exploration des corrélations et des influences combinées
 
 Dans cette partie, nous allons étudier l'ensemble des variables en utilisant une analyse en composantes principales (ACP).
 La variable à expliquer ("y_concrete_compresive") est également considérée comme active, aux côtés des huit autres variables explicatives.
@@ -522,18 +526,21 @@ Cette ACP met en évidence trois dimensions principales dans la composition du b
 -   L’opposition entre `coarse` et `super_blast` sur Dim 2 suggère qu’un effet combiné de ces deux variables pourrait influencer la résistance mécanique.
 
 
+\newpage
 
+# Modélisation linéaire
 
+Dans cette section, nous nous concentrons sur l'application de la régression linéaire pour modéliser la relation entre la résistance à la compression du béton et ses différentes variables explicatives. Cette approche permet de comprendre l'impact de chaque variable exogène sur la variable cible, d'identifier les relations significatives ainsi que d'évaluer leur pertinence statistique et les hypothèses qui en découlent.
 
-# Modélisation Linéaire
-
+## Résultats de la Régression
 ```{r , echo=FALSE}
 
-regression.lineaire <- lm(formula = y_concrete_compresive ~ ., data=bdd)
+regression.lineaire <- lm(formula = y_concrete_compresive ~ ., data=bdd_ing)
 ```
 
 
 ```{r table_regression, echo=FALSE, message=FALSE, warning=FALSE}
+
 
 # Chargement du package knitr pour créer un tableau
 library(knitr)
@@ -542,36 +549,53 @@ library(knitr)
 results <- data.frame(
   Coefficient = c("(Intercept)", "cement", "blast_furnace", "fly_ash", "water", 
                   "super_plast", "coarse", "fine_aggr", "age"),
-  Estimate = c(-23.163756, 0.119785, 0.103847, 0.087943, -0.150298, 
-               0.290687, 0.018030, 0.020154, 0.114226),
-  Std_Error = c(26.588421, 0.008489, 0.010136, 0.012585, 0.040179, 
-                0.093460, 0.009394, 0.010703, 0.005427),
-  t_value = c(-0.871, 14.110, 10.245, 6.988, -3.741, 
-              3.110, 1.919, 1.883, 21.046),
-  Pr = c("0.383851", "< 2e-16", "< 2e-16", "5.03e-12", "0.000194", 
-         "0.001921", "0.055227", "0.059968", "< 2e-16")
+  Estimate = c(13.5338116, 0.1104577, 0.0840965, 0.0571293, -0.1748622, 
+               0.3208792, 0.0012942, -0.0005301, 0.3112546),
+  Std_Error = c(21.7514794, 0.0069542, 0.0084035, 0.0104619, 0.0323918, 
+                0.0814200, 0.0077510, 0.0088325, 0.0093762),
+  t_value = c(0.622, 15.884, 10.007, 5.461, -5.398, 
+              3.941, 0.167, -0.060, 33.196),
+  Pr = c("0.534", "< 2e-16", "< 2e-16", "6.05e-08", "8.49e-08", 
+         "8.71e-05", "0.867", "0.952", "< 2e-16")
 )
 
 # Création du tableau avec un titre
 kable(results, caption = "Tableau des résultats de la régression linéaire")
+
 ```
 
+## Interprétations de la régression
 
 **Interprétation des p-values**
 
 Les résultats de la régression montrent que :
 
+- **Intercept** : La p-value est de **0.534**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H0**, selon laquelle cette valeur n'est **pas significative**.
 
-- **Intercept** : La p-value est de **0.38**, ce qui est **supérieur à 0.05**. Nous retenons donc l'**hypothèse H0**, selon laquelle cette valeur n'est **pas significative**.
-- **Variables significatives (p < 0.05)** : `cement`, `blast_furnace`, `fly_ash`, `water`, `super_plast` et `age`. Nous acceptons l'**hypothèse H1**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
-- **Variables non significatives au seuil de 5 %** : `coarse` et `fine_aggr`. Toutefois, elles deviennent **significatives pour un seuil de 10 %**.
+- **Les variables qui sont significatives (p < 0.05)** : `cement`, `blast_furnace`,`fly_ash`,`water`, `super_plast` et `age`. 
 
+Nous acceptons l'**hypothèse H1**, qui indique que ces variables ont un **effet significatif** sur la résistance du béton.
+
+- **Variables non significatives au seuil de 5 %** : `coarse` et `fine_aggr`. Elles ne sont pas significatives, même au seuil de 10 %, et n'ont donc **aucun effet statistique** sur la résistance du béton.
 
 Ces résultats suggèrent que certaines variables ont un impact plus marqué sur la **résistance à la compression du béton**, tandis que d'autres jouent un rôle moins déterminant.
 
-Au regard de ces variables significatives, nous avons constaté des effets diverses sur la variable réponse. Pour la variable **Cement**(ciment), on remarque un effet positif sur la variable réponse qui n'est rien d'autre que la résistance à la compression. La valeur de cette relation est de l'ordre de 0.119785, cela signifie que si le ciment augmente d'une unité alors la résistence à la compression augmente moins proportionnellement que l'augmentation du ciment (0.12 unité). Ensuite, pour la variable blast_furnace (laitier de haut fourneau), la relation est positive. Cela signifie qu'une hausse de la variable en question d'une unité entraine une augmentation de 0.12 unité de la variable cible. Puis, on s'interesse à la variable fly_ash (cendres volantes) qui est positivement corrélée avec la variable endogène (0.087943). Cela porrait être traduit comme étant une augmentation moins proportionnelle de la résistence comparé aux cendres volantes. De plus, nous remarquons une relation negative entre la variable water et la resistance à la compression. cette relation est de l'ordre de -0.15 c'est-à-dire que l'augmentation de l'eau d'une unite entraine une baisse de la resistance de 0.15. ce qui rejoint notre conclusion de l'analyse multivariee. Par ailleurs, la relation de notre variable cible avec la variable super_plast est de 0.29, qui est la relation la plus importante dans notre modele. cette relation est positive, ce qui signifie que Additif chimique est tres important pour augmenter la resistance de notre beton. cela confirme nos propos suite a l'analyse multivariee. Enfin, on s'apercoit que la variable age est positivement correlee avec la variable reponse, Ce qui confirme les resultats des revues qui stipulent qu'avec la resistance augmente avec le temps.
+Au regard de ces variables significatives, nous avons constaté des effets divers sur la variable réponse. 
+
+Pour la variable **Cement** (ciment), on remarque un effet positif sur la variable réponse qui n'est rien d'autre que la résistance à la compression. La valeur de cette relation est de l'ordre de **0.110**, cela signifie que si le ciment augmente d'une unité alors la résistance à la compression augmente de **0.110 unité**.
+
+Ensuite, pour la variable **blast_furnace** (laitier de haut fourneau), la relation est positive. Cela signifie qu'une hausse de la variable en question d'une unité entraîne une augmentation de **0.084 unité** de la variable cible.
+
+Puis, on s'intéresse à la variable **fly_ash** (cendres volantes) qui est positivement corrélée avec la variable endogène (**0.057**). Cela pourrait être traduit comme étant une augmentation moins proportionnelle de la résistance comparée aux cendres volantes.
+
+Par la suite, nous remarquons une relation négative entre la variable **water** et la résistance à la compression. Cette relation est de l'ordre de **-0.175**, c'est-à-dire que l'augmentation de l'eau d'une unité entraîne une baisse de la résistance de **0.175 unité**. Cela rejoint notre conclusion de l'analyse multivariée.
+
+Par ailleurs, la relation de notre variable cible avec la variable **super_plast** est de **0.321**, qui est la relation la plus importante dans notre modèle ! Cette relation est positive, ce qui signifie que l'**additif chimique est très important pour augmenter la résistance de notre béton**. Cela confirme nos propos suite à l'analyse multivariée.
+
+Enfin, on s'aperçoit que la variable **age** est positivement corrélée avec la variable réponse avec une valeur de **0.311**, ce qui confirme les résultats des revues qui stipulent que la résistance augmente avec le temps.
 
 
+##  Tests de diagnostic et vérification des hypothèses
 
 **Test de Durbin-Watson**
 
@@ -580,17 +604,19 @@ Au regard de ces variables significatives, nous avons constaté des effets diver
 # Création du tableau avec les résultats du test
 resultats <- data.frame(
   Description = c("DW", "p-value", "Alternative hypothesis"),
-  Valeur = c("1.2815", "< 2.2e-16", "true autocorrelation is not 0"),
+  Valeur = c("1.235", "< 2.2e-16", "true autocorrelation is not 0"),
   stringsAsFactors = FALSE
 )
 
 # Affichage du tableau
 kable(resultats, caption = "Durbin-Watson Test Results")
 
+
+
 ```
 
 
--   **Durbin-Watson statistic (DW)** : **1.2815**\
+-   **Durbin-Watson statistic (DW)** : **1.235**\
 -   **p-value** : **\< 2.2e-16**\
 -   **Hypothèse alternative** : L'autocorrélation des erreurs est **différente de 0**.
 
@@ -607,21 +633,24 @@ acf(regression.lineaire$residuals, main = "Autocorrélation des erreurs")
 On remarque que plusieurs barres sortent de l'intervalle de confiance, ce qui vient soutenir la conclusion\
 du test de Durbin-Watson selon laquelle les erreurs sont **autocorrélées**.
 
+
+
 **Test de Breusch-Pagan**
 
 ```{r, echo=FALSE}
 # Création du tableau avec les résultats du test
 resultats_bp <- data.frame(
   Description = c("Breusch-Pagan statistic (BP)", "Degrés de liberté (df)", "p-value"),
-  Valeur = c("140.25", "8", "< 2.2e-16"),
+  Valeur = c("137.02", "8", "< 2.2e-16"),
   stringsAsFactors = FALSE
 )
 
 # Affichage du tableau
 kable(resultats_bp, caption = "Breusch-Pagan Test Results")
+
 ```
 
--   **Breusch-Pagan statistic (BP)** : **140.25**\
+-   **Breusch-Pagan statistic (BP)** : **137.02**\
 -   **Degrés de liberté (df)** : **8**\
 -   **p-value** : **\< 2.2e-16**
 
@@ -636,16 +665,17 @@ entre la variance des erreurs et les **variables explicatives**.
 # Création du tableau avec les résultats du test
 resultats_sw <- data.frame(
   Description = c("Shapiro-Wilk statistic (W)", "p-value"),
-  Valeur = c("0.99532", "0.002986"),
+  Valeur = c("0.99324", "0.0002368"),
   stringsAsFactors = FALSE
 )
 
 # Affichage du tableau
 kable(resultats_sw, caption = "Shapiro-Wilk Normality Test Results")
+
 ```
 
--   **Shapiro-Wilk statistic (W)** : **0.99532**\
--   **p-value** : **0.002986**
+-   **Shapiro-Wilk statistic (W)** : **0.99324**\
+-   **p-value** : **0.0002368**
 
 
 D'après les résultats du **test de Shapiro-Wilk**, la p-value est **inférieure au seuil de 5 %**.  
@@ -667,6 +697,7 @@ data_tibble <- data.frame(
 
 # Affichage du tableau
 kable(data_tibble, caption = "A tibble: 6 x 6")
+
 ```
 
 
