@@ -759,6 +759,198 @@ formée par les **pointillés rouges**, qui représente le seuil à partir duque
 
 Les **bétons 57, 225 et 611** sont les **plus influents**.
 
+## Selection du Meilleur modèle 
+
+L'objectif de cette partie est de choisir le modèle de regression linéaire qui prédise au mieux la variable que l'on veut expliquer, c'est à dire ici la résistance à la compression du béton. On peut alors regarder premièrement la selection du meilleur modèle en utilisant le critère BIC
+
+```{r, echo= F,message=FALSE, warning=FALSE}
+library(glmulti)
+invisible(capture.output(
+  select_bic <- glmulti(y_concrete_compresive ~ .,
+                        data = bdd,
+                        level = 1,
+                        method = "h",
+                        fitfunction = lm,
+                        crit = "bic",
+                        plotty = FALSE)
+))
+
+```
+
+Cette selection de modèle nous donne le résultat suivant :
+
+`cement + blast_furnace + fly_ash + water + super_plast + age`
+
+On peut alors voir que les variables `coarse` et `fine_aggr` on étées retirées du modèle par manque de significativité et impact sur la valeur de l'erreur empirique.
+On peut se demander si l'utilisation d'un autre critère pour selectioner le meilleur modèle peut changer le modèle optimal obtenue précédemment. Essayons le critère AIC.
+
+```{r, echo  = F}
+bdd <- read_excel("../Data/Concrete_Data.xls")
+
+
+#reecriture des variables pour faciliter l'etude
+names(bdd) <- c('cement',
+                'blast_furnace',
+                'fly_ash',
+                'water',
+                'super_plast',
+                'coarse',
+                'fine_aggr',
+                'age',
+                'y_concrete_compresive')
+invisible(capture.output(
+select_aic <- glmulti(y_concrete_compresive~.,
+                      data = bdd,
+                      level = 1,
+                      method = "h",
+                      fitfunction = lm,
+                      crit = "aic",
+                      plotty = F)))
+
+best_model_aic <- summary(select_aic)$bestmodel
+```
+
+
+La encore, le même modèle `cement + blast_furnace + ` `fly_ash + water + super_plast + age` ressort, ce qui était assez prévisible car ces deux critères sont très similaires.
+
+On peut alors essayer de trier les modèle sur un dernier critaire comme par exemple le critère du $R^2$
+
+```{r, echo = F}
+# Récupération des modèles candidats
+modeles <- as.data.frame(weightable(select_aic))
+
+# Vérifie le nom de la colonne contenant les modèles
+
+
+# Supposons que la colonne soit nommée 'model'
+# Sinon, remplace 'model' par le vrai nom affiché par head(modeles)
+
+# Initialiser un vecteur pour stocker les R²
+r2_values <- numeric(nrow(modeles))
+
+# Calculer le R² pour chaque modèle correctement :
+for(i in 1:nrow(modeles)){
+  
+  # Construire correctement la formule
+  variables <- modeles[i, "model"]   # attention à bien préciser le nom exact de la colonne
+  formule <- as.formula(variables)
+  
+  # Ajuster le modèle et calculer le R²
+  fit <- lm(formule, data = bdd)
+  r2_values[i] <- summary(fit)$r.squared
+}
+
+# Ajouter le R² au tableau pour comparaison
+modeles$R2 <- r2_values
+
+# Trier selon le R² décroissant pour trouver le meilleur modèle selon ce critère
+modeles <- modeles[order(-modeles$R2), ]
+
+# Afficher clairement les modèles triés par R²
+
+```
+
+Ce filtre du R2 a ajouté la variable `coarse` qui avait disparu lors de l'utilisation des deux critères précédents. Aisni le modèle optimal en utilisant le critère R2 est  :
+
+`cement + blast_furnace + fly_ash + water + super_plast + age + coarse`
+
+**Erreur empirique**
+
+On va appliquer ici les méthode pour estimer l'erreur empirique d'un modèle : on regarde de modele complet et le modèle optimale selon BIC à chaque fois
+
+```{r, echo = F}
+bdd <- read_excel("../Data/Concrete_Data.xls")
+
+
+#reecriture des variables pour faciliter l'etude
+names(bdd) <- c('cement',
+                'blast_furnace',
+                'fly_ash',
+                'water',
+                'super_plast',
+                'coarse',
+                'fine_aggr',
+                'age',
+                'y_concrete_compresive')
+
+
+library(ISLR)
+
+n <- nrow(bdd) #nombre d'observations
+
+indices <- sample(x=n, size=trunc((3/4)*n), replace=FALSE) #vecteur d'indices, de taille `partie entière de (3/4)*n', 
+#les indices sont tirés de manière aléatoire sans remise dans l'ensemble {1,2, ...,n} 
+
+
+ensemble_apprentissage <- bdd[indices, ] #la partie de la base de données `Auto` qui va servir pour l'apprentissage
+
+
+ensemble_validation <- bdd[ - indices, ] #la base de validation
+
+
+
+modele_1 <- glm(y_concrete_compresive ~ ., data = ensemble_apprentissage)
+
+modele_2 <- glm(y_concrete_compresive ~ cement + blast_furnace + fly_ash + water + super_plast + age, data = ensemble_apprentissage) 
+
+#estimation de l'erreur du modele1
+#3
+valeurs_predites_1 <- predict(object = modele_1, newdata = ensemble_validation)
+valeurs_predites_2 <- predict(object = modele_2, newdata = ensemble_validation) 
+
+estimation_erreur_modele_1<- mean((ensemble_validation$y_concrete_compresive- valeurs_predites_1)^2)  
+estimation_erreur_modele_2<- mean((ensemble_validation$y_concrete_compresive- valeurs_predites_2)^2) 
+estimation_erreur_modele_1
+estimation_erreur_modele_2
+```
+
+On voit ici que piur la méthode d'apprentissage validation, le modèle pris n'influe pas sur la valeur de l'erreur.
+
+On regarde à présent la méthode de validation croisée K-fold.
+
+```{r, echo = F}
+
+set.seed(123)  # pour la reproductibilité
+K <- 10         # nombre de folds
+n <- nrow(bdd)  # nombre total d'observations
+
+# Mélanger les indices aléatoirement
+indices <- sample(1:n)
+folds <- cut(seq(1, n), breaks = K, labels = FALSE)
+
+# Initialiser un vecteur pour stocker les erreurs MSE de chaque fold
+mse_folds <- numeric(K)
+
+# Boucle sur chaque fold
+for (k in 1:K) {
+  # Séparer les données en training et validation
+  test_idx <- which(folds == k, arr.ind = TRUE)
+  test_data <- bdd[indices[test_idx], ]
+  train_data <- bdd[indices[-test_idx], ]
+  
+  # Ajuster le modèle sur les données d'entraînement
+  modele_k <- lm(y_concrete_compresive ~ cement + blast_furnace + fly_ash + 
+                   water + super_plast + age, data = train_data)
+  
+  # Prédire sur les données de test
+  pred_k <- predict(modele_k, newdata = test_data)
+  
+  # Calculer l'erreur quadratique moyenne sur le fold k
+  erreur_k <- mean((test_data$y_concrete_compresive - pred_k)^2)
+  
+  # Stocker l'erreur
+  mse_folds[k] <- erreur_k
+}
+
+# Moyenne des erreurs = estimation de l'erreur de généralisation
+mse_moyen <- mean(mse_folds)
+
+cat("Erreur estimée par validation croisée (", K, "-fold) :", mse_moyen, "\n")
+
+```
+
+On retrouve une erreur plus faible mais sans différence abérente des résultats ce qui indique une stabilité du modèle de regression.
+
 
 # Conclusion
 
