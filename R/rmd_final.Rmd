@@ -854,9 +854,9 @@ Ce filtre du R2 a ajouté la variable `coarse` qui avait disparu lors de l'utili
 
 `cement + blast_furnace + fly_ash + water + super_plast + age + coarse`
 
-**Erreur empirique**
+**Erreur théorique**
 
-On va appliquer ici les méthode pour estimer l'erreur empirique d'un modèle : on regarde de modele complet et le modèle optimale selon BIC à chaque fois
+On va appliquer ici les méthode pour estimer l'erreur théorique d'un modèle : on regarde de modele complet et le modèle optimale selon BIC à chaque fois
 
 ```{r, echo = F}
 bdd <- read_excel("../Data/Concrete_Data.xls")
