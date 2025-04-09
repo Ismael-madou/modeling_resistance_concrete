@@ -108,7 +108,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhead{}
-\fancyhead[R]{\small 2025-03-21}
+\fancyhead[R]{\small 2025-04-08}
 \fancyhead[L]{\small Regression Linéaire}
 \renewcommand{\headrulewidth}{0.4pt}
 \usepackage[labelfont=bf, labelsep=colon, position=top]{caption} % Place la légende au-dessus de la figure
@@ -126,7 +126,7 @@
 \title{\fbox{\huge Regression Linéaire}}
 \author{Dimitri DELPECH, \and Timothé FADENIPO, \and Matthis
 ARVOIS, \and Ismael MADOU GAGI GREMA, \and Cheikh LO}
-\date{2025-03-21}
+\date{2025-04-08}
 
 \begin{document}
 \maketitle
@@ -145,7 +145,9 @@ ARVOIS, \and Ismael MADOU GAGI GREMA, \and Cheikh LO}
 
 (en cours)
 
-\section{Revue empirique}\label{revue-empirique}
+\section{Developpemnt}\label{developpemnt}
+
+\subsection{Revue empirique}\label{revue-empirique}
 
 La résistance du béton est une propriété reconnue depuis longtemps. Si
 le béton est un élément important du développement de nos sociétés,
@@ -285,10 +287,105 @@ de la première semaine . Typiquement, un saut d'environ 10 MPa (environ
 durcissement ralentit, mais on atteint souvent plus de 90 \% de la
 résistance finale à 28 jours.
 
-\section{Zoom tour à tour sur les composantes de notre base de
-données.}\label{zoom-tour-uxe0-tour-sur-les-composantes-de-notre-base-de-donnuxe9es.}
+\subsection{Resulats des travaux}\label{resulats-des-travaux}
 
-\subsection{Cement (voir annexe fig 1)}\label{cement-voir-annexe-fig-1}
+A ce niveau, nous allons presenter les resultats de notre travail. Tout
+d'abord, nous avons remarqué qu'il existe une liaison positive
+(0.107597256 comme coefficient pénalisé) forte entre la quantité du
+ciment utilisée et la resistance à la compression (Statistique
+bivariée). Cela confirme les résultats des travaux effectués par Mehta
+et Monteiro (2014) qui soulignent que l'augmentation de la teneur en
+ciment améliore significativement la résistance mécanique, en
+particulier dans les premiers jours de durcissement. Puis nous avons
+observé à nouveau une significativité de cette variable ciment(avec le
+test de student qui designe une p-value très faible). De plus, la
+selection du modèle par la méthode apprentissage/validation mais aussi
+par la méthode K-fold permet de rendre compte de l'importance du ciment
+dans notre modèle.
+
+Ensuite, un autre lien positif (0.080643114) entre le laitier du haut
+fourneau et la resistance à la compression qui est totalemnt positif et
+significatif. Comme l'a demontré la litterature à ce sujet, le laitier
+du haut fourneau a un faible impact sur la resistance durant les
+premiers jours, Cependant son effet devient important avec le temps.
+Dans notre cas, la matrice de corrélation nous montre une relation
+faible entre l'age et le laitier du haut fourneau. Neamoins, on est tous
+unanime sur l'effet positif de cette variable sur la resistance. les
+resultats du test de student temoigne bel et bien cette affirmation avec
+une p-value inferieur à 5\% avec un poids de 8\%. On remarque que pour
+les méthodes de selection avec les trois critéres à savoir le BIC, AIC
+et Fisher ainsi que la regression ridge, cette variable est
+selectionnée. les resultats de l'ACP ont aussi predit un modèle
+contenant cette variable.
+
+De plus, l'eau est aussi attendu d'après nos resulats de l'ACP. la
+litterature stipule que l'eau est très important puiqu'elle augmente
+l'ouvrabilité du béton en augmentant la fluidité du béton et entraîne la
+diminution de la concentration en solides. Cependant, l'introduction
+excessive de l'eau provoque la chute de la résistance mécanique et sa
+durabilité. notre modèle basé sur toutes les approches prend en compte
+la variable eau, d'où son importance. Notons que la valeur du
+coefficient pénalisé de l'eau (-0.176721943) que ce soit au niveau du
+test student ou de la méthode lasso, ne réflete pas le vrai effet. Cela
+pourrait correspondre aux situations où la quantité d'eau est très
+importante d'où la nécéssité de connaitre les bases du domaine puisque
+les methodes utilisés ne cherchent pas un seuil à partir duquel la
+rélation de l'eau avec le variable cible change.
+
+Puis notre modèle prend en compte la variable cendres volantes au niveau
+de toutes les méthodes. Selon la litterature, cette variable est un
+substitut du ciment. Cependant nous devons retenir que cette variable
+agit lentement sur la resistance et ce n'est qu'à partir d'un moment
+qu'elle renforce la structure du béton et améliore sa durabilité grâce à
+une réaction chimique progressive. les tests confirment egalement la
+siginificativité avec un coefficient pénalisé d'une valeur de
+0.052423318. De plus, sur le cercle de correlation (ACP), on remarque
+que cette variable evolue dans la meme direction que la variable cible.
+tous ces resulats nous permettent de confirmer l'effet positif des
+cendres volantes sur la resistance à la compression.
+
+De plus, nous avons superplastifiant qui est également inclu dans le
+modèle. d'après la litterature, Le volume d'eau augmente avec
+l'augmentation du dosage en superplastifiant. vu que la litterature
+suppose que l'augmentation de l'eau a un effet positif donc on peut
+déduire également que l'augmentation du superplastifiant agit
+positivement sur la résistance du béton. les resulats du modèle montrent
+une significativité de cette variable avec un coeffcient pénalisé avec
+la méthode lasso positif (0.336140535) qui temoigne le lien positif
+entre le superplastifiant et la resistance du béton.
+
+Et enfin, nous avons la variable age dans notre modèle optimale. d'après
+la litterature et les observations faites, la resistance du béton
+augmente avec l'age. les resulats obtenus montrent les conclusions à
+savoir un lien positif avec coefficient pénalisé de l'ordre de
+0.309551398 entre l'age et la resistance. nous pouvons conclure l'idée
+selon laquelle le béton nécésite du temps pour s'endurcir. toutes les
+méthodes de selection utilisées ont selectionné cette variable pour
+faire partie du modèle.
+
+En resumé, retenons que toutes ces variables impactent positivement de
+maniére differente la resistance à la compression meme si le coefficient
+de l'eau montre une contradiction. Tout d'abord, nous avons le
+superplastifiant qui impacte plus la résistance ensuite l'age puis l'eau
+de maniére negative après vient le ciment qui impacte positivement cette
+résistance et qui sera suivi par le laitier du haut fourneau pour finir
+avec les cendres volantes qui ont un impact faible sur cette résistance
+comparés aux autres éléments. la méthode lasso quant à elle, a pris en
+compte la variable fine\_aggr (granulats fins) qui n'a pas été
+selectionné par toutes les méthodes de selection. De plus, le summary de
+notre modèle montre la non significativité de cette variable. Cela
+implique la suppression des deux variables coarse et fine\_agrr pour
+obtenir le meilleur modèle au sens de tous les critéres.
+
+\section{Conclusion}\label{conclusion}
+
+\section{Annexe}\label{annexe}
+
+\subsection{Analyse univariée}\label{analyse-univariuxe9e}
+
+\subsubsection{Cement}\label{cement}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-1-1.pdf}
 
 L'histogramme montre une distribution étalée avec plusieurs pics,
 indiquant une variabilité dans les proportions de ciment utilisées. Les
@@ -297,8 +394,9 @@ répartition suggère que différentes formulations de béton nécessitent
 des proportions de ciment variées, influençant potentiellement la
 résistance finale du béton.
 
-\subsection{Blast Furnace Slag (voir annexe fig
-2)}\label{blast-furnace-slag-voir-annexe-fig-2}
+\subsubsection{Blast Furnace Slag}\label{blast-furnace-slag}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-2-1.pdf}
 
 La majorité des valeurs sont proches de zéro, suggérant que le blast
 furnace slag est rarement utilisé en grande quantité. Cependant,
@@ -307,8 +405,9 @@ composant, ce qui pourrait indiquer des formulations spécifiques
 cherchant à améliorer certaines propriétés du béton, comme la durabilité
 ou la résistance aux sulfates.
 
-\subsection{Fly Ash (voir annexe fig
-3)}\label{fly-ash-voir-annexe-fig-3}
+\subsubsection{Fly Ash}\label{fly-ash}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-3-1.pdf}
 
 La distribution est fortement biaisée vers zéro, montrant que le fly ash
 est peu utilisé dans la majorité des échantillons. Seules quelques
@@ -317,7 +416,9 @@ additif est employé dans des mélanges spécifiques, probablement pour
 optimiser la maniabilité ou réduire les coûts en substituant une partie
 du cement.
 
-\subsection{Water (voir annexe fig 4)}\label{water-voir-annexe-fig-4}
+\subsubsection{Water}\label{water}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-4-1.pdf}
 
 La répartition est relativement normale avec un pic autour de 200 kg/m³,
 ce qui indique une quantité d'eau standardisée dans la plupart des
@@ -325,8 +426,9 @@ mélanges. Une consommation d'eau bien contrôlée est essentielle pour
 assurer une bonne hydratation du ciment et éviter une porosité excessive
 pouvant affaiblir le matériau.
 
-\subsection{Superplasticizer (voir annexe fig
-5)}\label{superplasticizer-voir-annexe-fig-5}
+\subsubsection{Superplasticizer}\label{superplasticizer}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-5-1.pdf}
 
 La plupart des valeurs sont proches de zéro, ce qui signifie que le
 superplasticizer est peu utilisé dans de nombreux échantillons.
@@ -335,8 +437,9 @@ importante, ce qui peut être lié à des mélanges nécessitant une
 meilleure fluidité tout en réduisant le rapport water/cement pour
 maximiser la résistance finale.
 
-\subsection{Coarse Aggregate (voir annexe fig
-6)}\label{coarse-aggregate-voir-annexe-fig-6}
+\subsubsection{Coarse Aggregate}\label{coarse-aggregate}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 Le coarse aggregate suit une distribution centrée autour de 950-1000
 kg/m³, ce qui montre une standardisation dans son utilisation. La
@@ -344,8 +447,9 @@ présence d'une quantité relativement constante de coarse aggregate est
 essentielle pour garantir la stabilité et la résistance mécanique du
 béton tout en minimisant la fissuration.
 
-\subsection{Fine Aggregate (voir annexe fig
-7)}\label{fine-aggregate-voir-annexe-fig-7}
+\subsubsection{Fine Aggregate}\label{fine-aggregate}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-7-1.pdf}
 
 La distribution est également centrée autour de 750-800 kg/m³, suggérant
 une utilisation homogène du fine aggregate dans les différents mélanges
@@ -353,7 +457,9 @@ de béton. Une quantité bien maîtrisée de fine aggregate améliore la
 compacité du béton et influe sur sa capacité de mise en œuvre et son
 imperméabilité.
 
-\subsection{Age (voir annexe fig 8 )}\label{age-voir-annexe-fig-8}
+\subsubsection{Age}\label{age}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-8-1.pdf}
 
 L'âge du béton est majoritairement faible, avec une concentration autour
 de 28 jours. Quelques échantillons présentent des âges plus avancés,
@@ -361,8 +467,10 @@ jusqu'à un an. Cela reflète l'importance de la période de cure du béton,
 puisque la résistance continue d'augmenter avec le temps grâce à
 l'hydratation prolongée du cement.
 
-\subsection{Concrete Compressive Strength (voir annexe fig
-9)}\label{concrete-compressive-strength-voir-annexe-fig-9}
+\subsubsection{Concrete Compressive
+Strength}\label{concrete-compressive-strength}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-9-1.pdf}
 
 La concrete compressive strength suit une distribution proche d'une loi
 normale, avec un pic autour de 40 MPa. Cela indique une variabilité
@@ -372,10 +480,49 @@ mélanges atteignent une performance attendue, bien qu'il existe des
 échantillons avec des valeurs plus élevées ou plus faibles en fonction
 des formulations utilisées.
 
-\newpage
+\subsubsection{Fig 10 : Détection des valeurs aberrantes
+(Boxplots)}\label{fig-10-duxe9tection-des-valeurs-aberrantes-boxplots}
 
-\section{Expliquons la résistance à la compression du béton par nos
-variables.}\label{expliquons-la-ruxe9sistance-uxe0-la-compression-du-buxe9ton-par-nos-variables.}
+\includegraphics{rmd_final_files/figure-latex/boxplots_outliers-1.pdf}
+
+\subsection{Analyse bivariee}\label{analyse-bivariee}
+
+\subsubsection{Matrice de correlation}\label{matrice-de-correlation}
+
+\begin{verbatim}
+##                            cement blast_furnace      fly_ash       water
+## cement                 1.00000000   -0.27519344 -0.397475440 -0.08154361
+## blast_furnace         -0.27519344    1.00000000 -0.323569468  0.10728594
+## fly_ash               -0.39747544   -0.32356947  1.000000000 -0.25704400
+## water                 -0.08154361    0.10728594 -0.257043997  1.00000000
+## super_plast            0.09277137    0.04337574  0.377339559 -0.65746444
+## coarse                -0.10935604   -0.28399823 -0.009976788 -0.18231167
+## fine_aggr             -0.22272017   -0.28159326  0.079076351 -0.45063498
+## age                    0.08194726   -0.04424580 -0.154370165  0.27760443
+## y_concrete_compresive  0.49783272    0.13482445 -0.105753348 -0.28961348
+##                       super_plast       coarse   fine_aggr          age
+## cement                 0.09277137 -0.109356039 -0.22272017  0.081947264
+## blast_furnace          0.04337574 -0.283998230 -0.28159326 -0.044245801
+## fly_ash                0.37733956 -0.009976788  0.07907635 -0.154370165
+## water                 -0.65746444 -0.182311668 -0.45063498  0.277604429
+## super_plast            1.00000000 -0.266302755  0.22250149 -0.192716518
+## coarse                -0.26630276  1.000000000 -0.17850575 -0.003015507
+## fine_aggr              0.22250149 -0.178505755  1.00000000 -0.156094049
+## age                   -0.19271652 -0.003015507 -0.15609405  1.000000000
+## y_concrete_compresive  0.36610230 -0.164927821 -0.16724896  0.328876976
+##                       y_concrete_compresive
+## cement                            0.4978327
+## blast_furnace                     0.1348244
+## fly_ash                          -0.1057533
+## water                            -0.2896135
+## super_plast                       0.3661023
+## coarse                           -0.1649278
+## fine_aggr                        -0.1672490
+## age                               0.3288770
+## y_concrete_compresive             1.0000000
+\end{verbatim}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/corr_y-1} \end{center}
 
 La matrice de corrélation en annexe va nous aider à voir les différents
 liens de corrélation potentiels entre nos variables. Dans cette partie,
@@ -385,8 +532,10 @@ couples liés afin d'expliquer de manière optimale comment les variables
 de notre base peuvent influer sur la résistance à la compression du
 béton.
 
-\subsection{Quantité de ciment et résistance du béton. (voir annexe fig
-12)}\label{quantituxe9-de-ciment-et-ruxe9sistance-du-buxe9ton.-voir-annexe-fig-12}
+\subsubsection{Quantité de ciment et résistance du
+béton.}\label{quantituxe9-de-ciment-et-ruxe9sistance-du-buxe9ton.}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 Nous allons ici examiner si la quantité de ciment utilisée pour créer le
 béton est significativement reliée à la résistance à la compression du
@@ -407,8 +556,9 @@ indique un lien relativement fort et non négligeable. Ainsi, une
 fabrication de béton comprenant une grande quantité de ciment
 favoriserait grandement sa résistance à la compression.
 
-\subsection{Additif chimique et eau. (voir annexe fig
-13)}\label{additif-chimique-et-eau.-voir-annexe-fig-13}
+\subsubsection{Additif chimique et eau.}\label{additif-chimique-et-eau.}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 Dans le processus de fabrication du béton, il est parfois nécessaire
 d'ajouter un additif chimique pour améliorer sa fluidité et sa
@@ -433,8 +583,10 @@ En clair, plus la quantité d'eau utilisée pour la fabrication du béton
 est importante, moins d'additif chimique a été ajouté lors de cette
 fabrication. Ce lien fort nous aidera dans la suite de notre étude.
 
-\subsection{L'age, une variable importante. (voir annexe fig
-14)}\label{lage-une-variable-importante.-voir-annexe-fig-14}
+\subsubsection{L'age, une variable
+importante.}\label{lage-une-variable-importante.}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 Il serait tout à fait naturel de penser que l'âge ait une quelconque
 importance sur la résistance à la compression du béton. En effet,
@@ -463,9 +615,11 @@ corrélation est positive mais modérée, avec un coefficient de Kendall
 \(\tau\) de 0,449 (voir annexe). Les valeurs croissent significativement
 ensemble, bien que certaines exceptions subsistent.
 
-\subsection{La resistance à la compression du béton peut-elle
-s'expliquer grâce au laitier de haut fournaux ? (voir fig
-15)}\label{la-resistance-uxe0-la-compression-du-buxe9ton-peut-elle-sexpliquer-gruxe2ce-au-laitier-de-haut-fournaux-voir-fig-15}
+\subsubsection{La resistance à la compression du béton peut-elle
+s'expliquer grâce au laitier de haut fournaux
+?}\label{la-resistance-uxe0-la-compression-du-buxe9ton-peut-elle-sexpliquer-gruxe2ce-au-laitier-de-haut-fournaux}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 On examine ici la relation entre le laitier de haut fourneau et la
 résistance à la compression du béton :
@@ -483,9 +637,11 @@ lien significatif positif entre ces deux variables, mais cette
 corrélation reste faible compte tenu de la proximité de \(\rho\) avec
 zéro.
 
-\subsection{Les cendres volantes peuvent-elles expliquer la resistance
-du béton ? (voir annexe fig
-16)}\label{les-cendres-volantes-peuvent-elles-expliquer-la-resistance-du-buxe9ton-voir-annexe-fig-16}
+\subsubsection{Les cendres volantes peuvent-elles expliquer la
+resistance du béton
+?}\label{les-cendres-volantes-peuvent-elles-expliquer-la-resistance-du-buxe9ton}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 Pour tenter de répondre à cette question, on peut d'abord examiner la
 distribution de la quantité de cendres volantes en fonction de la
@@ -502,8 +658,10 @@ entre ces deux variables. Comme indiqué dans notre interprétation, ce
 lien est négatif, avec un coefficient \(\rho\) de -0.19, indiquant ainsi
 une corrélation faible mais non négligeable.
 
-\subsection{L'eau, un facteur de résistance ? (voir Annexe fig
-17)}\label{leau-un-facteur-de-ruxe9sistance-voir-annexe-fig-17}
+\subsubsection{L'eau, un facteur de résistance
+?}\label{leau-un-facteur-de-ruxe9sistance}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 Dans l'imaginaire collectif, il est tout à fait logique de penser que si
 l'on ajoute de l'eau lors de la création du béton, celui-ci sera moins
@@ -528,8 +686,10 @@ celui-ci sera résistant. Cependant, les points situés à l'extrémité
 gauche du graphique suggèrent qu'un minimum d'eau est tout de même
 nécessaire pour que le béton atteigne une résistance suffisante.
 
-\subsection{Superplasticité et Résistance (voir annexe fig
-18)}\label{superplasticituxe9-et-ruxe9sistance-voir-annexe-fig-18}
+\subsubsection{Superplasticité et
+Résistance}\label{superplasticituxe9-et-ruxe9sistance}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 Le superplastifiant, utilisé dans les mélanges de béton, joue un rôle
 essentiel en améliorant la fluidité du béton sans ajout d'eau
@@ -552,9 +712,10 @@ manière générale, une augmentation de la quantité de superplastifiant
 dans le mélange de béton pourrait être associée à une amélioration de sa
 résistance à la compression.
 
-\subsection{Granulats grossiers et résistance à la compression (voir
-annexe fig 19
-)}\label{granulats-grossiers-et-ruxe9sistance-uxe0-la-compression-voir-annexe-fig-19}
+\subsubsection{Granulats grossiers et résistance à la
+compression}\label{granulats-grossiers-et-ruxe9sistance-uxe0-la-compression}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 Les granulats grossiers, qui comprennent des particules de grande taille
 comme des graviers ou des pierres concassées, contribuent à la
@@ -572,27 +733,94 @@ Bien que la p-value soit très faible (3.318e-09), ce faible tau indique
 une relation négative mais modérée. Cela signifie qu'il existe bien une
 certaine corrélation entre ces deux variables.
 
-\subsection{Une relation floue entre les granulats fins et résistance à
-la compression. ( voir annexe fig 20
-)}\label{une-relation-floue-entre-les-granulats-fins-et-ruxe9sistance-uxe0-la-compression.-voir-annexe-fig-20}
+\subsubsection{Fig 20 : Relation entre granulats fins et la resistance à
+la
+compression}\label{fig-20-relation-entre-granulats-fins-et-la-resistance-uxe0-la-compression}
 
-La présence de granulats fins améliore la compacité du mélange, ce qui
-peut influencer ses propriétés, notamment la résistance à la
-compression. Ils remplissent les espaces entre les granulats plus
-grossiers.
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
-Le graphique des granulats fins ne permet pas de tirer de conclusions
-claires concernant la relation entre cette variable et la résistance à
-la compression, aucune tendance évidente n'y apparaît.
+test corrrelation entre variable à expliquer et \texttt{cement}
 
-Les résultats du test de corrélation de Kendall indiquent une relation
-significative entre la quantité de granulats fins et la résistance du
-béton. Le coefficient \(\tau\) étant négatif, cela signifie que lorsque
-la proportion de granulats fins diminue, la résistance à la compression
-tend à augmenter. Cette observation suggère qu'un excès de granulats
-fins pourrait réduire la compacité du mélange.
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{cement, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\section{Ingénierie des données}\label{inguxe9nierie-des-donnuxe9es}
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  bdd$cement and bdd$y_concrete_compresive
+## t = 18.405, df = 1028, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.4504473 0.5424213
+## sample estimates:
+##       cor 
+## 0.4978327
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#test de pearson car ont une distribution pseudo{-}normale}
+\end{Highlighting}
+\end{Shaded}
+
+test de correlation entre variable \texttt{water} et
+\texttt{SuperPlasticizer}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{water, bdd}\SpecialCharTok{$}\NormalTok{super\_plast, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Kendall's rank correlation tau
+## 
+## data:  bdd$water and bdd$super_plast
+## z = -23.914, p-value < 2.2e-16
+## alternative hypothesis: true tau is not equal to 0
+## sample estimates:
+##       tau 
+## -0.528651
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#test de Kendall car n\textquotesingle{}ont pas de distribution pseudo{-} normale}
+\end{Highlighting}
+\end{Shaded}
+
+test de correlation entre variable \texttt{water} et \texttt{y}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{age, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Kendall's rank correlation tau
+## 
+## data:  bdd$age and bdd$y_concrete_compresive
+## z = 19.826, p-value < 2.2e-16
+## alternative hypothesis: true tau is not equal to 0
+## sample estimates:
+##       tau 
+## 0.4490164
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#test de Kendall car n\textquotesingle{}ont pas de distribution pseudo{-} normale}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Ingénierie des données}\label{inguxe9nierie-des-donnuxe9es}
 
 La base de données contient \textbf{1030 observations et 9 variables
 numériques} initialement. Dans cette partie, nous préparons les données
@@ -609,7 +837,7 @@ pour garantir leur qualité et leur pertinence. Cette étape comprend deux
   variables.
 \end{itemize}
 
-\subsection{Détection des valeurs
+\subsubsection{Détection des valeurs
 aberrantes}\label{duxe9tection-des-valeurs-aberrantes}
 
 Les valeurs aberrantes peuvent fausser l'analyse et influencer la
@@ -665,7 +893,8 @@ meilleure cohérence des données :
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{Analyse des corrélations}\label{analyse-des-corruxe9lations}
+\subsubsection{Analyse des
+corrélations}\label{analyse-des-corruxe9lations}
 
 L'objectif est d'identifier les variables fortement corrélées entre
 elles pour éviter la \textbf{multicolinéarité} dans le modèle.
@@ -702,7 +931,7 @@ Si deux variables sont trop fortement corrélées, l'une d'elles pourrait
 Ces observations pourront nous aider lors de la sélection des variables
 dans la prochaine étape.
 
-\subsection{Synthèse de l'Ingénierie des
+\subsubsection{Synthèse de l'Ingénierie des
 Données}\label{synthuxe8se-de-linguxe9nierie-des-donnuxe9es}
 
 Après le traitement des valeurs aberrantes et l'analyse des
@@ -718,8 +947,7 @@ plusieurs variables, notamment une forte corrélation entre \textbf{Water
 et Superplasticizer (-0.65)} et un lien important entre \textbf{Cement
 et la résistance à la compression (0.50)}.
 
-\section{Exploration des corrélations et des influences
-combinées}\label{exploration-des-corruxe9lations-et-des-influences-combinuxe9es}
+\subsection{Analyse multivariée}\label{analyse-multivariuxe9e}
 
 Dans cette partie, nous allons étudier l'ensemble des variables en
 utilisant une analyse en composantes principales (ACP). La variable à
@@ -729,7 +957,11 @@ active, aux côtés des huit autres variables explicatives.
 \subsection{Histogramme des valeurs
 propres}\label{histogramme-des-valeurs-propres}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{verbatim}
+## Warning: package 'FactoMineR' was built under R version 4.4.2
+\end{verbatim}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 Le graphique illustre l'histogramme des valeurs propres issu de l'ACP,
 permettant d'identifier le nombre d'axes principaux à retenir.
@@ -753,7 +985,7 @@ les \textbf{trois premiers axes} pour l'analyse.
 \subsection{Analyse sur les 2 Premiers
 Axes}\label{analyse-sur-les-2-premiers-axes}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 Le cercle de corrélation met en évidence les relations entre les
 variables étudiées, projetées sur les deux premiers axes principaux de
@@ -827,11 +1059,77 @@ les granulats fins (\texttt{fine\_aggr})}.
   axe.
 \end{itemize}
 
-\subsection{Interprétation du Troisième
+\subsubsection{Contribution des
+variables}\label{contribution-des-variables}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Tableau des contributions des variables}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{cex =} \FloatTok{0.65}\NormalTok{)}
+\NormalTok{contrib\_var }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(res\_pca}\SpecialCharTok{$}\NormalTok{var}\SpecialCharTok{$}\NormalTok{contrib)}
+\FunctionTok{print}\NormalTok{(contrib\_var)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                            Dim.1      Dim.2      Dim.3      Dim.4      Dim.5
+## cement                 1.8570924 21.8162521 19.4630539 17.0024498  0.3034758
+## blast_furnace          1.3854568 10.6144114 38.1264598  0.8844007  4.7645646
+## fly_ash                7.2754889 20.3973975  1.3084478  9.8815857  4.0570219
+## water                 28.2000179  2.1202816  1.4847945  2.0723167  4.4435413
+## super_plast           30.7756668  0.2472336  6.2022982  0.9015953  8.4701606
+## coarse                 0.8939835  3.4632950 32.5054492 12.5162699 10.6005496
+## fine_aggr              4.8648268 13.0123250  0.2499000 13.1394718 39.0454823
+## age                    5.5749786  4.1403732  0.4309223 40.7207759 28.1887145
+## y_concrete_compresive 19.1724883 24.1884306  0.2286743  2.8811343  0.1264894
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{Tableau des \(cos^2\) des variables
+sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variables-sur}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Tableau des cos² des variables}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{cex =} \FloatTok{0.65}\NormalTok{)}
+\NormalTok{cos2\_var }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(res\_pca}\SpecialCharTok{$}\NormalTok{var}\SpecialCharTok{$}\NormalTok{cos2)}
+\FunctionTok{print}\NormalTok{(cos2\_var)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                            Dim.1       Dim.2       Dim.3      Dim.4       Dim.5
+## cement                0.04181872 0.405352873 0.271676732 0.19539670 0.003132659
+## blast_furnace         0.03119825 0.197219125 0.532191509 0.01016377 0.049182696
+## fly_ash               0.16383224 0.378990105 0.018264082 0.11356182 0.041879015
+## water                 0.63501880 0.039395503 0.020725633 0.02381562 0.045868900
+## super_plast           0.69301824 0.004593679 0.086575320 0.01036137 0.087434082
+## coarse                0.02013106 0.064349119 0.453730143 0.14384032 0.109425235
+## fine_aggr             0.10954803 0.241773118 0.003488251 0.15100232 0.403050903
+## age                   0.12553950 0.076929445 0.006015067 0.46797404 0.290980829
+## y_concrete_compresive 0.43173343 0.449428700 0.003191970 0.03311077 0.001305699
+\end{verbatim}
+
+\subsubsection{Interprétation du Troisième
 Axe}\label{interpruxe9tation-du-troisiuxe8me-axe}
 
-\subsubsection{Dim(1-3) : 40.5\% \% de la Variance Totale (Voir annexe :
-fig 21)}\label{dim1-3-40.5-de-la-variance-totale-voir-annexe-fig-21}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot.PCA}\NormalTok{(}
+\NormalTok{    res\_pca,}
+    \AttributeTok{axes =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{),             }\CommentTok{\# On se concentre sur les axes 2 et 3}
+    \AttributeTok{choix =} \StringTok{"var"}\NormalTok{,              }\CommentTok{\# Afficher les variables dans le plan factoriel}
+    \AttributeTok{col.var =} \StringTok{"\#4B0000"}\NormalTok{,        }\CommentTok{\# Couleur des variables alignée au style}
+    \AttributeTok{col.quanti.sup =} \StringTok{"\#0000FF"}\NormalTok{, }\CommentTok{\# Couleur pour la variable quantitative supplémentaire}
+    \AttributeTok{label =} \StringTok{"all"}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{""}\NormalTok{,}
+    \AttributeTok{addgrid.col =} \StringTok{"\#DDB688"}     \CommentTok{\# Couleur de la grille}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-34-1} \end{center}
+
+Dim(1-3) : 40.5\% \% de la Variance Totale
 
 Le troisième axe distingue \textbf{les formulations riches en laitier du
 haut fourneau (\texttt{blast\_frunace}) et associées à une plus grande
@@ -860,9 +1158,28 @@ grossiers sont associées à une résistance plus faible.
   construction de cet axe.
 \end{itemize}
 
-\subsubsection{Dim(2-3) : 36.14 \% de la Variance Totale (Voir annexe :
-Partie
-22)}\label{dim2-3-36.14-de-la-variance-totale-voir-annexe-partie-22}
+\subsubsection{Interpretation PCA sur la dimension
+2-3}\label{interpretation-pca-sur-la-dimension-2-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Représentation des variables sur le plan factoriel (axes 1 et 3)}
+\FunctionTok{plot.PCA}\NormalTok{(}
+\NormalTok{  res\_pca,}
+  \AttributeTok{axes =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{),             }\CommentTok{\# On se concentre sur les 2 premiers axes}
+  \AttributeTok{choix =} \StringTok{"var"}\NormalTok{,              }\CommentTok{\# Afficher les variables dans le plan factoriel}
+  \AttributeTok{col.var =} \StringTok{"\#4B0000"}\NormalTok{,        }\CommentTok{\# Couleur des variables alignée au style}
+  \AttributeTok{col.quanti.sup =} \StringTok{"\#0000FF"}\NormalTok{, }\CommentTok{\# Couleur pour la variable quantitative supplémentaire}
+  \AttributeTok{label =} \StringTok{"all"}\NormalTok{,}
+  \AttributeTok{title =} \StringTok{""}\NormalTok{,}
+  \AttributeTok{addgrid.col =} \StringTok{"\#DDB688"}     \CommentTok{\# Couleur de la grille}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-35-1} \end{center}
+
+Dim(2-3) : 36.14 \% de la Variance Totale (Voir annexe : Partie 22)
 
 Le troisième axe distingue \textbf{les formulations riches en laitier du
 haut fourneau (\texttt{blast\_frunace}) et associées à une plus grande
@@ -1073,7 +1390,7 @@ La p-value étant inférieure à 0.05, nous rejetons l'\textbf{hypothèse
 H0} et acceptons l'\textbf{hypothèse H1},\\
 ce qui signifie que \textbf{les erreurs sont fortement corrélées}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-14-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-38-1.pdf}
 
 On remarque que plusieurs barres sortent de l'intervalle de confiance,
 ce qui vient soutenir la conclusion\\
@@ -1168,7 +1485,7 @@ normale}.
 26.9 & 20.20 & 0.00694 & 10.4 & 0.002940 & 1.950 \\
 \end{longtable}
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-18-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-42-1.pdf}
 
 D'après ce plot, il \textbf{n'existe aucune linéarité} entre la variable
 réponse et les variables explicatives.\\
@@ -1178,7 +1495,7 @@ relation \textbf{n'est pas linéaire}.
 Les observations \textbf{382, 384 et 115} sont les \textbf{bétons
 présentant les plus grandes valeurs en termes de résidus}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-19-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-43-1.pdf}
 
 Dans notre cas, la \textbf{courbe rouge n'est pas horizontale} et ne
 sépare pas les points de manière homogène\\
@@ -1186,7 +1503,7 @@ de part et d'autre. Cela indique que \textbf{les erreurs ne sont pas
 homogènes}, ce qui confirme la conclusion\\
 du \textbf{test de Breusch-Pagan}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-20-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-44-1.pdf}
 
 Ce plot de l'\textbf{hypothèse de normalité} montre que plusieurs points
 \textbf{ne suivent pas la ligne},\\
@@ -1197,7 +1514,7 @@ Shapiro-Wilk},\\
 indiquant que les erreurs \textbf{ne suivent pas une distribution
 normale}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-21-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-45-1.pdf}
 
 Tous les points situés \textbf{à droite de la droite verticale bleue}
 sont des \textbf{points leviers extrêmes},\\
@@ -1210,7 +1527,7 @@ c'est-à-dire des \textbf{valeurs extrêmes de la variable cible}.
 Dans notre cas, nous avons \textbf{deux outliers} et \textbf{plusieurs
 points leviers extrêmes}.
 
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-46-1.pdf}
 
 Suite à l'observation des résultats donnés par le graphique, on remarque
 que \textbf{plusieurs points dépassent la ligne}\\
@@ -1219,325 +1536,980 @@ partir duquel un point est \textbf{considéré comme influent}.
 
 Les \textbf{bétons 57, 225 et 611} sont les \textbf{plus influents}.
 
-\section{Conclusion}\label{conclusion}
+\subsection{Selection du Meilleur
+modèle}\label{selection-du-meilleur-moduxe8le}
 
-\section{Annexe}\label{annexe}
-
-\subsection{Analyse univariée}\label{analyse-univariuxe9e}
-
-\subsubsection{\texorpdfstring{Fig 1 : Histogramme pour la variable
-\texttt{Cement}}{Fig 1 : Histogramme pour la variable Cement}}\label{fig-1-histogramme-pour-la-variable-cement}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-23-1.pdf}
-
-\subsubsection{\texorpdfstring{Fig 2 : Histogramme pour la variable
-\texttt{Blast\ Furnace\ Slag}}{Fig 2 : Histogramme pour la variable Blast Furnace Slag}}\label{fig-2-histogramme-pour-la-variable-blast-furnace-slag}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-24-1.pdf}
-
-\subsubsection{\texorpdfstring{Fig 3 :Histogramme pour la variable
-\texttt{Fly\ Ash}}{Fig 3 :Histogramme pour la variable Fly Ash}}\label{fig-3-histogramme-pour-la-variable-fly-ash}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-25-1.pdf}
-
-\subsubsection{\texorpdfstring{Fig 4: Histogramme pour la variable
-\texttt{Water}}{Fig 4: Histogramme pour la variable Water}}\label{fig-4-histogramme-pour-la-variable-water}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-26-1.pdf}
-
-\subsubsection{\texorpdfstring{Fig 5 : Histogramme pour la variable
-\texttt{Superplasticizer}}{Fig 5 : Histogramme pour la variable Superplasticizer}}\label{fig-5-histogramme-pour-la-variable-superplasticizer}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-27-1.pdf}
-
-\subsubsection{\texorpdfstring{Fig 6 : Histogramme pour la variable
-\texttt{Coarse\ Aggregate}}{Fig 6 : Histogramme pour la variable Coarse Aggregate}}\label{fig-6-histogramme-pour-la-variable-coarse-aggregate}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-28-1.pdf}
-
-\subsubsection{\texorpdfstring{Fig 7 : Histogramme pour la variable
-\texttt{Fine\ Aggregate}}{Fig 7 : Histogramme pour la variable Fine Aggregate}}\label{fig-7-histogramme-pour-la-variable-fine-aggregate}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-29-1.pdf}
-
-\subsubsection{\texorpdfstring{Fig 8 : Histogramme pour la variable
-\texttt{Age}}{Fig 8 : Histogramme pour la variable Age}}\label{fig-8-histogramme-pour-la-variable-age}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-30-1.pdf}
-
-\subsubsection{\texorpdfstring{Fig 9 : Histogramme pour la variable
-\texttt{Concrete\ Compressive\ Strength}}{Fig 9 : Histogramme pour la variable Concrete Compressive Strength}}\label{fig-9-histogramme-pour-la-variable-concrete-compressive-strength}
-
-\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-31-1.pdf}
-
-\subsubsection{Fig 10 : Détection des valeurs aberrantes
-(Boxplots)}\label{fig-10-duxe9tection-des-valeurs-aberrantes-boxplots}
-
-\includegraphics{rmd_final_files/figure-latex/boxplots_outliers-1.pdf}
-
-\subsection{Analyse bivariee}\label{analyse-bivariee}
-
-\subsubsection{Fig 11 :Matrice de
-correlation}\label{fig-11-matrice-de-correlation}
+L'objectif de cette partie est de choisir le modèle de regression
+linéaire qui prédise au mieux la variable que l'on veut expliquer, c'est
+à dire ici la résistance à la compression du béton. On peut alors
+regarder premièrement la selection du meilleur modèle en utilisant le
+critère BIC
 
 \begin{verbatim}
-##                            cement blast_furnace      fly_ash       water
-## cement                 1.00000000   -0.27519344 -0.397475440 -0.08154361
-## blast_furnace         -0.27519344    1.00000000 -0.323569468  0.10728594
-## fly_ash               -0.39747544   -0.32356947  1.000000000 -0.25704400
-## water                 -0.08154361    0.10728594 -0.257043997  1.00000000
-## super_plast            0.09277137    0.04337574  0.377339559 -0.65746444
-## coarse                -0.10935604   -0.28399823 -0.009976788 -0.18231167
-## fine_aggr             -0.22272017   -0.28159326  0.079076351 -0.45063498
-## age                    0.08194726   -0.04424580 -0.154370165  0.27760443
-## y_concrete_compresive  0.49783272    0.13482445 -0.105753348 -0.28961348
-##                       super_plast       coarse   fine_aggr          age
-## cement                 0.09277137 -0.109356039 -0.22272017  0.081947264
-## blast_furnace          0.04337574 -0.283998230 -0.28159326 -0.044245801
-## fly_ash                0.37733956 -0.009976788  0.07907635 -0.154370165
-## water                 -0.65746444 -0.182311668 -0.45063498  0.277604429
-## super_plast            1.00000000 -0.266302755  0.22250149 -0.192716518
-## coarse                -0.26630276  1.000000000 -0.17850575 -0.003015507
-## fine_aggr              0.22250149 -0.178505755  1.00000000 -0.156094049
-## age                   -0.19271652 -0.003015507 -0.15609405  1.000000000
-## y_concrete_compresive  0.36610230 -0.164927821 -0.16724896  0.328876976
-##                       y_concrete_compresive
-## cement                            0.4978327
-## blast_furnace                     0.1348244
-## fly_ash                          -0.1057533
-## water                            -0.2896135
-## super_plast                       0.3661023
-## coarse                           -0.1649278
-## fine_aggr                        -0.1672490
-## age                               0.3288770
-## y_concrete_compresive             1.0000000
+## Initialization...
+## TASK: Exhaustive screening of candidate set.
+## Fitting...
+## 
+## After 50 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast
+## Crit= 7564.29155889758
+## Mean crit= 7878.64801735781
+## 
+## After 100 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast
+## Crit= 7564.29155889758
+## Mean crit= 7850.06359357518
+## 
+## After 150 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+age
+## Crit= 6840.15551689892
+## Mean crit= 7685.32713855584
+## 
+## After 200 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7457.27122102457
+## 
+## After 250 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7278.05906840489
+## Completed.
 \end{verbatim}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/corr_y-1} \end{center}
+\begin{verbatim}
+## Initialization...
+## TASK: Genetic algorithm in the candidate set.
+## Initialization...
+## Algorithm started...
+## 
+## After 10 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+age
+## Crit= 6840.15551689892
+## Mean crit= 7572.77901737913
+## Change in best IC: -3159.84448310108 / Change in mean IC: -2427.22098262087
+## 
+## After 20 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7555.37911821422
+## Change in best IC: -9.99828018651897 / Change in mean IC: -17.3998991649078
+## 
+## After 30 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7515.84197855532
+## Change in best IC: 0 / Change in mean IC: -39.537139658908
+## 
+## After 40 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7474.71542728983
+## Change in best IC: 0 / Change in mean IC: -41.1265512654863
+## 
+## After 50 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7445.94696865502
+## Change in best IC: 0 / Change in mean IC: -28.7684586348132
+## 
+## After 60 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7410.77157118085
+## Change in best IC: 0 / Change in mean IC: -35.1753974741614
+## 
+## After 70 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7384.72554579133
+## Change in best IC: 0 / Change in mean IC: -26.0460253895262
+## 
+## After 80 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7364.25007897453
+## Change in best IC: 0 / Change in mean IC: -20.4754668168025
+## 
+## After 90 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7332.89502465848
+## Change in best IC: 0 / Change in mean IC: -31.35505431605
+## 
+## After 100 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7316.90004117647
+## Change in best IC: 0 / Change in mean IC: -15.994983482009
+## 
+## After 110 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7303.32885776925
+## Change in best IC: 0 / Change in mean IC: -13.5711834072208
+## 
+## After 120 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7299.14509323565
+## Change in best IC: 0 / Change in mean IC: -4.18376453359269
+## 
+## After 130 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7286.92998969036
+## Change in best IC: 0 / Change in mean IC: -12.2151035452925
+## 
+## After 140 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7272.09778753786
+## Change in best IC: 0 / Change in mean IC: -14.8322021524982
+## 
+## After 150 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7272.09778753786
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 160 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7268.06131488493
+## Change in best IC: 0 / Change in mean IC: -4.03647265293603
+## 
+## After 170 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7260.55126299853
+## Change in best IC: 0 / Change in mean IC: -7.51005188639738
+## 
+## After 180 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7252.77377195289
+## Change in best IC: 0 / Change in mean IC: -7.77749104563645
+## 
+## After 190 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7246.52875722257
+## Change in best IC: 0 / Change in mean IC: -6.24501473032433
+## 
+## After 200 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7246.32470328474
+## Change in best IC: 0 / Change in mean IC: -0.204053937824028
+## 
+## After 210 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7238.73640919949
+## Change in best IC: 0 / Change in mean IC: -7.58829408525253
+## 
+## After 220 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7234.28872764401
+## Change in best IC: 0 / Change in mean IC: -4.44768155547899
+## 
+## After 230 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7234.28872764401
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 240 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7234.28872764401
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 250 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7234.28872764401
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 260 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7230.03175111718
+## Change in best IC: 0 / Change in mean IC: -4.25697652683448
+## 
+## After 270 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7228.01455400729
+## Change in best IC: 0 / Change in mean IC: -2.01719710989073
+## 
+## After 280 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7228.01455400729
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 290 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7222.93077601664
+## Change in best IC: 0 / Change in mean IC: -5.08377799064237
+## 
+## After 300 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7222.93077601664
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 310 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7222.93077601664
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 320 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7222.93077601664
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 330 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7222.93077601664
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 340 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7222.93077601664
+## Improvements in best and average IC have bebingo en below the specified goals.
+## Algorithm is declared to have converged.
+## Completed.
+\end{verbatim}
 
-\subsubsection{Fig 12 : Nuage des points entre le ciment et la
-resistance à la
-compression}\label{fig-12-nuage-des-points-entre-le-ciment-et-la-resistance-uxe0-la-compression}
+\begin{verbatim}
+## [1] "y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + "
+## [2] "    water + super_plast + age"
+\end{verbatim}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{verbatim}
+## [1] "y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + "
+## [2] "    water + super_plast + age"
+\end{verbatim}
 
-\subsubsection{Fig 13 : Relation entre l'eau et Super
-plasticizer}\label{fig-13-relation-entre-leau-et-super-plasticizer}
+Selon le critére aic, le premier modèle qui a été selectionné par
+l'algorithme exhaustive est le suivant : y\_concrete\_compresive
+\textasciitilde{} 1 + cement + blast\_furnace + fly\_ash + water +
+super\_plast + age.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-33-1} \end{center}
+selon la deuxième méthode qui est l'algorithme génétique, on a :
+y\_concrete\_compresive \textasciitilde{} y\_concrete\_compresive
+\textasciitilde{} 1 + cement + blast\_furnace + fly\_ash + water +
+super\_plast + age'' les deux methodes nous donnent le meme modèle.
 
-\subsubsection{Fig 14 : Relation entre l'age et la
-resistance}\label{fig-14-relation-entre-lage-et-la-resistance}
+On peut alors voir que les variables \texttt{coarse} et
+\texttt{fine\_aggr} on étées retirées du modèle par manque de
+significativité et impact sur la valeur de l'erreur empirique. On peut
+se demander si l'utilisation d'un autre critère pour selectioner le
+meilleur modèle peut changer le modèle optimal obtenue précédemment.
+Essayons le critère AIC.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{verbatim}
+## Initialization...
+## TASK: Exhaustive screening of candidate set.
+## Fitting...
+## 
+## After 50 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast
+## Crit= 7530.21573803479
+## Mean crit= 7855.99703439362
+## 
+## After 100 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast
+## Crit= 7530.21573803479
+## Mean crit= 7824.97094198255
+## 
+## After 150 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+age
+## Crit= 6806.07969603613
+## Mean crit= 7656.58448012012
+## 
+## After 200 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7426.01574811718
+## 
+## After 250 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7245.05420191207
+## Completed.
+\end{verbatim}
 
-\subsubsection{Fig 15 : Relation entre laitier haut fourneau et
-Résistance à la
-Compression}\label{fig-15-relation-entre-laitier-haut-fourneau-et-ruxe9sistance-uxe0-la-compression}
+\begin{verbatim}
+## Initialization...
+## TASK: Genetic algorithm in the candidate set.
+## Initialization...
+## Algorithm started...
+## 
+## After 10 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+water+coarse+fine_aggr+age
+## Crit= 6844.56850804795
+## Mean crit= 7583.84162218353
+## Change in best IC: -3155.43149195205 / Change in mean IC: -2416.15837781647
+## 
+## After 20 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7556.27153931652
+## Change in best IC: -53.3550666073115 / Change in mean IC: -27.5700828670151
+## 
+## After 30 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7472.05348938154
+## Change in best IC: 0 / Change in mean IC: -84.2180499349752
+## 
+## After 40 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7428.14256695322
+## Change in best IC: 0 / Change in mean IC: -43.9109224283238
+## 
+## After 50 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7382.03588924381
+## Change in best IC: 0 / Change in mean IC: -46.106677709412
+## 
+## After 60 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7372.58554581532
+## Change in best IC: 0 / Change in mean IC: -9.45034342848703
+## 
+## After 70 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7336.44488207012
+## Change in best IC: 0 / Change in mean IC: -36.140663745201
+## 
+## After 80 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7316.19765512038
+## Change in best IC: 0 / Change in mean IC: -20.2472269497439
+## 
+## After 90 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7293.33305005811
+## Change in best IC: 0 / Change in mean IC: -22.8646050622638
+## 
+## After 100 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7272.51150602343
+## Change in best IC: 0 / Change in mean IC: -20.8215440346821
+## 
+## After 110 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7264.18168575749
+## Change in best IC: 0 / Change in mean IC: -8.32982026594163
+## 
+## After 120 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7258.13264870334
+## Change in best IC: 0 / Change in mean IC: -6.04903705414745
+## 
+## After 130 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7256.27176340601
+## Change in best IC: 0 / Change in mean IC: -1.8608852973266
+## 
+## After 140 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7248.49235824073
+## Change in best IC: 0 / Change in mean IC: -7.7794051652827
+## 
+## After 150 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7230.31695409363
+## Change in best IC: 0 / Change in mean IC: -18.1754041471058
+## 
+## After 160 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7227.45732251172
+## Change in best IC: 0 / Change in mean IC: -2.85963158190862
+## 
+## After 170 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7224.41129603703
+## Change in best IC: 0 / Change in mean IC: -3.04602647468619
+## 
+## After 180 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7214.00151998289
+## Change in best IC: 0 / Change in mean IC: -10.4097760541417
+## 
+## After 190 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7214.00151998289
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 200 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7205.97625403521
+## Change in best IC: 0 / Change in mean IC: -8.02526594768278
+## 
+## After 210 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7205.97625403521
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 220 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7204.60362451675
+## Change in best IC: 0 / Change in mean IC: -1.37262951845696
+## 
+## After 230 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7204.60362451675
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 240 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7204.60362451675
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 250 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7204.60362451675
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 260 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7199.50853666441
+## Change in best IC: 0 / Change in mean IC: -5.09508785233629
+## 
+## After 270 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7193.41732512436
+## Change in best IC: 0 / Change in mean IC: -6.09121154005061
+## 
+## After 280 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7193.41732512436
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 290 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7188.82890310082
+## Change in best IC: 0 / Change in mean IC: -4.58842202354117
+## 
+## After 300 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7188.82890310082
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 310 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7188.82890310082
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 320 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7185.7258327337
+## Change in best IC: 0 / Change in mean IC: -3.10307036711765
+## 
+## After 330 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7185.7258327337
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 340 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7185.7258327337
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 350 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7179.93367802468
+## Change in best IC: 0 / Change in mean IC: -5.79215470902545
+## 
+## After 360 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7179.93367802468
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 370 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7179.93367802468
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 380 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7179.93367802468
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 390 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7179.93367802468
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 400 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7179.93367802468
+## Improvements in best and average IC have bebingo en below the specified goals.
+## Algorithm is declared to have converged.
+## Completed.
+\end{verbatim}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{verbatim}
+## [1] "y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + "
+## [2] "    water + super_plast + age"
+\end{verbatim}
 
-\subsubsection{Fig 16 : Relation entre Cendres volantes et Résistance à
-la
-Compression}\label{fig-16-relation-entre-cendres-volantes-et-ruxe9sistance-uxe0-la-compression}
+\begin{verbatim}
+## [1] "y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + "
+## [2] "    water + super_plast + age"
+\end{verbatim}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-36-1} \end{center}
+La encore, le même modèle \texttt{cement\ +\ blast\_furnace\ +}
+\texttt{fly\_ash\ +\ water\ +\ super\_plast\ +\ age} ressort, ce qui
+était assez prévisible car ces deux critères sont très similaires.
 
-\subsubsection{Fig 17 : Relation entre eau et Résistance à la
-Compression}\label{fig-17-relation-entre-eau-et-ruxe9sistance-uxe0-la-compression}
+Selon le critére aic, le premier modèle qui a été selectionné par
+l'algorithme exhaustive est le suivant :
+y\_concrete\_compresive\textasciitilde1+cement+blast\_furnace+fly\_ash+water+super\_plast+age.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-37-1} \end{center}
+selon la deuxième méthode qui est l'algorithme génétique, on a :
+y\_concrete\_compresive \textasciitilde{} 1 + cement + blast\_furnace +
+fly\_ash + water + super\_plast + age'' les deux methodes nous donnent
+le meme modèle.
 
-\subsubsection{Fig 18 : Relation entre additif chimique et Résistance à
-la
-Compression}\label{fig-18-relation-entre-additif-chimique-et-ruxe9sistance-uxe0-la-compression}
+\begin{verbatim}
+## Start:  AIC=4065.85
+## y_concrete_compresive ~ cement + blast_furnace + fly_ash + water + 
+##     super_plast + coarse + fine_aggr + age
+## 
+##                 Df Sum of Sq    RSS    AIC   F value    Pr(>F)    
+## - fine_aggr      1         0  64868 4063.9    0.0036    0.9522    
+## - coarse         1         2  64869 4063.9    0.0279    0.8674    
+## <none>                        64867 4065.9                        
+## - super_plast    1      1058  65926 4079.4   15.5318 8.706e-05 ***
+## - water          1      1986  66853 4092.8   29.1421 8.494e-08 ***
+## - fly_ash        1      2032  66899 4093.5   29.8192 6.053e-08 ***
+## - blast_furnace  1      6824  71691 4160.0  100.1476 < 2.2e-16 ***
+## - cement         1     17190  82058 4289.8  252.2890 < 2.2e-16 ***
+## - age            1     75088 139955 4802.8 1101.9937 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Step:  AIC=4063.86
+## y_concrete_compresive ~ cement + blast_furnace + fly_ash + water + 
+##     super_plast + coarse + age
+## 
+##                 Df Sum of Sq    RSS    AIC   F value    Pr(>F)    
+## - coarse         1        11  64878 4062.0    0.1557    0.6932    
+## <none>                        64868 4063.9                        
+## + fine_aggr      1         0  64867 4065.9    0.0036    0.9522    
+## - super_plast    1      1082  65949 4077.8   15.8930 7.215e-05 ***
+## - water          1      5245  70112 4136.6   77.0511 < 2.2e-16 ***
+## - fly_ash        1      5304  70172 4137.4   77.9273 < 2.2e-16 ***
+## - blast_furnace  1     26163  91030 4387.5  384.3664 < 2.2e-16 ***
+## - cement         1     63929 128797 4721.0  939.2137 < 2.2e-16 ***
+## - age            1     75321 140188 4802.4 1106.5715 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Step:  AIC=4062.01
+## y_concrete_compresive ~ cement + blast_furnace + fly_ash + water + 
+##     super_plast + age
+## 
+##                 Df Sum of Sq    RSS    AIC   F value    Pr(>F)    
+## <none>                        64878 4062.0                        
+## + coarse         1        11  64868 4063.9    0.1557    0.6932    
+## + fine_aggr      1         9  64869 4063.9    0.1314    0.7170    
+## - super_plast    1      1149  66027 4076.9   16.8912 4.299e-05 ***
+## - fly_ash        1      5359  70237 4136.3   78.8040 < 2.2e-16 ***
+## - water          1      6844  71722 4156.4  100.6397 < 2.2e-16 ***
+## - blast_furnace  1     28681  93559 4411.8  421.7378 < 2.2e-16 ***
+## - cement         1     68363 133241 4751.6 1005.2373 < 2.2e-16 ***
+## - age            1     75394 140272 4801.0 1108.6315 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-38-1} \end{center}
+\begin{verbatim}
+## Start:  AIC=5422.78
+## y_concrete_compresive ~ 1
+## 
+##                 Df Sum of Sq    RSS    AIC  F value    Pr(>F)    
+## + age            1     72105 198590 5127.1 348.1968 < 2.2e-16 ***
+## + cement         1     62942 207754 5170.5 290.5420 < 2.2e-16 ***
+## + super_plast    1     44529 226166 5252.1 188.8142 < 2.2e-16 ***
+## + water          1     34144 236551 5295.2 138.4248 < 2.2e-16 ***
+## + coarse         1      7440 263256 5398.0  27.1011 2.362e-07 ***
+## + blast_furnace  1      5874 264821 5403.7  21.2710 4.527e-06 ***
+## + fine_aggr      1      5602 265093 5404.7  20.2670 7.563e-06 ***
+## + fly_ash        1      1436 269259 5419.7   5.1145   0.02395 *  
+## <none>                       270695 5422.8                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Step:  AIC=5127.12
+## y_concrete_compresive ~ age
+## 
+##                 Df Sum of Sq    RSS    AIC F value    Pr(>F)    
+## + cement         1     67528 131063 4729.8 493.593 < 2.2e-16 ***
+## + super_plast    1     38724 159867 4920.7 232.050 < 2.2e-16 ***
+## + water          1     31044 167547 4965.8 177.502 < 2.2e-16 ***
+## + coarse         1      8459 190132 5087.3  42.620 1.077e-10 ***
+## + fine_aggr      1      7676 190914 5091.2  38.518 8.066e-10 ***
+## + blast_furnace  1      7419 191171 5092.5  37.180 1.560e-09 ***
+## + fly_ash        1      2732 195859 5115.8  13.363 0.0002706 ***
+## <none>                       198590 5127.1                      
+## - age            1     72105 270695 5422.8 348.197 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Step:  AIC=4729.75
+## y_concrete_compresive ~ age + cement
+## 
+##                 Df Sum of Sq    RSS    AIC  F value    Pr(>F)    
+## + super_plast    1     33652  97410 4446.6 330.6147 < 2.2e-16 ***
+## + blast_furnace  1     25164 105898 4526.9 227.4110 < 2.2e-16 ***
+## + water          1     23078 107985 4545.6 204.5271 < 2.2e-16 ***
+## + coarse         1      4325 126738 4699.5  32.6565 1.468e-08 ***
+## + fly_ash        1      2651 128412 4712.1  19.7565 9.825e-06 ***
+## + fine_aggr      1      1090 129973 4723.7   8.0269  0.004706 ** 
+## <none>                       131063 4729.8                       
+## - cement         1     67528 198590 5127.1 493.5929 < 2.2e-16 ***
+## - age            1     76691 207754 5170.5 560.5706 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Step:  AIC=4446.58
+## y_concrete_compresive ~ age + cement + super_plast
+## 
+##                 Df Sum of Sq    RSS    AIC  F value    Pr(>F)    
+## + blast_furnace  1     21785  75625 4205.3 275.3942 < 2.2e-16 ***
+## + fine_aggr      1      4221  93190 4406.0  43.2971 7.737e-11 ***
+## + water          1      2283  95127 4425.8  22.9430 1.933e-06 ***
+## + fly_ash        1      1592  95819 4432.8  15.8797 7.263e-05 ***
+## + coarse         1       511  96899 4443.5   5.0409   0.02498 *  
+## <none>                        97410 4446.6                       
+## - super_plast    1     33652 131063 4729.8 330.6147 < 2.2e-16 ***
+## - cement         1     62457 159867 4920.7 613.5993 < 2.2e-16 ***
+## - age            1     70891 168301 4970.1 696.4630 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Step:  AIC=4205.31
+## y_concrete_compresive ~ age + cement + super_plast + blast_furnace
+## 
+##                 Df Sum of Sq    RSS    AIC  F value    Pr(>F)    
+## + water          1      5388  70237 4136.3  73.2545 < 2.2e-16 ***
+## + fly_ash        1      3903  71722 4156.4  51.9651 1.147e-12 ***
+## + coarse         1       723  74902 4198.1   9.2160  0.002464 ** 
+## <none>                        75625 4205.3                       
+## + fine_aggr      1        73  75552 4206.4   0.9179  0.338282    
+## - blast_furnace  1     21785  97410 4446.6 275.3942 < 2.2e-16 ***
+## - super_plast    1     30273 105898 4526.9 382.6917 < 2.2e-16 ***
+## - age            1     74591 150216 4862.8 942.9251 < 2.2e-16 ***
+## - cement         1     78288 153913 4886.2 989.6569 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Step:  AIC=4136.29
+## y_concrete_compresive ~ age + cement + super_plast + blast_furnace + 
+##     water
+## 
+##                 Df Sum of Sq    RSS    AIC   F value    Pr(>F)    
+## + fly_ash        1      5359  64878 4062.0   78.8040 < 2.2e-16 ***
+## + fine_aggr      1      1497  68741 4117.6   20.7740 5.839e-06 ***
+## <none>                        70237 4136.3                        
+## + coarse         1        66  70172 4137.4    0.8909    0.3455    
+## - water          1      5388  75625 4205.3   73.2545 < 2.2e-16 ***
+## - super_plast    1      7738  77976 4234.7  105.2161 < 2.2e-16 ***
+## - blast_furnace  1     24890  95127 4425.8  338.4222 < 2.2e-16 ***
+## - age            1     74879 145117 4831.6 1018.1138 < 2.2e-16 ***
+## - cement         1     76726 146963 4843.8 1043.2183 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Step:  AIC=4062.01
+## y_concrete_compresive ~ age + cement + super_plast + blast_furnace + 
+##     water + fly_ash
+## 
+##                 Df Sum of Sq    RSS    AIC   F value    Pr(>F)    
+## <none>                        64878 4062.0                        
+## + coarse         1        11  64868 4063.9    0.1557    0.6932    
+## + fine_aggr      1         9  64869 4063.9    0.1314    0.7170    
+## - super_plast    1      1149  66027 4076.9   16.8912 4.299e-05 ***
+## - fly_ash        1      5359  70237 4136.3   78.8040 < 2.2e-16 ***
+## - water          1      6844  71722 4156.4  100.6397 < 2.2e-16 ***
+## - blast_furnace  1     28681  93559 4411.8  421.7378 < 2.2e-16 ***
+## - cement         1     68363 133241 4751.6 1005.2373 < 2.2e-16 ***
+## - age            1     75394 140272 4801.0 1108.6315 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
 
-\subsubsection{Fig 19 : Relation entre granulats grossiers et Résistance
-à la
-Compression}\label{fig-19-relation-entre-granulats-grossiers-et-ruxe9sistance-uxe0-la-compression}
+A ce niveau, nous avons utilisé le critère Fisher. nous avons utilisé
+deux methodes à savoir l'algorithme bidirectionnel descendante puis
+l'algorithme bidirectionnel ascendante. avec la première méthode, on a :
+y\_concrete\_compresive \textasciitilde{} cement + blast\_furnace +
+fly\_ash + water + super\_plast + age. La deuxième méthode quant à elle
+nous donne le modèle suivant : y\_concrete\_compresive \textasciitilde{}
+age + cement + super\_plast + blast\_furnace + water + fly\_ash. Avec
+les deux méthodes, nous avons pratiquement les memes résultats. De plus,
+les deux autres critères à savoir bic et aic ont donné les memes
+résulats avec les deux algoritmes à savoir : l'exhaustif et génétique.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-39-1} \end{center}
+\textbf{Erreur théorique}
 
-\subsubsection{Fig 20 : Relation entre granulats fins et la resistance à
-la
-compression}\label{fig-20-relation-entre-granulats-fins-et-la-resistance-uxe0-la-compression}
+On va appliquer ici les méthode pour estimer l'erreur théorique d'un
+modèle : on compare les modèles générés par le critére bic, aic et
+Fisher.
 
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-40-1} \end{center}
+\paragraph{Méthode 1 : estimation de l'erreur par la méthode
+apprentissage/validation}\label{muxe9thode-1-estimation-de-lerreur-par-la-muxe9thode-apprentissagevalidation}
 
-test corrrelation entre variable à expliquer et \texttt{cement}
+\begin{verbatim}
+## Warning: package 'ISLR' was built under R version 4.4.2
+\end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{cement, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+## [1] 81.95193
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 81.54004
+\end{verbatim}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-50-1.pdf}
+
+\begin{verbatim}
+## [1] "Erreur de prévision finale: 69.0263"
+\end{verbatim}
+
+On voit ici que pour la méthode d'apprentissage validation, le modèle
+optimal a une erreur théorique qui est inferieure à celle du modèle
+complet c'est-à-dire que ce modèle optimal est mieux performant que le
+modèle complet. modèle optimal : ``y\_concrete\_compresive
+\textasciitilde{} age + cement + super\_plast + blast\_furnace + water +
+fly\_ash''. En répétant la méthode plusieurs fois (dans ce cas 500
+fois), on a eu une erreur théorique inferieure à celui des deux
+méthodes. Malgrè les inconvenients de cette méthode qui est que la
+répartition change l'erreur théorique mais aussi qu'elle sous-estime
+l'erreur, en répetant la méthode plusieurs fois (la loi de grands
+nombres), l'erreur théorique tend vers l'erreur théorique optimale. On
+regarde à présent la méthode de validation croisée K-fold.
+
+\paragraph{Méthode 2 : estimation de l'erreur par la K-fold
+CV}\label{muxe9thode-2-estimation-de-lerreur-par-la-k-fold-cv}
+
+\begin{verbatim}
+## Erreur estimée par validation croisée ( 10 -fold) : 109.4825
+\end{verbatim}
+
+On retrouve une erreur plus importante que celle de la méthode
+précédente cela est du à la sous estimation de l''erreur théorique par
+la méthode apprentissage/validation. L'erreur théorique de cette méthode
+est de 109.43 contre 69.24 pour la méthode apprentissage/validation.
+
+\paragraph{Méthode 3 : estimation de l'erreur par leave-one-out VC
+(LOOCV)}\label{muxe9thode-3-estimation-de-lerreur-par-leave-one-out-vc-loocv}
 
 \begin{verbatim}
 ## 
-##  Pearson's product-moment correlation
+## Call:
+## glm(formula = y_concrete_compresive ~ age + cement + super_plast + 
+##     blast_furnace + water + fly_ash, data = bdd_ing)
 ## 
-## data:  bdd$cement and bdd$y_concrete_compresive
-## t = 18.405, df = 1028, p-value < 2.2e-16
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  0.4504473 0.5424213
-## sample estimates:
-##       cor 
-## 0.4978327
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   14.811114   3.553820   4.168 3.36e-05 ***
+## age            0.311302   0.009349  33.296  < 2e-16 ***
+## cement         0.110433   0.003483  31.705  < 2e-16 ***
+## super_plast    0.310397   0.075524   4.110 4.30e-05 ***
+## blast_furnace  0.083993   0.004090  20.536  < 2e-16 ***
+## water         -0.176827   0.017626 -10.032  < 2e-16 ***
+## fly_ash        0.057222   0.006446   8.877  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for gaussian family taken to be 68.00653)
+## 
+##     Null deviance: 270695  on 960  degrees of freedom
+## Residual deviance:  64878  on 954  degrees of freedom
+## AIC: 6791.2
+## 
+## Number of Fisher Scoring iterations: 2
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#test de pearson car ont une distribution pseudo{-}normale}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+## [1] "Erreur MSE estimée par LOOCV: 68.6502"
+\end{verbatim}
 
-test de correlation entre variable \texttt{water} et
-\texttt{SuperPlasticizer}
+\begin{verbatim}
+## [1] 81.95193
+\end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{water, bdd}\SpecialCharTok{$}\NormalTok{super\_plast, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+## [1] 81.54004
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 68.65022
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 109.4825
+\end{verbatim}
+
+On remarque l'erreur théorique estimée du modèle optimal par la méthode
+apprentissage/validation est la plus petite, ensuite celle du modèle
+complet avec la meme méthode, puis celle de la methode loocv et enfin
+celle de la méthode k-fold qui est l'idéale parce que les deux autres
+methodes presentent des inconvenients.
+
+\section{Statistique en Grande
+dimension}\label{statistique-en-grande-dimension}
+
+\subsection{methode ridge}\label{methode-ridge}
+
+cette methode nous permet de contraindre les coefficients de telle sorte
+à avoir un équilibre juste entre le biais et la variance.
+
+\begin{verbatim}
+## Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## Loaded glmnet 4.1-8
+\end{verbatim}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-53-1.pdf}
+
+\begin{verbatim}
+## Warning: Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per
+## fold
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "Meilleur lambda: 0.8662047727533"
+\end{verbatim}
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-53-2.pdf}
+
+\begin{verbatim}
+## [1] "Erreur MSE minimale: 69.9738363782654"
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "Coefficients optimaux:"
+\end{verbatim}
+
+\begin{verbatim}
+## 7 x 1 sparse Matrix of class "dgCMatrix"
+##                        s1
+## (Intercept)   17.14454013
+## cement         0.09734465
+## blast_furnace  0.07021218
+## fly_ash        0.03744530
+## water         -0.15953543
+## super_plast    0.45084306
+## age            0.29440887
+\end{verbatim}
+
+On remarque que l'erreur théorique est de 69.97 avec le meilleur lambda
+qui est de 0.86 .
+
+\subsection{methode lasso}\label{methode-lasso}
+
+cette deuxième nous permet de selectionner les variables à inserer dans
+le modèle tout en contraignant egalement les coefficients de telle sorte
+qu'il aii équilibre parfait entre biais et variance.
+
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-54-1.pdf}
+\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-54-2.pdf}
+
+\begin{verbatim}
+## Lambda optimal: 0.04731451
+\end{verbatim}
+
+\begin{verbatim}
+## 9 x 1 sparse Matrix of class "dgCMatrix"
+##                         s1
+## (Intercept)   17.752885121
+## cement         0.107597256
+## blast_furnace  0.080643114
+## fly_ash        0.052423318
+## water         -0.176721943
+## super_plast    0.336140535
+## coarse         .          
+## fine_aggr     -0.002259712
+## age            0.309551398
+\end{verbatim}
 
 \begin{verbatim}
 ## 
-##  Kendall's rank correlation tau
-## 
-## data:  bdd$water and bdd$super_plast
-## z = -23.914, p-value < 2.2e-16
-## alternative hypothesis: true tau is not equal to 0
-## sample estimates:
-##       tau 
-## -0.528651
+## Variables sélectionnées par Lasso:
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#test de Kendall car n\textquotesingle{}ont pas de distribution pseudo{-} normale}
-\end{Highlighting}
-\end{Shaded}
-
-test de correlation entre variable \texttt{water} et \texttt{y}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(bdd}\SpecialCharTok{$}\NormalTok{age, bdd}\SpecialCharTok{$}\NormalTok{y\_concrete\_compresive, }\AttributeTok{method =} \StringTok{"kendall"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\begin{verbatim}
+## [1] "cement"        "blast_furnace" "fly_ash"       "water"        
+## [5] "super_plast"   "fine_aggr"     "age"
+\end{verbatim}
 
 \begin{verbatim}
 ## 
-##  Kendall's rank correlation tau
-## 
-## data:  bdd$age and bdd$y_concrete_compresive
-## z = 19.826, p-value < 2.2e-16
-## alternative hypothesis: true tau is not equal to 0
-## sample estimates:
-##       tau 
-## 0.4490164
+## Erreur MSE minimale: 68.88931
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#test de Kendall car n\textquotesingle{}ont pas de distribution pseudo{-} normale}
-\end{Highlighting}
-\end{Shaded}
-
-\subsection{Analyse multivariée}\label{analyse-multivariuxe9e}
-
-\subsubsection{Contribution des
-variables}\label{contribution-des-variables}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Tableau des contributions des variables}
-\FunctionTok{par}\NormalTok{(}\AttributeTok{cex =} \FloatTok{0.65}\NormalTok{)}
-\NormalTok{contrib\_var }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(res\_pca}\SpecialCharTok{$}\NormalTok{var}\SpecialCharTok{$}\NormalTok{contrib)}
-\FunctionTok{print}\NormalTok{(contrib\_var)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##                            Dim.1      Dim.2      Dim.3      Dim.4      Dim.5
-## cement                 1.8570924 21.8162521 19.4630539 17.0024498  0.3034758
-## blast_furnace          1.3854568 10.6144114 38.1264598  0.8844007  4.7645646
-## fly_ash                7.2754889 20.3973975  1.3084478  9.8815857  4.0570219
-## water                 28.2000179  2.1202816  1.4847945  2.0723167  4.4435413
-## super_plast           30.7756668  0.2472336  6.2022982  0.9015953  8.4701606
-## coarse                 0.8939835  3.4632950 32.5054492 12.5162699 10.6005496
-## fine_aggr              4.8648268 13.0123250  0.2499000 13.1394718 39.0454823
-## age                    5.5749786  4.1403732  0.4309223 40.7207759 28.1887145
-## y_concrete_compresive 19.1724883 24.1884306  0.2286743  2.8811343  0.1264894
-\end{verbatim}
-
-\subsubsection{\texorpdfstring{Tableau des \(cos^2\) des variables
-sur}{Tableau des cos\^{}2 des variables sur}}\label{tableau-des-cos2-des-variables-sur}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Tableau des cos² des variables}
-\FunctionTok{par}\NormalTok{(}\AttributeTok{cex =} \FloatTok{0.65}\NormalTok{)}
-\NormalTok{cos2\_var }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(res\_pca}\SpecialCharTok{$}\NormalTok{var}\SpecialCharTok{$}\NormalTok{cos2)}
-\FunctionTok{print}\NormalTok{(cos2\_var)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##                            Dim.1       Dim.2       Dim.3      Dim.4       Dim.5
-## cement                0.04181872 0.405352873 0.271676732 0.19539670 0.003132659
-## blast_furnace         0.03119825 0.197219125 0.532191509 0.01016377 0.049182696
-## fly_ash               0.16383224 0.378990105 0.018264082 0.11356182 0.041879015
-## water                 0.63501880 0.039395503 0.020725633 0.02381562 0.045868900
-## super_plast           0.69301824 0.004593679 0.086575320 0.01036137 0.087434082
-## coarse                0.02013106 0.064349119 0.453730143 0.14384032 0.109425235
-## fine_aggr             0.10954803 0.241773118 0.003488251 0.15100232 0.403050903
-## age                   0.12553950 0.076929445 0.006015067 0.46797404 0.290980829
-## y_concrete_compresive 0.43173343 0.449428700 0.003191970 0.03311077 0.001305699
-\end{verbatim}
-
-\subsubsection{Fig 21 : PCA sur la dimension
-1-3}\label{fig-21-pca-sur-la-dimension-1-3}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{plot.PCA}\NormalTok{(}
-\NormalTok{    res\_pca,}
-    \AttributeTok{axes =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{),             }\CommentTok{\# On se concentre sur les axes 2 et 3}
-    \AttributeTok{choix =} \StringTok{"var"}\NormalTok{,              }\CommentTok{\# Afficher les variables dans le plan factoriel}
-    \AttributeTok{col.var =} \StringTok{"\#4B0000"}\NormalTok{,        }\CommentTok{\# Couleur des variables alignée au style}
-    \AttributeTok{col.quanti.sup =} \StringTok{"\#0000FF"}\NormalTok{, }\CommentTok{\# Couleur pour la variable quantitative supplémentaire}
-    \AttributeTok{label =} \StringTok{"all"}\NormalTok{,}
-    \AttributeTok{title =} \StringTok{""}\NormalTok{,}
-    \AttributeTok{addgrid.col =} \StringTok{"\#DDB688"}     \CommentTok{\# Couleur de la grille}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-46-1} \end{center}
-
-\subsubsection{Fig 22 : PCA sur la dimension
-2-3}\label{fig-22-pca-sur-la-dimension-2-3}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Représentation des variables sur le plan factoriel (axes 1 et 3)}
-\FunctionTok{plot.PCA}\NormalTok{(}
-\NormalTok{  res\_pca,}
-  \AttributeTok{axes =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{),             }\CommentTok{\# On se concentre sur les 2 premiers axes}
-  \AttributeTok{choix =} \StringTok{"var"}\NormalTok{,              }\CommentTok{\# Afficher les variables dans le plan factoriel}
-  \AttributeTok{col.var =} \StringTok{"\#4B0000"}\NormalTok{,        }\CommentTok{\# Couleur des variables alignée au style}
-  \AttributeTok{col.quanti.sup =} \StringTok{"\#0000FF"}\NormalTok{, }\CommentTok{\# Couleur pour la variable quantitative supplémentaire}
-  \AttributeTok{label =} \StringTok{"all"}\NormalTok{,}
-  \AttributeTok{title =} \StringTok{""}\NormalTok{,}
-  \AttributeTok{addgrid.col =} \StringTok{"\#DDB688"}     \CommentTok{\# Couleur de la grille}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-47-1} \end{center}
+Pour la méthode de lasso qui est une méthode de selection de variable,
+on remarque à la difference des autres methodes et critéres de
+selection, elle ajoute fine\_aggr. le modèle donne par cette méthode est
+la suivante : ``y\_concrete\_compresive'' = cement'' +
+``blast\_furnace'' + ``fly\_ash'' + ``water'' + ``super\_plast'' +
+``fine\_aggr'' + ``age''. Son erreur théorique (68.88) est inferieure à
+celle de la méthode ridge(69.97) avec un lambda inferieur à celui de
+méthode ridge.
 
 \end{document}

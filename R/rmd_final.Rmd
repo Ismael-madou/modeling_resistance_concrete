@@ -44,7 +44,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 (en cours)
 
-# Revue empirique
+# Developpemnt
+
+## Revue empirique
 
 La résistance du béton est une propriété reconnue depuis longtemps.
 Si le béton est un élément important du développement de nos sociétés, c’est qu’il possède une résistance mécanique, en particulier à la compression, qui a permis aux architectes et concepteurs de concevoir des structures de plus en plus importantes et durables dans le temps.
@@ -106,6 +108,39 @@ Typiquement, un saut d’environ 10 MPa (environ 50 %) est constaté entre 2 et 
 Après ce cap, le rythme de durcissement ralentit, mais on atteint souvent plus de 90 % de la résistance finale à 28 jours.
 
 
+## Resulats des travaux 
+
+A ce niveau, nous allons presenter les resultats de notre travail. Tout d'abord, nous avons remarqué qu'il existe une liaison positive (0.107597256 comme coefficient pénalisé) forte entre la quantité du ciment utilisée et la resistance à la compression (Statistique bivariée). Cela confirme les résultats des travaux effectués par Mehta et Monteiro (2014) qui soulignent que l’augmentation de la teneur en ciment améliore significativement la résistance mécanique, en particulier dans les
+premiers jours de durcissement. Puis nous avons observé à nouveau une significativité de cette variable ciment(avec le test de student qui designe une p-value très faible). De plus, la selection du modèle par la méthode apprentissage/validation mais aussi par la méthode K-fold permet de rendre compte de l'importance du ciment dans notre modèle.
+
+Ensuite, un autre lien positif (0.080643114) entre le laitier du haut fourneau et la resistance à la compression qui est totalemnt positif et significatif. Comme l'a demontré la litterature à ce sujet, le laitier du haut fourneau a un faible impact sur la resistance durant les premiers jours, Cependant son effet devient important avec le temps. Dans notre cas, la matrice de corrélation nous montre une relation faible entre l'age et le laitier du haut fourneau. Neamoins, on est tous unanime sur l'effet positif de cette variable sur la resistance. les resultats du test de student temoigne bel et bien cette affirmation avec une p-value inferieur à 5% avec un poids de 8%. On remarque que pour les méthodes de selection avec les trois critéres à savoir le BIC, AIC et Fisher ainsi que la regression ridge, cette variable est selectionnée. les resultats de l'ACP ont aussi predit un modèle contenant cette variable.
+
+De plus, l'eau est aussi attendu d'après nos resulats de l'ACP. la litterature stipule que l'eau est très important puiqu'elle augmente l'ouvrabilité du béton en  augmentant la fluidité du béton et entraîne la diminution de la concentration en solides. Cependant, l’introduction excessive de l’eau provoque la chute de la résistance mécanique et sa durabilité. notre modèle basé sur toutes les approches prend en compte la variable eau, d'où son importance. Notons que la valeur du coefficient pénalisé de l'eau (-0.176721943) que ce soit au niveau du test student ou de la méthode lasso, ne réflete pas le vrai effet. Cela pourrait correspondre aux situations où la quantité d'eau est très importante d'où la nécéssité de connaitre les bases du domaine puisque les methodes utilisés ne cherchent pas un seuil à partir duquel la rélation de l'eau avec le variable cible change.
+
+Puis notre modèle prend en compte la variable cendres volantes au niveau de toutes les méthodes. Selon la litterature, cette variable est un substitut du ciment. Cependant nous devons retenir que cette variable agit lentement sur la resistance et ce n'est qu'à partir d'un moment qu'elle renforce la structure du béton
+et améliore sa durabilité grâce à une réaction chimique progressive. les tests confirment egalement la siginificativité avec un coefficient pénalisé d'une valeur de 0.052423318. De plus, sur le cercle de correlation (ACP), on remarque que cette variable evolue dans la meme direction que la variable cible. tous ces resulats nous permettent de confirmer l'effet positif des cendres volantes sur la resistance à la compression.
+
+De plus, nous avons superplastifiant qui est également inclu dans le modèle. d'après la litterature, Le volume d’eau augmente avec l’augmentation du dosage en superplastifiant. vu que la litterature suppose que l'augmentation de l'eau a un effet positif donc on peut déduire également que l'augmentation du superplastifiant agit positivement sur la résistance du béton. les resulats du modèle montrent une significativité de cette variable avec un coeffcient pénalisé avec la méthode lasso positif (0.336140535) qui temoigne le lien positif entre le superplastifiant et la resistance du béton.
+
+Et enfin, nous avons la variable age dans notre modèle optimale. d'après la litterature et les observations faites, la resistance du béton augmente avec l'age. les resulats obtenus montrent les conclusions à savoir un lien positif avec coefficient pénalisé de l'ordre de 0.309551398 entre l'age et la resistance. nous pouvons conclure l'idée selon laquelle le béton nécésite du temps pour s'endurcir. toutes les méthodes de selection utilisées ont selectionné cette variable pour faire partie du modèle.
+
+En resumé, retenons que toutes ces variables impactent positivement de maniére differente la resistance à la compression meme si le coefficient de l'eau montre une contradiction. Tout d'abord, nous avons le superplastifiant qui impacte plus la résistance ensuite l'age puis l'eau de maniére negative après vient le ciment qui impacte positivement cette résistance et qui sera suivi par le laitier du haut fourneau pour finir avec les cendres volantes qui ont un impact faible sur cette résistance comparés aux autres éléments. la méthode lasso quant à elle, a pris en compte la variable fine_aggr (granulats fins) qui n'a pas été selectionné par toutes les méthodes de selection. De plus, le summary de notre modèle montre la non significativité de cette variable. Cela implique la suppression des deux variables coarse et fine_agrr pour obtenir le meilleur modèle au sens de tous les critéres. 
+
+
+
+# Conclusion
+
+
+
+
+
+
+
+
+
+
+# Annexe
+
 
 ```{r base, echo = FALSE, message=FALSE, warning=F}
 library(readxl)
@@ -138,72 +173,210 @@ verif <- str(bdd)
 ```
 
 
+## Analyse univariée
 
+### Cement
 
-
-
-# Zoom tour à tour sur les composantes de notre base de données.
-
-## Cement (voir annexe fig 1)
+```{r, echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Cement
+p1 <- ggplot(bdd, aes(x = cement)) +
+  geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
+  labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
+  theme_minimal()
+print(p1)
+```
 
 L'histogramme montre une distribution étalée avec plusieurs pics, indiquant une variabilité dans les proportions de ciment utilisées.
 Les valeurs les plus courantes se situent entre 100 et 400 kg/m³.
 Cette répartition suggère que différentes formulations de béton nécessitent des proportions de ciment variées, influençant potentiellement la résistance finale du béton.
 
-## Blast Furnace Slag (voir annexe fig 2)
+
+### Blast Furnace Slag 
+
+```{r , echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Blast Furnace Slag
+
+p2 <- ggplot(bdd, aes(x = blast_furnace)) +
+  geom_histogram(bins = 30, fill = "red", color = "darkred") +
+  labs(title = "Distribution de la variable Blast Furnace Slag", x = "Blast Furnace Slag", y = "Fréquence") +
+  theme_minimal()
+print(p2)
+
+```
 
 La majorité des valeurs sont proches de zéro, suggérant que le blast furnace slag est rarement utilisé en grande quantité.
 Cependant, quelques observations montrent une présence significative de ce composant, ce qui pourrait indiquer des formulations spécifiques cherchant à améliorer certaines propriétés du béton, comme la durabilité ou la résistance aux sulfates.
 
-## Fly Ash (voir annexe fig 3)
+### Fly Ash
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+#  Histogramme pour Fly Ash
+p3 <- ggplot(bdd, aes(x = fly_ash)) +
+  geom_histogram(bins = 30, fill = "purple", color = "darkblue") +
+  labs(title = "Distribution de la variable Fly Ash", x = "Fly Ash", y = "Fréquence") +
+  theme_minimal()
+print(p3)
+
+```
 
 La distribution est fortement biaisée vers zéro, montrant que le fly ash est peu utilisé dans la majorité des échantillons.
 Seules quelques observations présentent des valeurs plus élevées, ce qui indique que cet additif est employé dans des mélanges spécifiques, probablement pour optimiser la maniabilité ou réduire les coûts en substituant une partie du cement.
 
-## Water (voir annexe fig 4)
+### Water
+
+```{r , echo = FALSE, message=FALSE, warning=F}
+#Histogramme pour Water
+
+p4 <- ggplot(bdd, aes(x = water)) +
+  geom_histogram(bins = 30, fill = "cyan", color = "darkblue") +
+  labs(title = "Distribution de la variable Water", x = "Water", y = "Fréquence") +
+  theme_minimal()
+print(p4)
+
+
+```
 
 La répartition est relativement normale avec un pic autour de 200 kg/m³, ce qui indique une quantité d’eau standardisée dans la plupart des mélanges.
 Une consommation d’eau bien contrôlée est essentielle pour assurer une bonne hydratation du ciment et éviter une porosité excessive pouvant affaiblir le matériau.
 
-## Superplasticizer (voir annexe fig 5)
+### Superplasticizer
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Superplasticizer
+
+p5 <- ggplot(bdd, aes(x = super_plast)) +
+  geom_histogram(bins = 30, fill = "orange", color = "darkorange") +
+  labs(title = "Distribution de la variable Superplasticizer", x = "Superplasticizer", y = "Fréquence") +
+  theme_minimal()
+print(p5)
+
+```
 
 La plupart des valeurs sont proches de zéro, ce qui signifie que le superplasticizer est peu utilisé dans de nombreux échantillons.
 Cependant, certaines observations indiquent une utilisation plus importante, ce qui peut être lié à des mélanges nécessitant une meilleure fluidité tout en réduisant le rapport water/cement pour maximiser la résistance finale.
 
-## Coarse Aggregate (voir annexe fig 6)
+###  Coarse Aggregate
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+p6 <- ggplot(bdd, aes(x = coarse)) +
+  geom_histogram(bins = 30, fill = "yellow", color = "gold") +
+  labs(title = "Distribution de la variable Coarse Aggregate", x = "Coarse Aggregate", y = "Fréquence") +
+  theme_minimal()
+print(p6)
+```
 
 Le coarse aggregate suit une distribution centrée autour de 950-1000 kg/m³, ce qui montre une standardisation dans son utilisation.
 La présence d’une quantité relativement constante de coarse aggregate est essentielle pour garantir la stabilité et la résistance mécanique du béton tout en minimisant la fissuration.
 
-## Fine Aggregate (voir annexe fig 7)
+### Fine Aggregate
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Fine Aggregate
+
+p7 <- ggplot(bdd, aes(x = fine_aggr)) +
+  geom_histogram(bins = 30, fill = "pink", color = "black") +
+  labs(title = "Distribution de la variable Fine Aggregate", x = "Fine Aggregate", y = "Fréquence") +
+  theme_minimal()
+print(p7)
+
+```
 
 La distribution est également centrée autour de 750-800 kg/m³, suggérant une utilisation homogène du fine aggregate dans les différents mélanges de béton.
 Une quantité bien maîtrisée de fine aggregate améliore la compacité du béton et influe sur sa capacité de mise en œuvre et son imperméabilité.
 
-## Age (voir annexe fig 8 )
+###  Age
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Age
+
+p8 <- ggplot(bdd, aes(x = age)) +
+  geom_histogram(bins = 30, fill = "brown", color = "black") +
+  labs(title = "Distribution de la variable Age", x = "Age (jours)", y = "Fréquence") +
+  theme_minimal()
+print(p8)
+```
 
 L'âge du béton est majoritairement faible, avec une concentration autour de 28 jours.
 Quelques échantillons présentent des âges plus avancés, jusqu'à un an.
 Cela reflète l'importance de la période de cure du béton, puisque la résistance continue d’augmenter avec le temps grâce à l’hydratation prolongée du cement.
 
-## Concrete Compressive Strength (voir annexe fig 9)
+### Concrete Compressive Strength
 
+```{r , echo = FALSE, message=FALSE, warning=F}
+# Histogramme pour Concrete Compressive Strength
+
+p9 <- ggplot(bdd, aes(x = y_concrete_compresive)) +
+  geom_histogram(bins = 30, fill = "darkgreen", color = "black") +
+  labs(title = "Distribution de la variable Concrete Compressive Strength", x = "Concrete Compressive Strength (MPa)", y = "Fréquence") +
+  theme_minimal()
+print(p9)
+
+
+```
 
 La concrete compressive strength suit une distribution proche d’une loi normale, avec un pic autour de 40 MPa.
 Cela indique une variabilité contrôlée de la résistance du béton.
 La concrete compressive strength étant un paramètre clé, cette distribution montre que la plupart des mélanges atteignent une performance attendue, bien qu’il existe des échantillons avec des valeurs plus élevées ou plus faibles en fonction des formulations utilisées.
 
 
-\newpage
 
 
-# Expliquons la résistance à la compression du béton par nos variables. 
+###   Fig 10 : Détection des valeurs aberrantes (Boxplots)  
+
+```{r boxplots_outliers, echo = FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=6}
+par(mfrow=c(3,3))
+
+boxplot(bdd$cement, main="Cement", col="lightblue")
+boxplot(bdd$blast_furnace, main="Blast Furnace Slag", col="lightgreen")
+boxplot(bdd$fly_ash, main="Fly Ash", col="lightcoral")
+boxplot(bdd$water, main="Water", col="cyan")
+boxplot(bdd$super_plast, main="Superplasticizer", col="orange")
+boxplot(bdd$coarse, main="Coarse Aggregate", col="gold")
+boxplot(bdd$fine_aggr, main="Fine Aggregate", col="pink")
+boxplot(bdd$age, main="Age", col="brown")
+boxplot(bdd$y_concrete_compresive, main="Concrete Strength", col="darkgreen")
+```
+
+
+## Analyse bivariee
+
+
+### Matrice de correlation
+
+```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center',,fig.width=4, fig.height=3}
+par(cex=0.3)
+library(corrplot)
+library(ggcorrplot)
+
+# Calcul de la matrice de corrélation ----
+cor_matrix <- cor(bdd, use = "complete.obs")
+print(cor_matrix)
+
+
+#Graphe de la matrice de corelation
+ggcorrplot(cor_matrix,
+           hc.order = TRUE,        # Réorganise en clustering hiérarchique
+           type = "upper",         # Affiche uniquement la moitié 
+           lab = TRUE,             # Ajout des valeurs de corrélation
+           lab_size = 2.5,         # Réduit la taille du texte
+           tl.cex = 8)             # Réduit la taille des variables
+
+```
 
 La matrice de corrélation en annexe va nous aider à voir les différents liens de corrélation potentiels entre nos variables.
 Dans cette partie, nous allons étudier et essayer de trouver les couples de variables significativement dépendants.
 Il est important de trouver tous les couples liés afin d'expliquer de manière optimale comment les variables de notre base peuvent influer sur la résistance à la compression du béton.
 
-## Quantité de ciment et résistance du béton. (voir annexe fig 12)
+### Quantité de ciment et résistance du béton.
+
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex=0.5)
+plot(bdd$cement, bdd$y_concrete_compresive,
+     main = "Relation entre Cement et Résistance à la Compression",
+     xlab = "Cement",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
 
 Nous allons ici examiner si la quantité de ciment utilisée pour créer le béton est significativement reliée à la résistance à la compression du béton.
 En effet, nous pouvons d'abord observer la distribution de ces deux variables à l'aide du graphique ci-dessous :
@@ -215,7 +388,16 @@ On peut alors dire que plus la quantité de ciment utilisée pour la fabrication
 Le test final a donné un coefficient de corrélation $\rho$ de Pearson égal à **0,5** (annexe), ce qui indique un lien relativement fort et non négligeable.
 Ainsi, une fabrication de béton comprenant une grande quantité de ciment favoriserait grandement sa résistance à la compression.
 
-## Additif chimique et eau. (voir annexe fig 13)
+### Additif chimique et eau.
+
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex = 0.5) 
+plot(bdd$water, bdd$super_plast,
+     main = "Relation entre l'eau et Super plasticizer",
+     xlab = "eau",
+     ylab = "CSuper plasticizer",
+     pch = 16, col = "black")
+```
 
 Dans le processus de fabrication du béton, il est parfois nécessaire d'ajouter un additif chimique pour améliorer sa fluidité et sa maniabilité.
 La réflexion porte ici sur la corrélation entre l'ajout de cet additif chimique et la quantité d'eau utilisée pour la fabrication : y aurait-il un quelconque lien entre ces deux variables ?
@@ -230,7 +412,18 @@ Pour avoir une certitude, nous effectuons alors un test de corrélation de Kenda
 En clair, plus la quantité d'eau utilisée pour la fabrication du béton est importante, moins d'additif chimique a été ajouté lors de cette fabrication.
 Ce lien fort nous aidera dans la suite de notre étude.
 
-## L'age, une variable importante. (voir annexe fig 14)
+
+### L'age, une variable importante. 
+
+
+```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
+par(cex = 0.5)
+plot(bdd$age, bdd$y_concrete_compresive,
+     main = "Relation entre l'age et la resistance",
+     xlab = "age",
+     ylab = "Resistance à la compression",
+     pch = 16, col = "black")
+```
 
 Il serait tout à fait naturel de penser que l'âge ait une quelconque importance sur la résistance à la compression du béton.
 En effet, l'imaginaire collectif nous amène d'abord à penser que ce béton, en conséquence de l'âge, deviendrait de plus en plus fragile et, de ce fait, moins résistant à la compression.
@@ -253,7 +446,20 @@ test <- cor.test(bdd$age, bdd$y_concrete_compresive, method = "kendall")
 ```
 
 
-## La resistance à la compression du béton peut-elle s'expliquer grâce au laitier de haut fournaux ? (voir fig 15)
+### La resistance à la compression du béton peut-elle s'expliquer grâce au laitier de haut fournaux ? 
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2, fig.align='center'}
+
+data_nul <- bdd %>% 
+  filter(blast_furnace>10)
+
+par(cex=0.5)
+plot(data_nul$blast_furnace, data_nul$y_concrete_compresive,
+     main = "Relation entre blast_furnace et Résistance à la Compression",
+     xlab = "laitier de haut fourneau",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
 
 On examine ici la relation entre le laitier de haut fourneau et la résistance à la compression du béton :
 
@@ -265,7 +471,20 @@ En effet, ce test nous fournit une p-value inférieure à 0.05 et un coefficient
 test <- cor.test(bdd$blast_furnace, bdd$y_concrete_compresive, method = "spearman")
 ```
 
-## Les cendres volantes peuvent-elles expliquer la resistance du béton ? (voir annexe fig 16)
+### Les cendres volantes peuvent-elles expliquer la resistance du béton ?
+
+```{r, echo = FALSE, fig.align='center', fig.width=3, fig.height=2}
+library(dplyr)
+data_nul <- bdd %>% 
+  filter(fly_ash>0)
+
+par(cex=0.5)
+plot(data_nul$fly_ash, data_nul$y_concrete_compresive,
+     main = "Relation entre Cendres volantes et Résistance à la Compression",
+     xlab = "cendre volantes",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
 
 Pour tenter de répondre à cette question, on peut d'abord examiner la distribution de la quantité de cendres volantes en fonction de la résistance à la compression du béton.
 
@@ -280,7 +499,19 @@ data_nul <- bdd %>%
 test <- cor.test(data_nul$fly_ash, data_nul$y_concrete_compresive, method = "spearman")
 ```
 
-## L'eau, un facteur de résistance ? (voir Annexe fig 17)
+
+### L'eau, un facteur de résistance ? 
+
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
+par(cex=0.5)
+
+plot(bdd$water, bdd$y_concrete_compresive,
+     main = "Relation entre eau et Résistance à la Compression",
+     xlab = "quantité d'eau",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
 
 Dans l'imaginaire collectif, il est tout à fait logique de penser que si l'on ajoute de l'eau lors de la création du béton, celui-ci sera moins résistant que si l'on ne le fait pas. Cependant, il est indispensable d'incorporer une certaine quantité d'eau. L'objectif est donc de trouver un juste milieu dans cette quantité. Examinons d'abord la distribution de la résistance des bétons par rapport à leur résistance à la compression :
 
@@ -295,7 +526,22 @@ En conclusion, moins il y a d'eau dans la création du béton, plus celui-ci ser
 test <- cor.test(bdd$water, bdd$y_concrete_compresive, method = "spearman")
 ```
 
-## Superplasticité et Résistance (voir annexe fig 18)
+
+### Superplasticité et Résistance
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
+par(cex=0.5)
+library(dplyr)
+
+data_nul <- bdd %>%
+  filter(super_plast>0)
+
+plot(data_nul$super_plast, data_nul$y_concrete_compresive,
+     main = "Relation entre additif chimique et Résistance à la Compression",
+     xlab = "additif chimique",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
 
 Le superplastifiant, utilisé dans les mélanges de béton, joue un rôle essentiel en améliorant la fluidité du béton sans ajout d'eau supplémentaire. Ce composant chimique permet d’augmenter la densité du béton, contribuant ainsi à une meilleure résistance à la compression.
 
@@ -308,7 +554,16 @@ t <- cor.test(bdd$super_plast, bdd$y_concrete_compresive, method = "kendall")
 Le test de Kendall révèle une corrélation positive modérée (tau = 0.249) entre la quantité de superplastifiant et la résistance à la compression du béton. Cette corrélation est significative, comme en témoigne la p-value extrêmement faible, bien inférieure à 0.05. Cela suggère que, de manière générale, une augmentation de la quantité de superplastifiant dans le mélange de béton pourrait être associée à une amélioration de sa résistance à la compression.
 
 
-##  Granulats grossiers et résistance à la compression (voir annexe fig 19 )
+###  Granulats grossiers et résistance à la compression 
+
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
+par(cex=0.5)
+plot(bdd$coarse, bdd$y_concrete_compresive,
+     main = "Relation entre granulats grossiers et Résistance à la Compression",
+     xlab = "granulats grossiers",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
+```
 
 Les granulats grossiers, qui comprennent des particules de grande taille comme des graviers ou des pierres concassées, contribuent à la résistance à la compression du béton en réduisant les vides dans le mélange, augmentant ainsi sa compacité.
 
@@ -321,28 +576,47 @@ tes <- cor.test(bdd$coarse, bdd$y_concrete_compresive, method = "kendall")
 
 Le test de corrélation de Kendall a donné un coefficient tau de -0.124. Bien que la p-value soit très faible (3.318e-09), ce faible tau indique une relation négative mais modérée. Cela signifie qu'il existe bien une certaine corrélation entre ces deux variables.
 
+### Fig 20 : Relation entre granulats fins et la resistance à la compression
 
-## Une relation floue entre les granulats fins et résistance à la compression. ( voir annexe fig 20 )
 
-La présence de granulats fins améliore la compacité du mélange, ce qui peut influencer ses propriétés, notamment la résistance à la compression. Ils remplissent les espaces entre les granulats plus grossiers.
-
-Le graphique des granulats fins ne permet pas de tirer de conclusions claires concernant la relation entre cette variable et la résistance à la compression, aucune tendance évidente n’y apparaît.
-
-```{r, echo = F, eval = F}
-test <- cor.test(bdd$fine_aggr, bdd$y_concrete_compresive, method = "kendall")
+```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
+par(cex=0.5)
+plot(bdd$fine_aggr, bdd$y_concrete_compresive,
+     main = " Relation entre granulats fins et la resistance à la compression",
+     xlab = "granulats fins",
+     ylab = "Concrete Compressive Strength",
+     pch = 16, col = "black")
 ```
 
-Les résultats du test de corrélation de Kendall indiquent une relation significative entre la quantité de granulats fins et la résistance du béton. Le coefficient $\tau$ étant négatif, cela signifie que lorsque la proportion de granulats fins diminue, la résistance à la compression tend à augmenter. Cette observation suggère qu'un excès de granulats fins pourrait réduire la compacité du mélange.
+test corrrelation entre variable à expliquer et `cement`
 
+```{r}
+cor.test(bdd$cement, bdd$y_concrete_compresive, method = "pearson")
+#test de pearson car ont une distribution pseudo-normale
+```
 
-# Ingénierie des données  
+test de correlation entre variable `water` et `SuperPlasticizer`
+
+```{r}
+cor.test(bdd$water, bdd$super_plast, method = "kendall")
+#test de Kendall car n'ont pas de distribution pseudo- normale
+```
+
+test de correlation entre variable `water` et `y`
+
+```{r}
+cor.test(bdd$age, bdd$y_concrete_compresive, method = "kendall")
+#test de Kendall car n'ont pas de distribution pseudo- normale
+```
+
+## Ingénierie des données  
 
 La base de données contient **1030 observations et 9 variables numériques** initialement. Dans cette partie, nous préparons les données pour garantir leur qualité et leur pertinence. Cette étape comprend deux étapes principales :  
 
 - **Détection et traitement des valeurs aberrantes** à l’aide de boxplots.  
 - **Analyse des corrélations** pour éviter la redondance des variables.  
 
-## Détection des valeurs aberrantes  
+### Détection des valeurs aberrantes  
 
 Les valeurs aberrantes peuvent fausser l’analyse et influencer la modélisation. Les **boxplots** (voir [Analyse univariée](#détection-des-valeurs-aberrantes-boxplots)) permettent d’identifier des observations extrêmes.
 
@@ -381,7 +655,7 @@ seuil_sup_age <- Q3_age + 1.5 * IQR_age
 bdd_ing <- bdd_ing %>% filter(age <= seuil_sup_age)
 ```
 
-## Analyse des corrélations  
+### Analyse des corrélations  
 
 L’objectif est d’identifier les variables fortement corrélées entre elles pour éviter la **multicolinéarité** dans le modèle.  
 
@@ -401,7 +675,7 @@ Nous devons **évaluer l'impact de ces relations dans le modèle**. Si deux vari
 
 Ces observations pourront nous aider lors de la sélection des variables dans la prochaine étape.  
 
-## Synthèse de l’Ingénierie des Données  
+### Synthèse de l’Ingénierie des Données  
 
 Après le traitement des valeurs aberrantes et l’analyse des corrélations, la base de données passe de **1030 à 961 observations**.
 
@@ -410,7 +684,7 @@ Les valeurs extrêmes des variables **Age** et **Superplasticizer** ont été su
 L’analyse des corrélations a révélé des relations notables entre plusieurs variables, notamment une forte corrélation entre **Water et Superplasticizer (-0.65)** et un lien important entre **Cement et la résistance à la compression (0.50)**.
 
 
-# Exploration des corrélations et des influences combinées
+## Analyse multivariée
 
 Dans cette partie, nous allons étudier l'ensemble des variables en utilisant une analyse en composantes principales (ACP).
 La variable à expliquer ("y_concrete_compresive") est également considérée comme active, aux côtés des huit autres variables explicatives.
@@ -490,9 +764,41 @@ Le deuxième axe distingue **les formulations riches en ciment (`cement`) et ass
 -fly_ash (20.39% de contribution et cos² = 0.38) et fin_aggr (13.01% de contribution et  cos² = 0,24) contribuent plus sur cet axe que sur le premier et elles sont très bien representées sur cet axe contrairement au premier axe, suggérant que ces composants influencent la résistence du béton de la meme façon puisque les fleches de ces deux variables sont confondues.
 -   `coarse` (5.05 % de contribution, cos² = 0.10) et blast_furnace (10.61% de contribution et un cos² = 0.10) ne sont pas bien projetées  sur cet axe et contribue faiblement à al construction de cette dimension. Elles pourraient etre expliquées par le troisième axe. 
 
-## Interprétation du Troisième Axe
+### Contribution des variables
 
-### Dim(1-3) : 40.5%  % de la Variance Totale (Voir annexe : fig 21)
+```{r, fig.width=3, fig.height=2, fig.align='center'}
+# Tableau des contributions des variables
+par(cex = 0.65)
+contrib_var <- as.data.frame(res_pca$var$contrib)
+print(contrib_var)
+```
+
+### Tableau des $cos^2$ des variables sur
+
+```{r, fig.width=3, fig.height=2, fig.align='center'}
+# Tableau des cos² des variables
+par(cex = 0.65)
+cos2_var <- as.data.frame(res_pca$var$cos2)
+print(cos2_var)
+```
+
+### Interprétation du Troisième Axe
+
+```{r, fig.align='center'}
+
+plot.PCA(
+    res_pca,
+    axes = c(1, 3),             # On se concentre sur les axes 2 et 3
+    choix = "var",              # Afficher les variables dans le plan factoriel
+    col.var = "#4B0000",        # Couleur des variables alignée au style
+    col.quanti.sup = "#0000FF", # Couleur pour la variable quantitative supplémentaire
+    label = "all",
+    title = "",
+    addgrid.col = "#DDB688"     # Couleur de la grille
+  )
+```
+
+Dim(1-3) : 40.5%  % de la Variance Totale 
 
 Le troisième axe distingue **les formulations riches en laitier du haut fourneau (`blast_frunace`) et associées à une plus grande résistance (`y_concrete_compresive`)** des formulations utilisant **une proportion plus élevée des granulats grossiers (`Coarse`) et du ciment (`Cement`)**. ces deux axes representent 40.5% de la varaince totale.
 
@@ -504,8 +810,22 @@ Le troisième axe distingue **les formulations riches en laitier du haut fournea
 - Enfin, nous avons la variable `Cement` qui est egalement bien representée (cos² = 0.27) et contribue à la hauteur de 19.46% à la construction de cet axe.
 
 
+### Interpretation PCA sur  la dimension 2-3
 
-### Dim(2-3) : 36.14 % de la Variance Totale (Voir annexe : Partie 22)
+```{r, fig.align='center'}
+# Représentation des variables sur le plan factoriel (axes 1 et 3)
+plot.PCA(
+  res_pca,
+  axes = c(2, 3),             # On se concentre sur les 2 premiers axes
+  choix = "var",              # Afficher les variables dans le plan factoriel
+  col.var = "#4B0000",        # Couleur des variables alignée au style
+  col.quanti.sup = "#0000FF", # Couleur pour la variable quantitative supplémentaire
+  label = "all",
+  title = "",
+  addgrid.col = "#DDB688"     # Couleur de la grille
+)
+```
+Dim(2-3) : 36.14 % de la Variance Totale (Voir annexe : Partie 22)
 
 Le troisième axe distingue **les formulations riches en laitier du haut fourneau (`blast_frunace`) et associées à une plus grande résistance (`y_concrete_compresive`)** des formulations utilisant **une proportion plus élevée des granulats grossiers (`Coarse`) et du ciment (`Cement`)**. ces deux axes representent 40.5% de la varaince totale.
 
@@ -516,6 +836,7 @@ Cette ACP met en évidence trois dimensions principales dans la composition du b
 1.  **Axe 1 (Dim 1)** : Opposition entre l'eau et les superplastifiants.
 2.  **Axe 2 (Dim 2)** : Opposition entre ciment et cendres volantes, granulats fins.
 3.  **Axe 3 (Dim 3)** : Opposition entre laitier du haut fourneau et granulats grossiers, ciment
+
 
 ## Implications pour la Modélisation de la Résistance du Béton
 
@@ -765,31 +1086,43 @@ L'objectif de cette partie est de choisir le modèle de regression linéaire qui
 
 ```{r, echo= F,message=FALSE, warning=FALSE}
 library(glmulti)
-invisible(capture.output(
-  select_bic <- glmulti(y_concrete_compresive ~ .,
-                        data = bdd,
-                        level = 1,
-                        method = "h",
-                        fitfunction = lm,
-                        crit = "bic",
-                        plotty = FALSE)
-))
 
+# Sélection avec méthode exhaustive (h)
+select_bic <- glmulti(y_concrete_compresive ~ .,
+                          data = bdd_ing,
+                          level = 1,
+                          method = "h",
+                          fitfunction = lm,
+                          crit = "bic",  
+                          plot = FALSE)  
+
+# Sélection avec algorithme génétique (g)
+select_bic_2 <- glmulti(y_concrete_compresive ~ .,
+                            data = bdd_ing,
+                            level = 1,
+                            method = "g",
+                            fitfunction = lm,
+                            crit = "bic",  
+                            plot = FALSE)
+
+best_model_bic <- summary(select_bic)$bestmodel
+best_modele_bic_2 <- summary(select_bic_2)$bestmodel
+best_model_bic
+best_modele_bic_2
 ```
+Selon le critére aic, le premier modèle qui a été selectionné par l'algorithme exhaustive est le suivant :   y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + water + super_plast + age.
 
-Cette selection de modèle nous donne le résultat suivant :
-
-`cement + blast_furnace + fly_ash + water + super_plast + age`
+selon la deuxième méthode qui est l'algorithme génétique, on a : 
+y_concrete_compresive ~ y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash +  water + super_plast + age"
+les deux methodes nous donnent le meme modèle.
 
 On peut alors voir que les variables `coarse` et `fine_aggr` on étées retirées du modèle par manque de significativité et impact sur la valeur de l'erreur empirique.
 On peut se demander si l'utilisation d'un autre critère pour selectioner le meilleur modèle peut changer le modèle optimal obtenue précédemment. Essayons le critère AIC.
 
 ```{r, echo  = F}
-bdd <- read_excel("../Data/Concrete_Data.xls")
-
 
 #reecriture des variables pour faciliter l'etude
-names(bdd) <- c('cement',
+names(bdd_ing) <- c('cement',
                 'blast_furnace',
                 'fly_ash',
                 'water',
@@ -798,69 +1131,77 @@ names(bdd) <- c('cement',
                 'fine_aggr',
                 'age',
                 'y_concrete_compresive')
-invisible(capture.output(
-select_aic <- glmulti(y_concrete_compresive~.,
-                      data = bdd,
-                      level = 1,
-                      method = "h",
-                      fitfunction = lm,
-                      crit = "aic",
-                      plotty = F)))
+# Sélection avec méthode exhaustive (h)
+select_aic <- glmulti(y_concrete_compresive ~ .,
+                          data = bdd_ing,
+                          level = 1,
+                          method = "h",
+                          fitfunction = lm,
+                          crit = "aic",  # Note: "adjr2" n'est pas un critère standard
+                          plot = FALSE)  # plotty remplacé par plot
+
+# Sélection avec algorithme génétique (g)
+select_aic_2 <- glmulti(y_concrete_compresive ~ .,
+                            data = bdd_ing,
+                            level = 1,
+                            method = "g",
+                            fitfunction = lm,
+                            crit = "aic",  # Même remarque
+                            plot = FALSE)
 
 best_model_aic <- summary(select_aic)$bestmodel
+best_modele_aic_2 <- summary(select_aic_2)$bestmodel
+best_model_aic
+best_modele_aic_2
 ```
-
-
 La encore, le même modèle `cement + blast_furnace + ` `fly_ash + water + super_plast + age` ressort, ce qui était assez prévisible car ces deux critères sont très similaires.
 
-On peut alors essayer de trier les modèle sur un dernier critaire comme par exemple le critère du $R^2$
+Selon le critére aic, le premier modèle qui a été selectionné par l'algorithme exhaustive est le suivant :  y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age.
 
-```{r, echo = F}
-# Récupération des modèles candidats
-modeles <- as.data.frame(weightable(select_aic))
-
-# Vérifie le nom de la colonne contenant les modèles
+selon la deuxième méthode qui est l'algorithme génétique, on a : 
+y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash +  water + super_plast + age"
+les deux methodes nous donnent le meme modèle.
 
 
-# Supposons que la colonne soit nommée 'model'
-# Sinon, remplace 'model' par le vrai nom affiché par head(modeles)
+```{r, echo  = F}
 
-# Initialiser un vecteur pour stocker les R²
-r2_values <- numeric(nrow(modeles))
+#reecriture des variables pour faciliter l'etude
+names(bdd_ing) <- c('cement',
+                'blast_furnace',
+                'fly_ash',
+                'water',
+                'super_plast',
+                'coarse',
+                'fine_aggr',
+                'age',
+                'y_concrete_compresive')
+# Modèle complet
+modele_complet <- lm(y_concrete_compresive ~ ., data = bdd_ing)
+modele_trivial <- lm(y_concrete_compresive ~ 1, data = bdd_ing)
 
-# Calculer le R² pour chaque modèle correctement :
-for(i in 1:nrow(modeles)){
-  
-  # Construire correctement la formule
-  variables <- modeles[i, "model"]   # attention à bien préciser le nom exact de la colonne
-  formule <- as.formula(variables)
-  
-  # Ajuster le modèle et calculer le R²
-  fit <- lm(formule, data = bdd)
-  r2_values[i] <- summary(fit)$r.squared
-}
+# Sélection progressive basée sur le test F
+modele_fisher <- step(modele_complet, 
+                      direction = "both", 
+                      test = "F")
+modele_fishe_2 <- step(modele_trivial, 
+                         scope = list(lower = modele_trivial, upper = modele_complet),
+                         data = bdd_ing, direction = "both", test = "F")
 
-# Ajouter le R² au tableau pour comparaison
-modeles$R2 <- r2_values
-
-# Trier selon le R² décroissant pour trouver le meilleur modèle selon ce critère
-modeles <- modeles[order(-modeles$R2), ]
-
-# Afficher clairement les modèles triés par R²
+best_model_Fisher <- summary(modele_fisher)$bestmodel
+best_model_Fisher_2 <- summary(modele_fishe_2)$bestmodel
 
 ```
+A ce niveau, nous avons utilisé le critère Fisher. nous avons utilisé deux methodes à savoir l'algorithme bidirectionnel descendante puis l'algorithme bidirectionnel ascendante. avec la première méthode, on a : y_concrete_compresive ~ cement + blast_furnace + fly_ash + water + super_plast + age.
+La deuxième méthode quant à elle nous donne le modèle suivant : y_concrete_compresive ~ age + cement + super_plast + blast_furnace + water + fly_ash.
+Avec les deux méthodes, nous avons pratiquement les memes résultats. De plus, les deux autres critères à savoir bic et aic ont donné les memes résulats avec les deux algoritmes à savoir : l'exhaustif et génétique.
 
-Ce filtre du R2 a ajouté la variable `coarse` qui avait disparu lors de l'utilisation des deux critères précédents. Aisni le modèle optimal en utilisant le critère R2 est  :
-
-`cement + blast_furnace + fly_ash + water + super_plast + age + coarse`
 
 **Erreur théorique**
 
-On va appliquer ici les méthode pour estimer l'erreur théorique d'un modèle : on regarde de modele complet et le modèle optimale selon BIC à chaque fois
+On va appliquer ici les méthode pour estimer l'erreur théorique d'un modèle : on compare les modèles générés par le critére bic, aic et Fisher.
 
+#### Méthode 1 : estimation de l'erreur par la méthode apprentissage/validation
 ```{r, echo = F}
-bdd <- read_excel("../Data/Concrete_Data.xls")
-
 
 #reecriture des variables pour faciliter l'etude
 names(bdd) <- c('cement',
@@ -876,38 +1217,67 @@ names(bdd) <- c('cement',
 
 library(ISLR)
 
-n <- nrow(bdd) #nombre d'observations
+n <- nrow(bdd_ing) #nombre d'observations
 
 indices <- sample(x=n, size=trunc((3/4)*n), replace=FALSE) #vecteur d'indices, de taille `partie entière de (3/4)*n', 
 #les indices sont tirés de manière aléatoire sans remise dans l'ensemble {1,2, ...,n} 
 
 
-ensemble_apprentissage <- bdd[indices, ] #la partie de la base de données `Auto` qui va servir pour l'apprentissage
+ensemble_apprentissage <- bdd_ing[indices, ] #la partie de la base de données `Auto` qui va servir pour l'apprentissage
 
+ensemble_validation <- bdd_ing [ - indices, ] #la base de validation
+modele_complet <- glm(y_concrete_compresive ~ ., data = ensemble_apprentissage)
+modele_optimal <- glm(y_concrete_compresive ~ age + cement + super_plast + blast_furnace + water + fly_ash, data= ensemble_apprentissage) 
 
-ensemble_validation <- bdd[ - indices, ] #la base de validation
-
-
-
-modele_1 <- glm(y_concrete_compresive ~ ., data = ensemble_apprentissage)
-
-modele_2 <- glm(y_concrete_compresive ~ cement + blast_furnace + fly_ash + water + super_plast + age, data = ensemble_apprentissage) 
 
 #estimation de l'erreur du modele1
 #3
-valeurs_predites_1 <- predict(object = modele_1, newdata = ensemble_validation)
-valeurs_predites_2 <- predict(object = modele_2, newdata = ensemble_validation) 
+valeurs_predites_complet  <- predict(object = modele_complet, newdata = ensemble_validation)
+valeurs_predites_optimal  <- predict(object = modele_optimal, newdata = ensemble_validation)
+estimation_erreur_modele_complet<- mean((ensemble_validation$y_concrete_compresive- valeurs_predites_complet)^2)  
+estimation_erreur_modele_optimal <- mean((ensemble_validation$y_concrete_compresive- valeurs_predites_optimal)^2) 
+estimation_erreur_modele_complet
+estimation_erreur_modele_optimal
 
-estimation_erreur_modele_1<- mean((ensemble_validation$y_concrete_compresive- valeurs_predites_1)^2)  
-estimation_erreur_modele_2<- mean((ensemble_validation$y_concrete_compresive- valeurs_predites_2)^2) 
-estimation_erreur_modele_1
-estimation_erreur_modele_2
+#ameliorer le modèle 
+# Amélioration du modèle avec validation croisée
+M <- 500 
+erreur_modele_optimal <- numeric(M)  # Initialisation plus propre
+n <- nrow(bdd_ing)  # Assurez-vous que 'n' est défini
+
+for (i in 1:M) {
+  # Échantillonnage
+  indices <- sample(x = n, size = trunc((2/3)*n), replace = FALSE)
+  ensemble_apprentissage <- bdd_ing[indices, ]  # Correction: utiliser bdd_ing au lieu de Auto
+  ensemble_validation <- bdd_ing[-indices, ]
+  
+  # Modèle optimal
+  modele_optimal <- glm(y_concrete_compresive ~ age + cement + super_plast + 
+                        blast_furnace + water + fly_ash, 
+                       data = ensemble_apprentissage) 
+  
+  # Prédiction et erreur
+  valeurs_predites <- predict(object = modele_optimal, newdata = ensemble_validation)  # Correction: valeurs_predites au lieu de valeurs_predites_optimal
+  erreur_modele_optimal[i] <- mean((ensemble_validation$y_concrete_compresive - valeurs_predites)^2)
+}
+
+# Calcul de l'erreur cumulative moyenne
+Err <- cumsum(erreur_modele_optimal) / (1:M)  # Plus efficace que la boucle
+
+# Visualisation
+plot(Err, type = 'l', xlab = "Nombre d'itérations", ylab = "Erreur MSE moyenne",
+     main = "Convergence de l'erreur de prévision")
+
+# Meilleure estimation de l'erreur
+Erreur_prevision_modele_optimal <- Err[M]
+print(paste("Erreur de prévision finale:", round(Erreur_prevision_modele_optimal, 4)))
 ```
 
-On voit ici que piur la méthode d'apprentissage validation, le modèle pris n'influe pas sur la valeur de l'erreur.
-
+On voit ici que pour la méthode d'apprentissage validation, le modèle optimal a une erreur théorique qui est inferieure à celle du modèle complet c'est-à-dire que ce modèle optimal est mieux performant que le modèle complet. modèle optimal : "y_concrete_compresive ~ age + cement + super_plast + blast_furnace + water + fly_ash".
+En répétant la méthode plusieurs fois (dans ce cas 500 fois), on a eu une erreur théorique inferieure à celui des deux méthodes. Malgrè les inconvenients de cette méthode qui est que la répartition change l'erreur théorique mais aussi qu'elle sous-estime l'erreur, en répetant la méthode plusieurs fois (la loi de grands nombres), l'erreur théorique tend vers l'erreur théorique optimale.
 On regarde à présent la méthode de validation croisée K-fold.
 
+#### Méthode 2 : estimation de l'erreur par la K-fold CV 
 ```{r, echo = F}
 
 set.seed(123)  # pour la reproductibilité
@@ -943,370 +1313,145 @@ for (k in 1:K) {
 }
 
 # Moyenne des erreurs = estimation de l'erreur de généralisation
-mse_moyen <- mean(mse_folds)
+mse_moyen_kfold<- mean(mse_folds)
 
-cat("Erreur estimée par validation croisée (", K, "-fold) :", mse_moyen, "\n")
-
-```
-
-On retrouve une erreur plus faible mais sans différence abérente des résultats ce qui indique une stabilité du modèle de regression.
-
-
-# Conclusion
-
-# Annexe
-
-## Analyse univariée
-
-### Fig 1 : Histogramme pour la variable `Cement`
-
-```{r, echo = FALSE, message=FALSE, warning=F}
-# Histogramme pour Cement
-p1 <- ggplot(bdd, aes(x = cement)) +
-  geom_histogram(bins = 30, fill = "blue", color = "darkgreen") +
-  labs(title = "Distribution de la variable Cement", x = "Cement", y = "Fréquence") +
-  theme_minimal()
-print(p1)
-```
-
-
-
-###  Fig 2 : Histogramme pour la variable `Blast Furnace Slag`
-
-```{r , echo = FALSE, message=FALSE, warning=F}
-# Histogramme pour Blast Furnace Slag
-
-p2 <- ggplot(bdd, aes(x = blast_furnace)) +
-  geom_histogram(bins = 30, fill = "red", color = "darkred") +
-  labs(title = "Distribution de la variable Blast Furnace Slag", x = "Blast Furnace Slag", y = "Fréquence") +
-  theme_minimal()
-print(p2)
+cat("Erreur estimée par validation croisée (", K, "-fold) :", mse_moyen_kfold, "\n")
 
 ```
 
-###  Fig 3 :Histogramme pour la variable `Fly Ash`
+On retrouve une erreur plus importante que celle de la méthode précédente cela est du à la sous estimation de l"erreur théorique par la méthode apprentissage/validation. L'erreur théorique de cette méthode est de 109.43 contre  69.24 pour la méthode apprentissage/validation.
 
-```{r, echo = FALSE, message=FALSE, warning=F}
-#  Histogramme pour Fly Ash
-p3 <- ggplot(bdd, aes(x = fly_ash)) +
-  geom_histogram(bins = 30, fill = "purple", color = "darkblue") +
-  labs(title = "Distribution de la variable Fly Ash", x = "Fly Ash", y = "Fréquence") +
-  theme_minimal()
-print(p3)
 
+
+#### Méthode 3 : estimation de l'erreur par leave-one-out VC (LOOCV)
+```{r, echo=FALSE}
+library(boot)
+
+# 1. Construction du modèle optimal
+modele_optimal <- glm(y_concrete_compresive ~ age + cement + super_plast + 
+                      blast_furnace + water + fly_ash, 
+                     data = bdd_ing)
+
+# 2. LOOCV (K = n)
+set.seed(123) # Pour reproductibilité même si LOOCV est déterministe
+estimation_erreur_loocv <- cv.glm(data = bdd_ing, 
+                                 glmfit = modele_optimal, 
+                                 K = nrow(bdd_ing))$delta[1]
+
+# 3. Affichage des résultats
+print(summary(modele_optimal))
+cat("\n")
+print(paste("Erreur MSE estimée par LOOCV:", round(estimation_erreur_loocv, 4)))
+
+#comparaison des trois methodes 
+
+estimation_erreur_modele_complet
+estimation_erreur_modele_optimal
+estimation_erreur_loocv 
+mse_moyen_kfold
+```
+On remarque l'erreur théorique estimée du modèle optimal par la méthode apprentissage/validation est la plus petite, ensuite celle du modèle complet avec la meme méthode, puis celle de la methode loocv et enfin celle de la méthode k-fold qui est l'idéale parce que les deux autres methodes presentent des inconvenients.
+
+
+# Statistique en Grande dimension 
+
+## methode ridge 
+
+cette methode nous permet de contraindre les coefficients de telle sorte à avoir un équilibre juste entre le biais et la variance.
+
+```{r, echo=FALSE}
+library(glmnet)
+
+# Préparation des données
+XX <- model.matrix(y_concrete_compresive ~  cement + blast_furnace + fly_ash + 
+                   water + super_plast + age, data = bdd_ing)[,-1]  # Matrice de design sans intercept
+yy <- bdd_ing$y_concrete_compresive  # Vecteur réponse
+
+# Ridge regression (alpha=0)
+reg.ridge <- glmnet(x = XX, y = yy, alpha = 0, standardize = TRUE)  # standardize=TRUE fait le scaling automatique
+
+# Visualisation
+par(mfrow = c(1,2))
+plot(reg.ridge, label = TRUE)
+plot(reg.ridge, xvar = "lambda", label = TRUE, lwd = 2)
+
+# Validation croisée LOOCV (Leave-One-Out)
+set.seed(123)  # Pour reproductibilité
+reg.cvridge <- cv.glmnet(x = XX, y = yy, alpha = 0, 
+                        nfolds = nrow(bdd_ing),  # LOOCV
+                        standardize = TRUE)
+
+# Résultats
+bestlam <- reg.cvridge$lambda.min
+print(paste("Meilleur lambda:", bestlam))
+
+par(mfrow = c(1,1))
+plot(reg.cvridge)
+
+print(paste("Erreur MSE minimale:", min(reg.cvridge$cvm)))
+print("Coefficients optimaux:")
+print(coef(reg.cvridge, s = "lambda.min"))
+```
+On remarque que l'erreur théorique est de  69.97 avec le meilleur lambda qui est de 0.86 .
+
+
+## methode lasso 
+
+cette deuxième nous permet de selectionner les variables à inserer dans le modèle tout en contraignant egalement les coefficients de telle sorte qu'il aii équilibre parfait entre biais et variance.
+
+```{r, echo=FALSE}
+library(glmnet)
+
+# Préparation des données
+# Matrice des prédicteurs (sans la colonne intercept)
+XX <- model.matrix(y_concrete_compresive ~ ., data = bdd_ing)[,-1]
+
+# Vecteur réponse
+yy <- bdd_ing$y_concrete_compresive
+
+# 1. Ajustement du modèle Lasso (alpha=1 pour Lasso)
+lasso_model <- glmnet(x = XX, 
+                     y = yy,
+                     alpha = 1,         # alpha=1 pour Lasso
+                     standardize = TRUE) # Standardisation automatique
+
+# Visualisation de la trajectoire des coefficients
+plot(lasso_model, xvar = "lambda", label = TRUE)
+title("Lasso - Trajectoire des coefficients")
+
+# 2. Validation croisée pour sélectionner lambda optimal
+set.seed(123) # Pour reproductibilité
+cv_lasso <- cv.glmnet(x = XX, 
+                     y = yy,
+                     alpha = 1,         # Lasso
+                     nfolds = 10,       # 10-fold CV
+                     standardize = TRUE)
+
+# Visualisation de l'erreur en fonction de lambda
+plot(cv_lasso)
+title("Erreur MSE en fonction de lambda")
+
+# Meilleur lambda (valeur qui minimise l'erreur)
+best_lambda <- cv_lasso$lambda.min
+cat("Lambda optimal:", best_lambda, "\n")
+
+# 3. Coefficients du modèle optimal
+lasso_coef <- coef(cv_lasso, s = "lambda.min")
+print(lasso_coef)
+
+# 4. Prédiction avec le modèle Lasso optimal
+# (Si vous avez un jeu de test)
+# predictions <- predict(cv_lasso, newx = XX_test, s = "lambda.min")
+
+# 5. Variables sélectionnées (coefficients non nuls)
+selected_vars <- which(lasso_coef[-1] != 0) # -1 pour exclure l'intercept
+cat("\nVariables sélectionnées par Lasso:\n")
+print(colnames(XX)[selected_vars])
+
+# 6. Performance du modèle
+cat("\nErreur MSE minimale:", min(cv_lasso$cvm), "\n")
 ```
 
-###  Fig 4: Histogramme pour la variable `Water`
-
-```{r , echo = FALSE, message=FALSE, warning=F}
-#Histogramme pour Water
-
-p4 <- ggplot(bdd, aes(x = water)) +
-  geom_histogram(bins = 30, fill = "cyan", color = "darkblue") +
-  labs(title = "Distribution de la variable Water", x = "Water", y = "Fréquence") +
-  theme_minimal()
-print(p4)
-
-
-```
-
-###  Fig 5 : Histogramme pour la variable `Superplasticizer`
-
-```{r, echo = FALSE, message=FALSE, warning=F}
-# Histogramme pour Superplasticizer
-
-p5 <- ggplot(bdd, aes(x = super_plast)) +
-  geom_histogram(bins = 30, fill = "orange", color = "darkorange") +
-  labs(title = "Distribution de la variable Superplasticizer", x = "Superplasticizer", y = "Fréquence") +
-  theme_minimal()
-print(p5)
-
-```
-
-###  Fig 6 : Histogramme pour la variable `Coarse Aggregate`
-
-```{r, echo = FALSE, message=FALSE, warning=F}
-p6 <- ggplot(bdd, aes(x = coarse)) +
-  geom_histogram(bins = 30, fill = "yellow", color = "gold") +
-  labs(title = "Distribution de la variable Coarse Aggregate", x = "Coarse Aggregate", y = "Fréquence") +
-  theme_minimal()
-print(p6)
-```
-
-###  Fig 7 : Histogramme pour la variable `Fine Aggregate`
-
-```{r, echo = FALSE, message=FALSE, warning=F}
-# Histogramme pour Fine Aggregate
-
-p7 <- ggplot(bdd, aes(x = fine_aggr)) +
-  geom_histogram(bins = 30, fill = "pink", color = "black") +
-  labs(title = "Distribution de la variable Fine Aggregate", x = "Fine Aggregate", y = "Fréquence") +
-  theme_minimal()
-print(p7)
-
-```
-
-###  Fig 8 : Histogramme pour la variable `Age`
-
-```{r, echo = FALSE, message=FALSE, warning=F}
-# Histogramme pour Age
-
-p8 <- ggplot(bdd, aes(x = age)) +
-  geom_histogram(bins = 30, fill = "brown", color = "black") +
-  labs(title = "Distribution de la variable Age", x = "Age (jours)", y = "Fréquence") +
-  theme_minimal()
-print(p8)
-```
-
-###  Fig 9 : Histogramme pour la variable `Concrete Compressive Strength`
-
-```{r , echo = FALSE, message=FALSE, warning=F}
-# Histogramme pour Concrete Compressive Strength
-
-p9 <- ggplot(bdd, aes(x = y_concrete_compresive)) +
-  geom_histogram(bins = 30, fill = "darkgreen", color = "black") +
-  labs(title = "Distribution de la variable Concrete Compressive Strength", x = "Concrete Compressive Strength (MPa)", y = "Fréquence") +
-  theme_minimal()
-print(p9)
-
-
-```
-
-
-###   Fig 10 : Détection des valeurs aberrantes (Boxplots)  
-
-```{r boxplots_outliers, echo = FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=6}
-par(mfrow=c(3,3))
-
-boxplot(bdd$cement, main="Cement", col="lightblue")
-boxplot(bdd$blast_furnace, main="Blast Furnace Slag", col="lightgreen")
-boxplot(bdd$fly_ash, main="Fly Ash", col="lightcoral")
-boxplot(bdd$water, main="Water", col="cyan")
-boxplot(bdd$super_plast, main="Superplasticizer", col="orange")
-boxplot(bdd$coarse, main="Coarse Aggregate", col="gold")
-boxplot(bdd$fine_aggr, main="Fine Aggregate", col="pink")
-boxplot(bdd$age, main="Age", col="brown")
-boxplot(bdd$y_concrete_compresive, main="Concrete Strength", col="darkgreen")
-```
-
-
-## Analyse bivariee
-
-
-
-###  Fig 11 :Matrice de correlation
-
-```{r corr_y, echo = FALSE, message=FALSE, warning=F, fig.align='center',,fig.width=4, fig.height=3}
-par(cex=0.3)
-library(corrplot)
-library(ggcorrplot)
-
-# Calcul de la matrice de corrélation ----
-cor_matrix <- cor(bdd, use = "complete.obs")
-print(cor_matrix)
-
-
-#Graphe de la matrice de corelation
-ggcorrplot(cor_matrix,
-           hc.order = TRUE,        # Réorganise en clustering hiérarchique
-           type = "upper",         # Affiche uniquement la moitié 
-           lab = TRUE,             # Ajout des valeurs de corrélation
-           lab_size = 2.5,         # Réduit la taille du texte
-           tl.cex = 8)             # Réduit la taille des variables
-
-```
-
-### Fig 12 : Nuage des points entre le ciment et la resistance à la compression
-
-```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
-par(cex=0.5)
-plot(bdd$cement, bdd$y_concrete_compresive,
-     main = "Relation entre Cement et Résistance à la Compression",
-     xlab = "Cement",
-     ylab = "Concrete Compressive Strength",
-     pch = 16, col = "black")
-```
-
-### Fig 13 : Relation entre l'eau et Super plasticizer
-
-
-```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
-par(cex = 0.5) 
-plot(bdd$water, bdd$super_plast,
-     main = "Relation entre l'eau et Super plasticizer",
-     xlab = "eau",
-     ylab = "CSuper plasticizer",
-     pch = 16, col = "black")
-```
-
-### Fig 14 : Relation entre l'age et la resistance
-
-
-```{r, echo = FALSE, fig.width=3, fig.height=2, fig.align='center'}
-par(cex = 0.5)
-plot(bdd$age, bdd$y_concrete_compresive,
-     main = "Relation entre l'age et la resistance",
-     xlab = "age",
-     ylab = "Resistance à la compression",
-     pch = 16, col = "black")
-```
-
-### Fig 15 : Relation entre laitier haut fourneau et Résistance à la Compression
-
-```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2, fig.align='center'}
-
-data_nul <- bdd %>% 
-  filter(blast_furnace>10)
-
-par(cex=0.5)
-plot(data_nul$blast_furnace, data_nul$y_concrete_compresive,
-     main = "Relation entre blast_furnace et Résistance à la Compression",
-     xlab = "laitier de haut fourneau",
-     ylab = "Concrete Compressive Strength",
-     pch = 16, col = "black")
-```
-
-### Fig 16 : Relation entre Cendres volantes et Résistance à la Compression
-
-
-```{r, echo = FALSE, fig.align='center', fig.width=3, fig.height=2}
-library(dplyr)
-data_nul <- bdd %>% 
-  filter(fly_ash>0)
-
-par(cex=0.5)
-plot(data_nul$fly_ash, data_nul$y_concrete_compresive,
-     main = "Relation entre Cendres volantes et Résistance à la Compression",
-     xlab = "cendre volantes",
-     ylab = "Concrete Compressive Strength",
-     pch = 16, col = "black")
-```
-
-
-### Fig 17 : Relation entre eau et Résistance à la Compression
-
-
-```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
-par(cex=0.5)
-
-plot(bdd$water, bdd$y_concrete_compresive,
-     main = "Relation entre eau et Résistance à la Compression",
-     xlab = "quantité d'eau",
-     ylab = "Concrete Compressive Strength",
-     pch = 16, col = "black")
-```
-
-
-### Fig 18 : Relation entre additif chimique et Résistance à la Compression
-
-```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
-par(cex=0.5)
-library(dplyr)
-
-data_nul <- bdd %>%
-  filter(super_plast>0)
-
-plot(data_nul$super_plast, data_nul$y_concrete_compresive,
-     main = "Relation entre additif chimique et Résistance à la Compression",
-     xlab = "additif chimique",
-     ylab = "Concrete Compressive Strength",
-     pch = 16, col = "black")
-```
-
-
-### Fig 19 : Relation entre granulats grossiers et Résistance à la Compression
-
-```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
-par(cex=0.5)
-plot(bdd$coarse, bdd$y_concrete_compresive,
-     main = "Relation entre granulats grossiers et Résistance à la Compression",
-     xlab = "granulats grossiers",
-     ylab = "Concrete Compressive Strength",
-     pch = 16, col = "black")
-```
-
-
-### Fig 20 : Relation entre granulats fins et la resistance à la compression
-
-
-```{r, echo = FALSE, fig.align='center',fig.width=3, fig.height=2}
-par(cex=0.5)
-plot(bdd$fine_aggr, bdd$y_concrete_compresive,
-     main = " Relation entre granulats fins et la resistance à la compression",
-     xlab = "granulats fins",
-     ylab = "Concrete Compressive Strength",
-     pch = 16, col = "black")
-```
-
-test corrrelation entre variable à expliquer et `cement`
-
-```{r}
-cor.test(bdd$cement, bdd$y_concrete_compresive, method = "pearson")
-#test de pearson car ont une distribution pseudo-normale
-```
-
-test de correlation entre variable `water` et `SuperPlasticizer`
-
-```{r}
-cor.test(bdd$water, bdd$super_plast, method = "kendall")
-#test de Kendall car n'ont pas de distribution pseudo- normale
-```
-
-test de correlation entre variable `water` et `y`
-
-```{r}
-cor.test(bdd$age, bdd$y_concrete_compresive, method = "kendall")
-#test de Kendall car n'ont pas de distribution pseudo- normale
-```
-
-## Analyse multivariée
-
-### Contribution des variables
-
-```{r, fig.width=3, fig.height=2, fig.align='center'}
-# Tableau des contributions des variables
-par(cex = 0.65)
-contrib_var <- as.data.frame(res_pca$var$contrib)
-print(contrib_var)
-```
-
-### Tableau des $cos^2$ des variables sur
-
-```{r, fig.width=3, fig.height=2, fig.align='center'}
-# Tableau des cos² des variables
-par(cex = 0.65)
-cos2_var <- as.data.frame(res_pca$var$cos2)
-print(cos2_var)
-```
-
-### Fig 21 : PCA sur  la dimension 1-3
-
-```{r, fig.align='center'}
-
-plot.PCA(
-    res_pca,
-    axes = c(1, 3),             # On se concentre sur les axes 2 et 3
-    choix = "var",              # Afficher les variables dans le plan factoriel
-    col.var = "#4B0000",        # Couleur des variables alignée au style
-    col.quanti.sup = "#0000FF", # Couleur pour la variable quantitative supplémentaire
-    label = "all",
-    title = "",
-    addgrid.col = "#DDB688"     # Couleur de la grille
-  )
-```
-
-### Fig 22 : PCA sur  la dimension 2-3
-
-```{r, fig.align='center'}
-# Représentation des variables sur le plan factoriel (axes 1 et 3)
-plot.PCA(
-  res_pca,
-  axes = c(2, 3),             # On se concentre sur les 2 premiers axes
-  choix = "var",              # Afficher les variables dans le plan factoriel
-  col.var = "#4B0000",        # Couleur des variables alignée au style
-  col.quanti.sup = "#0000FF", # Couleur pour la variable quantitative supplémentaire
-  label = "all",
-  title = "",
-  addgrid.col = "#DDB688"     # Couleur de la grille
-)
-```
+Pour la méthode de lasso qui est une méthode de selection de variable, on remarque à la difference des autres methodes et critéres de selection, elle ajoute fine_aggr. le modèle donne par cette méthode est la suivante : 
+ "y_concrete_compresive" = cement" + "blast_furnace" + "fly_ash" + "water" + "super_plast" + "fine_aggr" + "age".
+Son erreur théorique (68.88) est inferieure à celle de la méthode ridge(69.97) avec un lambda inferieur à celui de méthode ridge. 
