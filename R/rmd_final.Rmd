@@ -116,7 +116,7 @@ Après ce cap, le rythme de durcissement ralentit, mais on atteint souvent plus 
 
 Nous présentons ici les résultats obtenus avec le modèle final, construit en combinant plusieurs approches : une sélection exhaustive guidée par les critères AIC et BIC, une analyse descriptive (analyse univariée, bivariée et multivariée via l’ACP), ainsi que des éléments issus de la littérature.
 
-La base de données initiale comptait 1030 observations et 9 variables numériques. Après traitement des valeurs aberrantes (notamment pour age et super_plast) et analyse des corrélations, elle a été réduite à 961 observations.  
+La base de données initiale comptait 1030 observations et 9 variables numériques. Après traitement des valeurs aberrantes (notamment pour age et super_plast), elle a été réduite à 961 observations.  
 
 Comme le nombre de variables explicatives était relativement limité (huit au total), une approche exhaustive a pu être appliquée sans contrainte particulière. Cette méthode a permis d’évaluer l’ensemble des modèles sans interactions à l’aide des critères AIC et BIC. Le modèle a ensuite été complété par l’ajout de termes d’interaction et d’un effet quadratique, guidé par l’analyse descriptive et la littérature.
 
