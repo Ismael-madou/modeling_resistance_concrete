@@ -971,6 +971,10 @@ active, aux côtés des huit autres variables explicatives.
 \subsection{Histogramme des valeurs
 propres}\label{histogramme-des-valeurs-propres}
 
+\begin{verbatim}
+## Warning: package 'FactoMineR' was built under R version 4.4.2
+\end{verbatim}
+
 \begin{center}\includegraphics{rmd_final_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 Le graphique illustre l'histogramme des valeurs propres issu de l'ACP,
@@ -1560,6 +1564,291 @@ linéaire qui prédise au mieux la variable que l'on veut expliquer, c'est
 regarder premièrement la selection du meilleur modèle en utilisant le
 critère BIC
 
+\begin{verbatim}
+## Initialization...
+## TASK: Exhaustive screening of candidate set.
+## Fitting...
+## 
+## After 50 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast
+## Crit= 7564.29155889758
+## Mean crit= 7878.64801735781
+## 
+## After 100 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast
+## Crit= 7564.29155889758
+## Mean crit= 7850.06359357518
+## 
+## After 150 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+age
+## Crit= 6840.15551689892
+## Mean crit= 7685.32713855584
+## 
+## After 200 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7457.27122102457
+## 
+## After 250 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7278.05906840489
+## Completed.
+\end{verbatim}
+
+\begin{verbatim}
+## Initialization...
+## TASK: Genetic algorithm in the candidate set.
+## Initialization...
+## Algorithm started...
+## 
+## After 10 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+fine_aggr+age
+## Crit= 6836.89267770694
+## Mean crit= 7593.44807488735
+## Change in best IC: -3163.10732229306 / Change in mean IC: -2406.55192511265
+## 
+## After 20 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7560.13428541751
+## Change in best IC: -6.7354409945392 / Change in mean IC: -33.313789469833
+## 
+## After 30 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7508.98029739617
+## Change in best IC: 0 / Change in mean IC: -51.153988021345
+## 
+## After 40 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7457.63128235804
+## Change in best IC: 0 / Change in mean IC: -51.3490150381267
+## 
+## After 50 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7403.399879041
+## Change in best IC: 0 / Change in mean IC: -54.2314033170378
+## 
+## After 60 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7374.09830857244
+## Change in best IC: 0 / Change in mean IC: -29.3015704685668
+## 
+## After 70 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7356.43961924158
+## Change in best IC: 0 / Change in mean IC: -17.6586893308522
+## 
+## After 80 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7333.23261946562
+## Change in best IC: 0 / Change in mean IC: -23.2069997759672
+## 
+## After 90 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7308.2452474095
+## Change in best IC: 0 / Change in mean IC: -24.9873720561163
+## 
+## After 100 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7293.01133220841
+## Change in best IC: 0 / Change in mean IC: -15.2339152010863
+## 
+## After 110 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7285.0470213154
+## Change in best IC: 0 / Change in mean IC: -7.96431089301768
+## 
+## After 120 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7284.83523584866
+## Change in best IC: 0 / Change in mean IC: -0.211785466738547
+## 
+## After 130 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7268.23577109265
+## Change in best IC: 0 / Change in mean IC: -16.5994647560092
+## 
+## After 140 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7246.75270373996
+## Change in best IC: 0 / Change in mean IC: -21.4830673526867
+## 
+## After 150 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7245.37068144482
+## Change in best IC: 0 / Change in mean IC: -1.38202229514263
+## 
+## After 160 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7244.93377312344
+## Change in best IC: 0 / Change in mean IC: -0.436908321375995
+## 
+## After 170 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7244.93377312344
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 180 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7244.73909764022
+## Change in best IC: 0 / Change in mean IC: -0.194675483222454
+## 
+## After 190 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7237.96370669489
+## Change in best IC: 0 / Change in mean IC: -6.77539094532858
+## 
+## After 200 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7237.96370669489
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 210 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7237.96370669489
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 220 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7234.91303007765
+## Change in best IC: 0 / Change in mean IC: -3.05067661724661
+## 
+## After 230 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7234.91303007765
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 240 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7227.62393985456
+## Change in best IC: 0 / Change in mean IC: -7.28909022308289
+## 
+## After 250 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7226.74261958458
+## Change in best IC: 0 / Change in mean IC: -0.881320269985736
+## 
+## After 260 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7226.74261958458
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 270 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7226.74261958458
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 280 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7226.74261958458
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 290 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7220.6976170682
+## Change in best IC: 0 / Change in mean IC: -6.04500251638183
+## 
+## After 300 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7220.6976170682
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 310 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7220.6976170682
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 320 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7220.6976170682
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 330 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7220.6976170682
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 340 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7219.26151822845
+## Change in best IC: 0 / Change in mean IC: -1.43609883974204
+## 
+## After 350 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7219.26151822845
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 360 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7219.26151822845
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 370 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7219.26151822845
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 380 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7219.26151822845
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 390 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6830.1572367124
+## Mean crit= 7219.26151822845
+## Improvements in best and average IC have bebingo en below the specified goals.
+## Algorithm is declared to have converged.
+## Completed.
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + "
+## [2] "    water + super_plast + age"
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + "
+## [2] "    water + super_plast + age"
+\end{verbatim}
+
 Selon le critére aic, le premier modèle qui a été selectionné par
 l'algorithme exhaustive est le suivant : y\_concrete\_compresive
 \textasciitilde{} 1 + cement + blast\_furnace + fly\_ash + water +
@@ -1576,6 +1865,207 @@ significativité et impact sur la valeur de l'erreur empirique. On peut
 se demander si l'utilisation d'un autre critère pour selectioner le
 meilleur modèle peut changer le modèle optimal obtenue précédemment.
 Essayons le critère AIC.
+
+\begin{verbatim}
+## Initialization...
+## TASK: Exhaustive screening of candidate set.
+## Fitting...
+## 
+## After 50 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast
+## Crit= 7530.21573803479
+## Mean crit= 7855.99703439362
+## 
+## After 100 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast
+## Crit= 7530.21573803479
+## Mean crit= 7824.97094198255
+## 
+## After 150 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+age
+## Crit= 6806.07969603613
+## Mean crit= 7656.58448012012
+## 
+## After 200 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7426.01574811718
+## 
+## After 250 models:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7245.05420191207
+## Completed.
+\end{verbatim}
+
+\begin{verbatim}
+## Initialization...
+## TASK: Genetic algorithm in the candidate set.
+## Initialization...
+## Algorithm started...
+## 
+## After 10 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7540.81737870367
+## Change in best IC: -3208.78655855936 / Change in mean IC: -2459.18262129633
+## 
+## After 20 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7484.96425295491
+## Change in best IC: 0 / Change in mean IC: -55.8531257487666
+## 
+## After 30 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7409.68708199348
+## Change in best IC: 0 / Change in mean IC: -75.2771709614244
+## 
+## After 40 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7361.89874914248
+## Change in best IC: 0 / Change in mean IC: -47.7883328509997
+## 
+## After 50 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7330.94398206818
+## Change in best IC: 0 / Change in mean IC: -30.9547670743004
+## 
+## After 60 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7294.31041097024
+## Change in best IC: 0 / Change in mean IC: -36.6335710979456
+## 
+## After 70 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7271.31218947834
+## Change in best IC: 0 / Change in mean IC: -22.9982214918937
+## 
+## After 80 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7261.49982706729
+## Change in best IC: 0 / Change in mean IC: -9.81236241104853
+## 
+## After 90 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7247.32410564259
+## Change in best IC: 0 / Change in mean IC: -14.1757214247064
+## 
+## After 100 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7230.56528117628
+## Change in best IC: 0 / Change in mean IC: -16.7588244663057
+## 
+## After 110 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7229.21851807587
+## Change in best IC: 0 / Change in mean IC: -1.34676310041232
+## 
+## After 120 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7217.20462885096
+## Change in best IC: 0 / Change in mean IC: -12.0138892249142
+## 
+## After 130 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7203.17842579272
+## Change in best IC: 0 / Change in mean IC: -14.0262030582371
+## 
+## After 140 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7203.17842579272
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 150 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7203.16307540418
+## Change in best IC: 0 / Change in mean IC: -0.0153503885430837
+## 
+## After 160 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7202.09925910297
+## Change in best IC: 0 / Change in mean IC: -1.06381630120541
+## 
+## After 170 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7198.16560588505
+## Change in best IC: 0 / Change in mean IC: -3.93365321792317
+## 
+## After 180 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7198.16560588505
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 190 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7198.16560588505
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 200 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7192.05614403497
+## Change in best IC: 0 / Change in mean IC: -6.10946185007288
+## 
+## After 210 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7192.05614403497
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 220 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7192.05614403497
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 230 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7192.05614403497
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 240 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7192.05614403497
+## Change in best IC: 0 / Change in mean IC: 0
+## 
+## After 250 generations:
+## Best model: y_concrete_compresive~1+cement+blast_furnace+fly_ash+water+super_plast+age
+## Crit= 6791.21344144064
+## Mean crit= 7192.05614403497
+## Improvements in best and average IC have bebingo en below the specified goals.
+## Algorithm is declared to have converged.
+## Completed.
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + "
+## [2] "    water + super_plast + age"
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "y_concrete_compresive ~ 1 + cement + blast_furnace + fly_ash + "
+## [2] "    water + super_plast + age"
+\end{verbatim}
 
 La encore, le même modèle \texttt{cement\ +\ blast\_furnace\ +}
 \texttt{fly\_ash\ +\ water\ +\ super\_plast\ +\ age} ressort, ce qui
@@ -1780,21 +2270,21 @@ Fisher.
 apprentissage/validation}\label{muxe9thode-1-estimation-de-lerreur-par-la-muxe9thode-apprentissagevalidation}
 
 \begin{verbatim}
-## Warning: le package 'ISLR' a été compilé avec la version R 4.4.2
+## Warning: package 'ISLR' was built under R version 4.4.2
 \end{verbatim}
 
 \begin{verbatim}
-## [1] 72.58354
+## [1] 71.627
 \end{verbatim}
 
 \begin{verbatim}
-## [1] 71.78797
+## [1] 71.28255
 \end{verbatim}
 
 \includegraphics{rmd_final_files/figure-latex/unnamed-chunk-50-1.pdf}
 
 \begin{verbatim}
-## [1] "Erreur de prévision finale: 68.9399"
+## [1] "Erreur de prévision finale: 69.0386"
 \end{verbatim}
 
 On voit ici que pour la méthode d'apprentissage validation, le modèle
@@ -2006,7 +2496,7 @@ cette methode nous permet de contraindre les coefficients de telle sorte
 à avoir un équilibre juste entre le biais et la variance.
 
 \begin{verbatim}
-## Le chargement a nécessité le package : Matrix
+## Loading required package: Matrix
 \end{verbatim}
 
 \begin{verbatim}

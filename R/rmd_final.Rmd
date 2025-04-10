@@ -1092,7 +1092,7 @@ Les **bétons 57, 225 et 611** sont les **plus influents**.
 
 L'objectif de cette partie est de choisir le modèle de regression linéaire qui prédise au mieux la variable que l'on veut expliquer, c'est à dire ici la résistance à la compression du béton. On peut alors regarder premièrement la selection du meilleur modèle en utilisant le critère BIC
 
-```{r, echo= F,message=FALSE, warning=FALSE, eval=FALSE}
+```{r, echo= F,message=FALSE, warning=FALSE}
 library(glmulti)
 
 # Sélection avec méthode exhaustive (h)
@@ -1127,7 +1127,7 @@ les deux methodes nous donnent le meme modèle.
 On peut alors voir que les variables `coarse` et `fine_aggr` on étées retirées du modèle par manque de significativité et impact sur la valeur de l'erreur empirique.
 On peut se demander si l'utilisation d'un autre critère pour selectioner le meilleur modèle peut changer le modèle optimal obtenue précédemment. Essayons le critère AIC.
 
-```{r, echo  = F, eval=FALSE}
+```{r, echo  = F}
 
 #reecriture des variables pour faciliter l'etude
 names(bdd_ing) <- c('cement',
