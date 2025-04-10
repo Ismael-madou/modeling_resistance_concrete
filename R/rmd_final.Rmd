@@ -34,15 +34,19 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-\listoffigures
 
-\listoftables
 
 \newpage
 
 # Introduction
 
-(en cours)
+Le béton est un matériau très utilisé dans la construction, car il est solide, résistant dans le temps et peut être façonné facilement. Parmi ses propriétés, la résistance à la compression est la plus importante. Elle correspond à la capacité du béton à supporter une charge sans se casser. C’est cette résistance qui garantit la stabilité et la durabilité des ouvrages.
+
+Cette résistance dépend de plusieurs facteurs : la quantité de ciment, d’eau, de granulats, d’adjuvants (ou additifs), mais aussi de l’âge du béton. Chaque composant joue un rôle, et c’est souvent leur combinaison qui influence le résultat final. Comprendre ces effets est essentiel pour concevoir un béton performant.
+
+Dans ce travail, on cherche à identifier les facteurs qui ont un impact sur la résistance du béton à la compression, à partir de données mesurées en laboratoire. 
+
+On commence d’abord par une revue empirique qui présente ce que disent les études sur les effets des différents composants du béton. Ensuite, on passe à l’analyse des résultats obtenus avec notre modèle linéaire.
 
 # Developpemnt
 
@@ -110,32 +114,35 @@ Après ce cap, le rythme de durcissement ralentit, mais on atteint souvent plus 
 
 ## Resulats des travaux 
 
-A ce niveau, nous allons presenter les resultats de notre travail. Tout d'abord, nous avons remarqué qu'il existe une liaison positive (0.107597256 comme coefficient pénalisé) forte entre la quantité du ciment utilisée et la resistance à la compression (Statistique bivariée). Cela confirme les résultats des travaux effectués par Mehta et Monteiro (2014) qui soulignent que l’augmentation de la teneur en ciment améliore significativement la résistance mécanique, en particulier dans les
-premiers jours de durcissement. Puis nous avons observé à nouveau une significativité de cette variable ciment(avec le test de student qui designe une p-value très faible). De plus, la selection du modèle par la méthode apprentissage/validation mais aussi par la méthode K-fold permet de rendre compte de l'importance du ciment dans notre modèle.
+Nous présentons ici les résultats obtenus avec le modèle final, construit à partir des critères AIC/BIC, des résultats de l'analyse descriptives (notamment l'ACP) et des apports de la littérature.
 
-Ensuite, un autre lien positif (0.080643114) entre le laitier du haut fourneau et la resistance à la compression qui est totalemnt positif et significatif. Comme l'a demontré la litterature à ce sujet, le laitier du haut fourneau a un faible impact sur la resistance durant les premiers jours, Cependant son effet devient important avec le temps. Dans notre cas, la matrice de corrélation nous montre une relation faible entre l'age et le laitier du haut fourneau. Neamoins, on est tous unanime sur l'effet positif de cette variable sur la resistance. les resultats du test de student temoigne bel et bien cette affirmation avec une p-value inferieur à 5% avec un poids de 8%. On remarque que pour les méthodes de selection avec les trois critéres à savoir le BIC, AIC et Fisher ainsi que la regression ridge, cette variable est selectionnée. les resultats de l'ACP ont aussi predit un modèle contenant cette variable.
+La variable cement (ciment) est fortement significative avec un effet positif (coefficient estimé à 0.097). Cela confirme que plus on augmente la quantité de ciment, plus la résistance à la compression augmente. Ce résultat est en accord avec la littérature, notamment Mehta et Monteiro (2014), qui ont montré que le ciment est un facteur clé de la résistance, surtout dans les premiers jours.
 
-De plus, l'eau est aussi attendu d'après nos resulats de l'ACP. la litterature stipule que l'eau est très important puiqu'elle augmente l'ouvrabilité du béton en  augmentant la fluidité du béton et entraîne la diminution de la concentration en solides. Cependant, l’introduction excessive de l’eau provoque la chute de la résistance mécanique et sa durabilité. notre modèle basé sur toutes les approches prend en compte la variable eau, d'où son importance. Notons que la valeur du coefficient pénalisé de l'eau (-0.176721943) que ce soit au niveau du test student ou de la méthode lasso, ne réflete pas le vrai effet. Cela pourrait correspondre aux situations où la quantité d'eau est très importante d'où la nécéssité de connaitre les bases du domaine puisque les methodes utilisés ne cherchent pas un seuil à partir duquel la rélation de l'eau avec le variable cible change.
+L’interaction age * cement est aussi significative (coefficient de 0.00041). Cela veut dire que l’effet du ciment sur la résistance dépend du temps : plus le béton vieillit, plus cet effet devient important.
 
-Puis notre modèle prend en compte la variable cendres volantes au niveau de toutes les méthodes. Selon la litterature, cette variable est un substitut du ciment. Cependant nous devons retenir que cette variable agit lentement sur la resistance et ce n'est qu'à partir d'un moment qu'elle renforce la structure du béton
-et améliore sa durabilité grâce à une réaction chimique progressive. les tests confirment egalement la siginificativité avec un coefficient pénalisé d'une valeur de 0.052423318. De plus, sur le cercle de correlation (ACP), on remarque que cette variable evolue dans la meme direction que la variable cible. tous ces resulats nous permettent de confirmer l'effet positif des cendres volantes sur la resistance à la compression.
+La variable age seule est également significative (0.093). Cela confirme ce qu’indiquent Neville (2011) et Mindess et Young (2019) : la résistance du béton augmente avec le temps, surtout durant les 28 premiers jours, grâce à la poursuite du processus d’hydratation du ciment.
 
-De plus, nous avons superplastifiant qui est également inclu dans le modèle. d'après la litterature, Le volume d’eau augmente avec l’augmentation du dosage en superplastifiant. vu que la litterature suppose que l'augmentation de l'eau a un effet positif donc on peut déduire également que l'augmentation du superplastifiant agit positivement sur la résistance du béton. les resulats du modèle montrent une significativité de cette variable avec un coeffcient pénalisé avec la méthode lasso positif (0.336140535) qui temoigne le lien positif entre le superplastifiant et la resistance du béton.
+Le blast_furnace (laitier de haut fourneau) a un effet positif (0.054) et très significatif. Cela reflète bien son rôle connu : il a peu d’impact au début, mais renforce le béton progressivement. L’interaction age * blast_furnace (0.00089) est aussi significative, ce qui montre que cet effet s’accentue avec le temps, comme le soulignent les travaux de Jin et al. (2003).
 
-Et enfin, nous avons la variable age dans notre modèle optimale. d'après la litterature et les observations faites, la resistance du béton augmente avec l'age. les resulats obtenus montrent les conclusions à savoir un lien positif avec coefficient pénalisé de l'ordre de 0.309551398 entre l'age et la resistance. nous pouvons conclure l'idée selon laquelle le béton nécésite du temps pour s'endurcir. toutes les méthodes de selection utilisées ont selectionné cette variable pour faire partie du modèle.
+Concernant fly_ash (cendres volantes), son effet seul est légèrement positif (0.014) mais faiblement significatif (p = 0.10). Par contre, l’interaction age * fly_ash est bien significative (0.00093), ce qui veut dire que les cendres volantes contribuent davantage à la résistance avec le temps. Cela correspond aux observations dans la littérature qui indiquent un effet lent mais croissant.
 
-En resumé, retenons que toutes ces variables impactent positivement de maniére differente la resistance à la compression meme si le coefficient de l'eau montre une contradiction. Tout d'abord, nous avons le superplastifiant qui impacte plus la résistance ensuite l'age puis l'eau de maniére negative après vient le ciment qui impacte positivement cette résistance et qui sera suivi par le laitier du haut fourneau pour finir avec les cendres volantes qui ont un impact faible sur cette résistance comparés aux autres éléments. la méthode lasso quant à elle, a pris en compte la variable fine_aggr (granulats fins) qui n'a pas été selectionné par toutes les méthodes de selection. De plus, le summary de notre modèle montre la non significativité de cette variable. Cela implique la suppression des deux variables coarse et fine_agrr pour obtenir le meilleur modèle au sens de tous les critéres. 
+L’eau a été centrée avant d’ajouter le terme au carré, pour éviter les problèmes de colinéarité entre water et water². Le coefficient de water_c est négatif (-0.295), ce qui montre que lorsque la quantité d’eau augmente, la résistance diminue. Le terme water_c² est positif (0.00168), ce qui indique que l’effet de l’eau n’est pas linéaire. Cela signifie qu’à très faibles ou très fortes doses, l’impact sur la résistance varie. Ce résultat est cohérent avec la notion de rapport eau/ciment, souvent citée dans la littérature, où trop ou pas assez d’eau nuit à la performance du béton.
 
+Le super_plast (superplastifiant) a un effet positif et significatif (0.443), ce qui montre qu’il améliore la résistance du béton, surtout à court terme. L’interaction super_plast * water_c (0.01795) est aussi significative, ce qui veut dire que l’effet du superplastifiant dépend de la quantité d’eau. Cela rejoint les travaux montrant que le superplastifiant agit sur la fluidité, mais que son effet combiné avec l’eau est déterminant.
+
+En résumé, le modèle final contient six variables principales (age, cement, water, super_plast, blast_furnace, fly_ash) et cinq interactions significatives. Tous les effets inclus sont cohérents avec la littérature et les résultats de l’analyse exploratoire.
+
+Sur le plan de la performance, la validation croisée à 10 groupes donne une erreur moyenne de 109.48 pour le modèle basé uniquement sur les critères AIC, BIC et Fisher. Avec le modèle final, qui inclut des interactions et un effet quadratique, cette erreur descend à 64.56.
+Par ailleurs, le R² ajusté du modèle final est de 0.7768, ce qui signifie que le modèle explique environ 78 % de la variabilité observée dans la résistance à la compression.
 
 
 # Conclusion
 
+Ce travail avait pour objectif d’identifier les facteurs qui influencent la résistance du béton à la compression, à partir d’une base de données expérimentales. Pour cela, nous avons combiné des critères statistiques (AIC/BIC), les résultats de l’analyse descriptive, ainsi que des éléments issus de la littérature.
 
+Le modèle final comprend six variables principales, plusieurs interactions et un effet quadratique de l’eau. Il permet d’expliquer environ 78 % de la variabilité de la résistance (R² ajusté = 0.7768), avec une erreur moyenne de 64.56 en validation croisée à 10 groupes.
 
-
-
-
-
+Les effets estimés sont globalement en accord avec les connaissances du domaine. Ils mettent en évidence le rôle important du ciment, de l’eau, du superplastifiant, du laitier et des cendres volantes, ainsi que des interactions liées à l’évolution dans le temps et à l’effet non linéaire de l’eau. Malgré certaines limites sur les résidus (autocorrélation, hétéroscédasticité, et normalité imparfaite), le modèle offre une base solide pour analyser et interpréter la résistance du béton à la compression.
 
 
 
@@ -653,6 +660,7 @@ seuil_sup_age <- Q3_age + 1.5 * IQR_age
 
 # Filtrer les valeurs aberrantes pour Age
 bdd_ing <- bdd_ing %>% filter(age <= seuil_sup_age)
+bdd_final <- bdd_ing
 ```
 
 ### Analyse des corrélations  
@@ -916,7 +924,7 @@ Par ailleurs, la relation de notre variable cible avec la variable **super_plast
 Enfin, on s'aperçoit que la variable **age** est positivement corrélée avec la variable réponse avec une valeur de **0.311**, ce qui confirme les résultats des revues qui stipulent que la résistance augmente avec le temps.
 
 
-##  Tests de diagnostic et vérification des hypothèses
+##  Diagnostic initial du modèle sans interactions (avec toutes les variables)
 
 **Test de Durbin-Watson**
 
@@ -1028,10 +1036,11 @@ kable(data_tibble, caption = "A tibble: 6 x 6")
 plot(regression.lineaire,1)
 ```
 
-D'après ce plot, il **n'existe aucune linéarité** entre la variable réponse et les variables explicatives.\
-La **courbe rouge n'est pas horizontale**, ce qui indique que la relation **n'est pas linéaire**.
+Le nuage de points montre une dispersion relativement homogène autour de zéro, mais la courbe rouge (loess) présente une légère forme incurvée, ce qui suggère une possible non-linéarité dans la relation entre les variables explicatives et la variable réponse.
 
-Les observations **382, 384 et 115** sont les **bétons présentant les plus grandes valeurs en termes de résidus**.
+Il n’y a pas de motif très marqué, mais la présence de cette courbe légèrement incurvée pourrait indiquer que certaines transformations ou interactions pourraient améliorer le modèle.
+
+Les observations 338, 340 et 361 présentent les résidus les plus élevés, mais ne semblent pas influentes ou aberrantes à ce stade.
 
 
 ```{r, echo=FALSE}
@@ -1048,11 +1057,10 @@ du **test de Breusch-Pagan**.
 plot(regression.lineaire, 2)
 ```
 
-Ce plot de l'**hypothèse de normalité** montre que plusieurs points **ne suivent pas la ligne**,\
-bien qu'ils en soient proches.
+Le Q-Q plot montre que la majorité des résidus sont proches de la droite théorique, ce qui suggère une approximation raisonnable à la normalité.
+Cependant, quelques valeurs extrêmes dans la queue droite (observations 338, 340 et 361) s’en écartent légèrement.
 
-Cela confirme les résultats du **test de normalité de Shapiro-Wilk**,\
-indiquant que les erreurs **ne suivent pas une distribution normale**.
+Bien que visuellement la normalité semble globalement respectée, le test de Shapiro-Wilk rejette l’hypothèse de normalité au seuil de 5 %, indiquant que les résidus ne suivent pas une loi normale.
 
 ```{r, echo=FALSE}
 plot(regression.lineaire, 5)
@@ -1084,7 +1092,7 @@ Les **bétons 57, 225 et 611** sont les **plus influents**.
 
 L'objectif de cette partie est de choisir le modèle de regression linéaire qui prédise au mieux la variable que l'on veut expliquer, c'est à dire ici la résistance à la compression du béton. On peut alors regarder premièrement la selection du meilleur modèle en utilisant le critère BIC
 
-```{r, echo= F,message=FALSE, warning=FALSE}
+```{r, echo= F,message=FALSE, warning=FALSE, eval=FALSE}
 library(glmulti)
 
 # Sélection avec méthode exhaustive (h)
@@ -1119,7 +1127,7 @@ les deux methodes nous donnent le meme modèle.
 On peut alors voir que les variables `coarse` et `fine_aggr` on étées retirées du modèle par manque de significativité et impact sur la valeur de l'erreur empirique.
 On peut se demander si l'utilisation d'un autre critère pour selectioner le meilleur modèle peut changer le modèle optimal obtenue précédemment. Essayons le critère AIC.
 
-```{r, echo  = F}
+```{r, echo  = F, eval=FALSE}
 
 #reecriture des variables pour faciliter l'etude
 names(bdd_ing) <- c('cement',
@@ -1273,8 +1281,8 @@ Erreur_prevision_modele_optimal <- Err[M]
 print(paste("Erreur de prévision finale:", round(Erreur_prevision_modele_optimal, 4)))
 ```
 
-On voit ici que pour la méthode d'apprentissage validation, le modèle optimal a une erreur théorique qui est inferieure à celle du modèle complet c'est-à-dire que ce modèle optimal est mieux performant que le modèle complet. modèle optimal : "y_concrete_compresive ~ age + cement + super_plast + blast_furnace + water + fly_ash".
-En répétant la méthode plusieurs fois (dans ce cas 500 fois), on a eu une erreur théorique inferieure à celui des deux méthodes. Malgrè les inconvenients de cette méthode qui est que la répartition change l'erreur théorique mais aussi qu'elle sous-estime l'erreur, en répetant la méthode plusieurs fois (la loi de grands nombres), l'erreur théorique tend vers l'erreur théorique optimale.
+On voit ici que pour la méthode d'apprentissage validation, le modèle retenu avec les AIC/BIC/Fisher a une erreur théorique qui est inferieure à celle du modèle complet c'est-à-dire que ce modèle est plus performant que le modèle complet. modèle retunu avec les critères AIC/BIC/Fisher : "y_concrete_compresive ~ age + cement + super_plast + blast_furnace + water + fly_ash".
+En répétant la méthode plusieurs fois (dans ce cas 500 fois), on a eu une erreur théorique inferieure à celui des deux méthodes. Malgrè les inconvenients de cette méthode, en répetant la méthode plusieurs fois (la loi de grands nombres), l'erreur théorique tend vers l'erreur théorique optimale.
 On regarde à présent la méthode de validation croisée K-fold.
 
 #### Méthode 2 : estimation de l'erreur par la K-fold CV 
@@ -1319,39 +1327,202 @@ cat("Erreur estimée par validation croisée (", K, "-fold) :", mse_moyen_kfold,
 
 ```
 
-On retrouve une erreur plus importante que celle de la méthode précédente cela est du à la sous estimation de l"erreur théorique par la méthode apprentissage/validation. L'erreur théorique de cette méthode est de 109.43 contre  69.24 pour la méthode apprentissage/validation.
+On trouve une erreur plus importante que celle de la méthode précédente. L'erreur théorique de cette méthode est de 109.43 contre  69.24 pour la méthode apprentissage/validation. L'estimation de l'erreur théorique de prévision pour la méthode apprentissage/validation dépend de la partition aléatoire, c'est moins précis car on n'utilise qu'une partie des données pour entrainer le modèle.
+
+
+#### Sélection du meilleur modèle    
+  
+    
+    
+Pour la sélection du modèle, on s’est appuyée sur trois approches complémentaires :  
+1. les critères statistiques (AIC/BIC/Fisher),  
+2. l’analyse descriptive (notamment l'ACP),  
+3. la littérature sur les propriétés du béton.
+
+**1. Sélection par AIC/BIC/Fisher**  
+Parmi les huit variables initiales, six ont été retenues : *age*, *cement*, *fly_ash*, *water*, *super_plast* et *blast_furnace*.  
+Les variables *fine_aggr* et *coarse* ont été écartées selon les critères AIC/BIC.
+
+**2. Apport de l’ACP**  
+L’ACP a permis d’identifier des interactions pertinentes qu'on a testé :  
+- Opposition *water* / *super_plast* (Dim 1) → test de l’interaction *water \* super_plast*.  
+- Projection de *fly_ash* et *fine_aggr* sur Dim 2 → test de *cement \* fine_aggr* pour explorer leur effet combiné sur la compacité et la résistance (non retenue). 
+- Bonne projection de *age* (Dim 4) → ajout de l’interaction *age \* cement*.  
+- Opposition entre *coarse* et *super_plast* sur Dim 2 → interaction testée malgré l'exclusion initiale de *coarse* avec AIC, mais non retenue car non significative et perturbant l’ajustement du modèle.
 
 
 
-#### Méthode 3 : estimation de l'erreur par leave-one-out VC (LOOCV)
+**3. Apport de la littérature**  
+Des interactions basées sur la littérature ont été intégrées :  
+- *age \* blast_furnace* : le laitier améliore la résistance surtout après plusieurs jours.  
+- *age \* fly_ash* : les cendres volantes renforcent le béton avec le temps.  
+- *water²* : effet non linéaire du rapport eau/ciment.
+
+**Modèle final retenu**  
+Variables principales : *age*, *cement*, *blast_furnace*, *fly_ash*, *water* (centrée pour réduire la colinéarité avec *water²*), *super_plast*  
+Interactions retenues :  
+- *age \* cement*  
+- *age \* blast_furnace*  
+- *age \* fly_ash*  
+- *water_c \* super_plast*  
+- *water_c²*
+
+
+Les résultats ci-dessous correspondent au modèle final ajusté, incluant les interactions retenues à partir de l’ACP, de la littérature et des critères AIC/BIC.
+
+
 ```{r, echo=FALSE}
-library(boot)
+# Centrage de water
+bdd_final$water_c <- scale(bdd_final$water, center = TRUE, scale = FALSE)
+bdd_final$water_c2 <- bdd_final$water_c^2
 
-# 1. Construction du modèle optimal
-modele_optimal <- glm(y_concrete_compresive ~ age + cement + super_plast + 
-                      blast_furnace + water + fly_ash, 
-                     data = bdd_ing)
+# Modèle final avec interactions
+modele_complet <- glm(y_concrete_compresive ~ 
+                        age * cement + 
+                        water_c + water_c2 +
+                        super_plast * water_c + 
+                        blast_furnace + fly_ash +
+                        age * blast_furnace + 
+                        age * fly_ash,
+                      data = bdd_final)
 
-# 2. LOOCV (K = n)
-set.seed(123) # Pour reproductibilité même si LOOCV est déterministe
-estimation_erreur_loocv <- cv.glm(data = bdd_ing, 
-                                 glmfit = modele_optimal, 
-                                 K = nrow(bdd_ing))$delta[1]
-
-# 3. Affichage des résultats
-print(summary(modele_optimal))
-cat("\n")
-print(paste("Erreur MSE estimée par LOOCV:", round(estimation_erreur_loocv, 4)))
-
-#comparaison des trois methodes 
-
-estimation_erreur_modele_complet
-estimation_erreur_modele_optimal
-estimation_erreur_loocv 
-mse_moyen_kfold
+# Résumé du modèle
+summary(modele_complet)
 ```
-On remarque l'erreur théorique estimée du modèle optimal par la méthode apprentissage/validation est la plus petite, ensuite celle du modèle complet avec la meme méthode, puis celle de la methode loocv et enfin celle de la méthode k-fold qui est l'idéale parce que les deux autres methodes presentent des inconvenients.
 
+
+
+#### Comparaison des performances par validation croisée (10-fold)
+
+
+
+```{r, echo=FALSE}
+set.seed(123)
+K <- 10
+n <- nrow(bdd_final)
+indices <- sample(1:n)
+folds <- cut(seq(1, n), breaks = K, labels = FALSE)
+mse_folds_complet <- numeric(K)
+
+# centrer water
+bdd_final$water_c <- scale(bdd_final$water, center = TRUE, scale = FALSE)
+bdd_final$water_c2 <- bdd_final$water_c^2
+for (k in 1:K) {
+  test_idx <- which(folds == k, arr.ind = TRUE)
+  test_data <- bdd_final[indices[test_idx], ]
+  train_data <- bdd_final[indices[-test_idx], ]
+  
+  # Modèle final avec interactions
+  modele_complet <- glm(y_concrete_compresive ~ 
+                          age * cement + water_c + water_c2 +
+                          super_plast * water_c + blast_furnace + fly_ash +
+                          age * blast_furnace + age * fly_ash,
+                        data = train_data)
+  
+  pred_k <- predict(modele_complet, newdata = test_data)
+  mse_folds_complet[k] <- mean((test_data$y_concrete_compresive - pred_k)^2)
+}
+
+# Moyenne des erreurs MSE
+mse_complet_kfold <- mean(mse_folds_complet)
+cat("Erreur estimée par validation croisée (10-fold) - modèle final :", round(mse_complet_kfold, 4), "\n")
+
+
+```
+
+
+Le modèle initial (basé uniquement sur les critères AIC/BIC) présente une erreur moyenne de 109.48.  
+Le modèle final, construit en combinant les critères AIC/BIC, les résultats de l’ACP et les apports de la littérature, a une erreur de 64.56.  
+
+
+
+#### R2 ajusté
+
+```{r, echo=FALSE}
+# Ajustement du modèle
+mod <- glm(y_concrete_compresive ~ age * cement + water_c + water_c2 +
+             super_plast * water_c + blast_furnace + fly_ash +
+             age * blast_furnace + age * fly_ash, data = bdd_final)
+
+# Calcul du R² ajusté
+n <- nrow(bdd_final)
+p <- length(coef(mod))
+rss <- sum(residuals(mod)^2)
+tss <- sum((bdd_final$y_concrete_compresive - mean(bdd_final$y_concrete_compresive))^2)
+
+r2_adj <- 1 - ((rss / (n - p)) / (tss / (n - 1)))
+cat("R² ajusté du modèle :", round(r2_adj, 4), "\n")
+```
+
+Le R² ajusté du modèle final est de 0.7768, ce qui signifie que le modèle explique environ 78 % de la variabilité observée dans la résistance à la compression.
+
+## Diagnostic du modèle final retenu
+
+
+### Test de Durbin-Watson
+```{r, echo=FALSE}
+# Centrage de la variable water
+bdd_final$water_c <- scale(bdd_final$water, center = TRUE, scale = FALSE)
+bdd_final$water_c2 <- bdd_final$water_c^2
+
+# Modèle final avec interactions et terme quadratique
+modele_complet <- glm(y_concrete_compresive ~ 
+                        age * cement + 
+                        water_c + water_c2 +
+                        super_plast * water_c + 
+                        blast_furnace + fly_ash +
+                        age * blast_furnace + 
+                        age * fly_ash,
+                      data = bdd_final)
+```
+
+
+```{r, echo=FALSE}
+library(lmtest)
+
+dw <- dwtest(modele_complet)
+print(dw)
+```
+```{r, echo=FALSE}
+acf(modele_complet$residuals, main = "Autocorrélation des erreurs - modèle final")
+```
+Le statistique de Durbin-Watson est égal à 1.22, avec une p-value très petite (< 2.2e-16).
+Cela signifie que les erreurs du modèle sont autocorrélées.
+
+
+### Test de Breusch-Pagan
+
+```{r, echo=FALSE}
+bp <- bptest(modele_complet)
+print(bp)
+
+```
+Le test de Breusch-Pagan donne une statistique de 150.28 avec 11 degrés de liberté, et une p-value inférieure à 2.2e-16.
+Cela signifie que les erreurs du modèle ne sont pas homogènes : il y a hétéroscédasticité.
+
+### Test de normalité de Shapiro-Wilk
+
+```{r, echo=FALSE}
+sw <- shapiro.test(residuals(modele_complet))
+print(sw)
+```
+Le test de Shapiro-Wilk donne une statistique de W = 0.99088 avec une p-value = 1.14e-05.
+Cette p-value étant inférieure à 0.05, on rejette l'hypothèse de normalité des résidus.
+
+### Graphique : Résidus vs Valeurs ajustées
+```{r, echo=FALSE}
+plot(modele_complet, 1)
+```
+Le nuage de points est globalement centré autour de zéro, mais la courbe rouge montre une légère courbure.
+Cela suggère que la relation n’est pas parfaitement linéaire, malgré l’ajout d’interactions et de transformations.
+
+### Graphique : Q-Q plot
+
+```{r, echo=FALSE}
+plot(modele_complet, 2)
+```
+Les observations 338, 340 et 185 s’écartent de la droite dans la partie haute, ce qui montre quelques résidus extrêmes.
+Cela rejoint le résultat du test de Shapiro-Wilk, qui avait déjà indiqué que les résidus ne sont pas normaux.
 
 # Statistique en Grande dimension 
 
