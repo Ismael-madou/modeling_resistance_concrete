@@ -114,7 +114,11 @@ Après ce cap, le rythme de durcissement ralentit, mais on atteint souvent plus 
 
 ## Resulats des travaux 
 
-Nous présentons ici les résultats obtenus avec le modèle final, construit à partir des critères AIC/BIC, des résultats de l'analyse descriptives (notamment l'ACP) et des apports de la littérature.
+Nous présentons ici les résultats obtenus avec le modèle final, construit en combinant plusieurs approches : une sélection exhaustive guidée par les critères AIC et BIC, une analyse descriptive (analyse univariée, bivariée et multivariée via l’ACP), ainsi que des éléments issus de la littérature.
+
+La base de données initiale comptait 1030 observations et 9 variables numériques. Après traitement des valeurs aberrantes (notamment pour age et super_plast) et analyse des corrélations, elle a été réduite à 961 observations.  
+
+Comme le nombre de variables explicatives était relativement limité (huit au total), une approche exhaustive a pu être appliquée sans contrainte particulière. Cette méthode a permis d’évaluer l’ensemble des modèles sans interactions à l’aide des critères AIC et BIC. Le modèle a ensuite été complété par l’ajout de termes d’interaction et d’un effet quadratique, guidé par l’analyse descriptive et la littérature.
 
 La variable cement (ciment) est fortement significative avec un effet positif (coefficient estimé à 0.097). Cela confirme que plus on augmente la quantité de ciment, plus la résistance à la compression augmente. Ce résultat est en accord avec la littérature, notamment Mehta et Monteiro (2014), qui ont montré que le ciment est un facteur clé de la résistance, surtout dans les premiers jours.
 
@@ -124,15 +128,17 @@ La variable age seule est également significative (0.093). Cela confirme ce qu�
 
 Le blast_furnace (laitier de haut fourneau) a un effet positif (0.054) et très significatif. Cela reflète bien son rôle connu : il a peu d’impact au début, mais renforce le béton progressivement. L’interaction age * blast_furnace (0.00089) est aussi significative, ce qui montre que cet effet s’accentue avec le temps, comme le soulignent les travaux de Jin et al. (2003).
 
-Concernant fly_ash (cendres volantes), son effet seul est légèrement positif (0.014) mais faiblement significatif (p = 0.10). Par contre, l’interaction age * fly_ash est bien significative (0.00093), ce qui veut dire que les cendres volantes contribuent davantage à la résistance avec le temps. Cela correspond aux observations dans la littérature qui indiquent un effet lent mais croissant.
+Concernant fly_ash (cendres volantes), son effet seul est positif (0.014) mais faiblement significatif (p = 0.10). Par contre, l’interaction age * fly_ash est bien significative (0.00093), ce qui veut dire que les cendres volantes contribuent davantage à la résistance avec le temps. Cela correspond aux observations dans la littérature qui indiquent un effet lent mais croissant.
 
 L’eau a été centrée avant d’ajouter le terme au carré, pour éviter les problèmes de colinéarité entre water et water². Le coefficient de water_c est négatif (-0.295), ce qui montre que lorsque la quantité d’eau augmente, la résistance diminue. Le terme water_c² est positif (0.00168), ce qui indique que l’effet de l’eau n’est pas linéaire. Cela signifie qu’à très faibles ou très fortes doses, l’impact sur la résistance varie. Ce résultat est cohérent avec la notion de rapport eau/ciment, souvent citée dans la littérature, où trop ou pas assez d’eau nuit à la performance du béton.
 
 Le super_plast (superplastifiant) a un effet positif et significatif (0.443), ce qui montre qu’il améliore la résistance du béton, surtout à court terme. L’interaction super_plast * water_c (0.01795) est aussi significative, ce qui veut dire que l’effet du superplastifiant dépend de la quantité d’eau. Cela rejoint les travaux montrant que le superplastifiant agit sur la fluidité, mais que son effet combiné avec l’eau est déterminant.
 
-En résumé, le modèle final contient six variables principales (age, cement, water, super_plast, blast_furnace, fly_ash) et cinq interactions significatives. Tous les effets inclus sont cohérents avec la littérature et les résultats de l’analyse exploratoire.
+En résumé, le modèle final inclut six variables ayant un effet direct sur la résistance à la compression : age, cement, water (centrée), super_plast, blast_furnace et fly_ash.
+Il comprend également plusieurs interactions : age * cement, age * blast_furnace, age * fly_ash, water_c * super_plast, ainsi qu’un terme quadratique water_c² pour tenir compte de la non-linéarité de l’effet de l’eau.
+Tous les effets retenus sont cohérents avec la littérature et les résultats de l’analyse exploratoire.
 
-Sur le plan de la performance, la validation croisée à 10 groupes donne une erreur moyenne de 109.48 pour le modèle basé uniquement sur les critères AIC, BIC et Fisher. Avec le modèle final, qui inclut des interactions et un effet quadratique, cette erreur descend à 64.56.
+Sur le plan de la performance, la validation croisée à 10 groupes donne une erreur moyenne de 109.48 pour le modèle basé uniquement sur les critères AIC et BIC. Avec le modèle final, qui inclut des interactions et un effet quadratique, cette erreur descend à 64.56.
 Par ailleurs, le R² ajusté du modèle final est de 0.7768, ce qui signifie que le modèle explique environ 78 % de la variabilité observée dans la résistance à la compression.
 
 
@@ -1090,7 +1096,7 @@ Les **bétons 57, 225 et 611** sont les **plus influents**.
 
 ## Selection du Meilleur modèle 
 
-L'objectif de cette partie est de choisir le modèle de regression linéaire qui prédise au mieux la variable que l'on veut expliquer, c'est à dire ici la résistance à la compression du béton. On peut alors regarder premièrement la selection du meilleur modèle en utilisant le critère BIC
+L'objectif de cette partie est de choisir le modèle de regression linéaire qui prédise/expliquer au mieux la variable dépendante, c'est à dire ici la résistance à la compression du béton. On peut alors regarder premièrement la selection du meilleur modèle en utilisant le critère BIC
 
 ```{r, echo= F,message=FALSE, warning=FALSE}
 library(glmulti)
@@ -1333,8 +1339,12 @@ On trouve une erreur plus importante que celle de la méthode précédente. L'er
 #### Sélection du meilleur modèle    
   
     
-    
+  
+      
+
 Pour la sélection du modèle, on s’est appuyée sur trois approches complémentaires :  
+
+
 1. les critères statistiques (AIC/BIC/Fisher),  
 2. l’analyse descriptive (notamment l'ACP),  
 3. la littérature sur les propriétés du béton.
